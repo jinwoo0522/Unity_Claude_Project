@@ -1,0 +1,40 @@
+# Unity 생성 폴더
+[Ll]ibrary/
+[Tt]emp/
+[Oo]bj/
+[Bb]uild/
+[Bb]uilds/
+[Ll]ogs/
+[Uu]ser[Ss]ettings/
+
+# VisualStudio 캐시/옵션 디렉토리
+.vs/
+
+# Unity 자동 생성 파일
+*.csproj
+*.sln
+*.slnx
+
+# 서드파티 에셋 (에셋스토어 구매 에셋 제외)
+Assets/Fab_content/
+Assets/Fab_content.meta
+Assets/Fab_plugin/
+Assets/Fab_plugin.meta
+Assets/Fantastic Dungeon Pack/
+Assets/Fantastic Dungeon Pack.meta
+Assets/Hovl Studio/
+Assets/Hovl Studio.meta
+Assets/Lana Studio/
+Assets/Lana Studio.meta
+Assets/Magician_RIO/
+Assets/Magician_RIO.meta
+Assets/Stone_Golem/
+Assets/Stone_Golem.meta
+Assets/TutorialInfo/
+Assets/TutorialInfo.meta
+Assets/Readme.asset
+Assets/Readme.asset.meta
+
+# OS 관련 파일
+.DS_Store
+Thumbs.db
