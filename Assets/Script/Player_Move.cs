@@ -1,56 +1,94 @@
+using System;
 using UnityEngine;
+using UnityEngine.InputSystem;
+
 
 public class Player_Move : MonoBehaviour
 {
     [Header("이동")]
     public float fWalkSpeed = 3f;
     public float fRunSpeed  = 6f;
-
     [Header("점프")]
-    public float fJumpHeight = 1.5f;
-    public float fGravity    = -20f;
+    public float fJumpAmount = 5f;
+    public float fGravity = -9.8f;
+    [Header("애니메이션")]
+    public float fAnimSpeed = 3f;
+    private bool isSprint = false;
+    private Vector2 MoveDir;
+    private float verticalVelocity = 0f;
+    private float fAccTime = 0f;
+    private Vector2 vAnimLerp;
 
-    CharacterController _cc;
-    Animator            _anim;
-    Vector3             _vVelocity;
+    CharacterController               cct;
+    Animator                          anim;
+
+    void Awake()
+    {
+
+    }
 
     void Start()
     {
-        _cc   = GetComponent<CharacterController>();
-        _anim = GetComponentInChildren<Animator>();
+        cct   = GetComponent<CharacterController>();
+        anim = GetComponentInChildren<Animator>();
     }
 
     void Update()
     {
-        float fH = Input.GetAxisRaw("Horizontal");
-        float fV = Input.GetAxisRaw("Vertical");
+        PlayerMove();
+        Anim_Manage();
+    }
 
-        bool  bRunning = Input.GetKey(KeyCode.LeftShift);
-        float fSpeed   = bRunning ? fRunSpeed : fWalkSpeed;
-        Vector3 vMove  = new Vector3(fH, 0f, fV).normalized * fSpeed;
+    void OnMove(InputValue value)
+    {
+        MoveDir = value.Get<Vector2>();
+    }
+    void OnJump() => PlayerJump();
+    void OnSprint(InputValue value)
+    {
+        isSprint = value.isPressed;
+    }
+    void PlayerMove()
+    {
+        Vector2 vMoveInput = MoveDir;
+        
+        Vector3 vMoveDir = new Vector3(vMoveInput.x , 0, vMoveInput.y);
 
-        if (vMove.sqrMagnitude > 0.01f)
-            transform.rotation = Quaternion.LookRotation(new Vector3(vMove.x, 0f, vMove.z));
+        float fSpeed = isSprint ? fRunSpeed : fWalkSpeed;
 
-        if (_cc.isGrounded && _vVelocity.y < 0f)
-            _vVelocity.y = -2f;
+        vMoveDir *= fSpeed; // 이동 속도!
 
-        if (Input.GetKeyDown(KeyCode.Space) && _cc.isGrounded)
+        if (cct.isGrounded == false)
         {
-            _vVelocity.y = Mathf.Sqrt(fJumpHeight * -2f * fGravity);
-            _anim.SetTrigger("Jump");
+             fAccTime += Time.deltaTime;
+             verticalVelocity += fGravity * fAccTime * fAccTime;  // 중력 가속
+             vMoveDir.y = verticalVelocity; // 중력 적용
         }
 
-        if (Input.GetMouseButtonDown(0))
-            _anim.SetTrigger("Attack");
-
-        _vVelocity.y += fGravity * Time.deltaTime;
-        _cc.Move((vMove + Vector3.up * _vVelocity.y) * Time.deltaTime);
-
-        float fNormSpeed = vMove.sqrMagnitude > 0.01f ? (bRunning ? 1f : 0.5f) : 0f;
-        _anim.SetFloat("MoveX", fH * fNormSpeed, 0.1f, Time.deltaTime);
-        _anim.SetFloat("MoveZ", fV * fNormSpeed, 0.1f, Time.deltaTime);
-        _anim.SetFloat("Speed", fNormSpeed,       0.1f, Time.deltaTime);
-        _anim.SetBool("IsGrounded", _cc.isGrounded);
+        cct.Move(vMoveDir * Time.deltaTime);
     }
+
+    void Anim_Manage()
+    {
+        vAnimLerp += MoveDir * Time.deltaTime * fAnimSpeed;
+        float fClampValue = 0.5f;
+        fClampValue = isSprint ? fClampValue + 0.5f : fClampValue;
+
+        vAnimLerp.x = Mathf.Clamp(vAnimLerp.x ,-fClampValue , fClampValue);
+        vAnimLerp.y = Mathf.Clamp(vAnimLerp.y , -fClampValue , fClampValue);
+
+        anim.SetFloat("MoveX",vAnimLerp.x);
+        anim.SetFloat("MoveZ",vAnimLerp.y);
+    }
+
+    void PlayerJump()
+    {
+        if (cct.isGrounded)
+        { 
+            verticalVelocity = fJumpAmount;
+            fAccTime = 0f;
+        }
+    }
+
+
 }
