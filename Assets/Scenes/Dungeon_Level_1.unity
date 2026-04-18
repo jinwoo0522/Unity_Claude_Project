@@ -57411,7 +57411,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 9547c738ea76d0441bd4c030b5fe9a7e, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 9547c738ea76d0441bd4c030b5fe9a7e, type: 3}
       propertyPath: m_LocalRotation.x
@@ -57419,7 +57419,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 9547c738ea76d0441bd4c030b5fe9a7e, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 9547c738ea76d0441bd4c030b5fe9a7e, type: 3}
       propertyPath: m_LocalRotation.z
@@ -57431,7 +57431,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 9547c738ea76d0441bd4c030b5fe9a7e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 180
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 9547c738ea76d0441bd4c030b5fe9a7e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
@@ -308175,6 +308175,7 @@ GameObject:
   - component: {fileID: 2146632077}
   - component: {fileID: 2146632078}
   - component: {fileID: 2146632079}
+  - component: {fileID: 2146632080}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -308191,7 +308192,7 @@ Transform:
   m_GameObject: {fileID: 2146632076}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 36.02492, y: -2, z: 38.87064}
+  m_LocalPosition: {x: 36.02492, y: 0, z: 38.87064}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -308222,7 +308223,7 @@ CharacterController:
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 0.9, z: 0}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &2146632079
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -308235,10 +308236,42 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5dcbec35709a364e845a873cfc4eba8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Player_Move
-  fWalkSpeed: 3
-  fRunSpeed: 6
-  fJumpHeight: 1.5
+  fWalkSpeed: 2
+  fRunSpeed: 4
+  fJumpAmount: 10
   fGravity: -20
+  fJumpDelay: 0.6
+  fAnimSpeed: 3
+--- !u!114 &2146632080
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2146632076}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.InputSystem::UnityEngine.InputSystem.PlayerInput
+  m_Actions: {fileID: -944628639613478452, guid: d1fa02e9f631ab44996cef0ec87ccddb, type: 3}
+  m_NotificationBehavior: 0
+  m_UIInputModule: {fileID: 0}
+  m_DeviceLostEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_DeviceRegainedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ControlsChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ActionEvents: []
+  m_NeverAutoSwitchControlSchemes: 0
+  m_DefaultControlScheme: 
+  m_DefaultActionMap: Player
+  m_SplitScreenIndex: -1
+  m_Camera: {fileID: 0}
 --- !u!1001 &2146828317
 PrefabInstance:
   m_ObjectHideFlags: 0

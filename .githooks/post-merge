@@ -1,0 +1,35 @@
+#!/bin/bash
+
+CURRENT_BRANCH=$(git branch --show-current)
+
+# Develop 브랜치에서만 실행
+if [ "$CURRENT_BRANCH" != "Develop" ] && [ "$CURRENT_BRANCH" != "dev" ]; then
+    exit 0
+fi
+
+TASK_FILE="TASK.md"
+
+# 머지된 브랜치의 TASK.md 가져오기
+FEATURE_TASK=$(git show HEAD^2:"$TASK_FILE" 2>/dev/null)
+
+if [ -z "$FEATURE_TASK" ]; then
+    exit 0
+fi
+
+# dev의 기존 TASK.md 복원 (머지 전 상태)
+git show HEAD^1:"$TASK_FILE" > "$TASK_FILE" 2>/dev/null
+
+# Day 번호 계산
+DAY_NUM=$(grep -c "^## Day" "$TASK_FILE" 2>/dev/null || echo 0)
+DAY_NUM=$((DAY_NUM + 1))
+DATE=$(date +"%Y-%m-%d")
+
+# 머지된 브랜치 이름
+BRANCH_NAME=$(git name-rev --name-only HEAD^2 2>/dev/null | sed 's/remotes\/origin\///')
+
+# dev TASK.md에 항목 추가
+printf "\n\n## Day%d (%s - %s)\n\n%s\n" "$DAY_NUM" "$DATE" "$BRANCH_NAME" "$FEATURE_TASK" >> "$TASK_FILE"
+
+# 커밋
+git add "$TASK_FILE"
+git commit -m "docs: Day${DAY_NUM} TASK.md 업데이트 (${BRANCH_NAME})"

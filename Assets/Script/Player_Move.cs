@@ -1,4 +1,4 @@
-using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -11,13 +11,15 @@ public class Player_Move : MonoBehaviour
     [Header("점프")]
     public float fJumpAmount = 5f;
     public float fGravity = -9.8f;
+    public float fJumpDelay = 0.1f;
     [Header("애니메이션")]
     public float fAnimSpeed = 3f;
     private bool isSprint = false;
     private Vector2 MoveDir;
     private float verticalVelocity = 0f;
-    private float fAccTime = 0f;
+
     private Vector2 vAnimLerp;
+    private bool isJumpPending = false;
 
     CharacterController               cct;
     Animator                          anim;
@@ -46,48 +48,53 @@ public class Player_Move : MonoBehaviour
     void OnJump() => PlayerJump();
     void OnSprint(InputValue value)
     {
-        isSprint = value.isPressed;
+        isSprint = value.Get<float>() > 0.5f;
     }
     void PlayerMove()
     {
-        Vector2 vMoveInput = MoveDir;
-        
-        Vector3 vMoveDir = new Vector3(vMoveInput.x , 0, vMoveInput.y);
+        Vector3 vMoveDir = new Vector3(MoveDir.x, 0, MoveDir.y);
 
         float fSpeed = isSprint ? fRunSpeed : fWalkSpeed;
+        vMoveDir *= fSpeed;
 
-        vMoveDir *= fSpeed; // 이동 속도!
+        // 중력 처리
+        if (cct.isGrounded && verticalVelocity < 0f)
+            verticalVelocity = -2f; // 바닥 감지를 위한 최소 하강값
+        else if (!cct.isGrounded)
+            verticalVelocity += fGravity * Time.deltaTime;
 
-        if (cct.isGrounded == false)
-        {
-             fAccTime += Time.deltaTime;
-             verticalVelocity += fGravity * fAccTime * fAccTime;  // 중력 가속
-             vMoveDir.y = verticalVelocity; // 중력 적용
-        }
-
+        vMoveDir.y = verticalVelocity;
         cct.Move(vMoveDir * Time.deltaTime);
     }
 
     void Anim_Manage()
     {
-        vAnimLerp += MoveDir * Time.deltaTime * fAnimSpeed;
-        float fClampValue = 0.5f;
-        fClampValue = isSprint ? fClampValue + 0.5f : fClampValue;
+        // 이동 중이면 해당 방향/속도로, 멈추면 0으로 보간
+        float fTargetScale = isSprint ? 1f : 0.5f;
+        Vector2 vTarget = MoveDir.magnitude > 0.1f ? MoveDir.normalized * fTargetScale
+        : Vector2.zero;
+        vAnimLerp = Vector2.Lerp(vAnimLerp, vTarget, Time.deltaTime * fAnimSpeed);
 
-        vAnimLerp.x = Mathf.Clamp(vAnimLerp.x ,-fClampValue , fClampValue);
-        vAnimLerp.y = Mathf.Clamp(vAnimLerp.y , -fClampValue , fClampValue);
-
-        anim.SetFloat("MoveX",vAnimLerp.x);
-        anim.SetFloat("MoveZ",vAnimLerp.y);
+        anim.SetFloat("MoveX", vAnimLerp.x);
+        anim.SetFloat("MoveZ", vAnimLerp.y);
+        anim.SetBool("IsGrounded", cct.isGrounded && !isJumpPending);
     }
 
     void PlayerJump()
     {
-        if (cct.isGrounded)
-        { 
-            verticalVelocity = fJumpAmount;
-            fAccTime = 0f;
+        if (cct.isGrounded && !isJumpPending)
+        {
+            anim.SetTrigger("Jump");
+            isJumpPending = true;
+            StartCoroutine(JumpDelay());
         }
+    }
+
+    IEnumerator JumpDelay()
+    {
+        yield return new WaitForSeconds(fJumpDelay);
+        verticalVelocity = fJumpAmount;
+        isJumpPending = false;
     }
 
 
