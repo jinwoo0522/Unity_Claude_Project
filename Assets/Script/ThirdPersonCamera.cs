@@ -38,9 +38,8 @@ public class ThirdPersonCamera : MonoBehaviour
     void Start()
     {
         // 마우스 커서 숨기고 화면 중앙에 고정
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible   = false;
-        _fYaw = transform.eulerAngles.y;
+
+        _fYaw = target.eulerAngles.y;
     }
 
     // LateUpdate : 플레이어 이동 후 카메라 위치를 갱신 (Update보다 늦게 실행)
@@ -56,6 +55,9 @@ public class ThirdPersonCamera : MonoBehaviour
 
         // 회전값으로 쿼터니언 생성
         Quaternion qRot = Quaternion.Euler(_fPitch, _fYaw, 0f);
+
+        // 플레이어 Y축 회전을 카메라 Yaw에 동기화
+        target.rotation = Quaternion.Euler(0f, _fYaw, 0f);
 
         // 타겟 뒤쪽으로 거리만큼 떨어진 위치에 카메라 배치
         transform.position = target.position + Vector3.up * fHeight - qRot * Vector3.forward * fDistance;

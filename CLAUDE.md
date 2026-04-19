@@ -27,6 +27,7 @@
 
 ## Git 규칙
 
+- 머지 전 반드시 `unity-cli menu "File/Save Project"` 로 Unity 씬 저장
 - Develop 머지 시 반드시 `--no-ff` 옵션 사용 (훅 실행을 위해 필수)
 - Develop 머지 후 반드시 `git push origin Develop` 으로 원격 푸시
 - 각 작업 브랜치 완료 후 해당 브랜치도 `git push origin <브랜치명>` 으로 원격 푸시

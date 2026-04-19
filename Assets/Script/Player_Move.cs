@@ -27,7 +27,8 @@ public class Player_Move : MonoBehaviour
 
     void Awake()
     {
-
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible   = false;
     }
 
     void Start()
@@ -39,8 +40,14 @@ public class Player_Move : MonoBehaviour
 
     void Update()
     {
+        RotateWithCamera();
         PlayerMove();
         Anim_Manage();
+    }
+
+    void RotateWithCamera()
+    {
+        transform.rotation = Quaternion.Euler(0f, Camera.main.transform.eulerAngles.y, 0f);
     }
 
     void OnMove(InputValue value)
@@ -54,7 +61,7 @@ public class Player_Move : MonoBehaviour
     }
     void PlayerMove()
     {
-        Vector3 vMoveDir = new Vector3(MoveDir.x, 0, MoveDir.y);
+        Vector3 vMoveDir = transform.right * MoveDir.x + transform.forward * MoveDir.y;
 
         float fSpeed = isSprint ? fRunSpeed : fWalkSpeed;
         vMoveDir *= fSpeed;
