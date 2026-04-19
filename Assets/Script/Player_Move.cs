@@ -23,6 +23,7 @@ public class Player_Move : MonoBehaviour
 
     CharacterController               cct;
     Animator                          anim;
+    Player_UpperBody                  playerUpper;
 
     void Awake()
     {
@@ -31,8 +32,9 @@ public class Player_Move : MonoBehaviour
 
     void Start()
     {
-        cct   = GetComponent<CharacterController>();
-        anim = GetComponentInChildren<Animator>();
+        cct      = GetComponent<CharacterController>();
+        anim     = GetComponentInChildren<Animator>();
+        playerUpper = GetComponent<Player_UpperBody>();
     }
 
     void Update()
@@ -82,6 +84,7 @@ public class Player_Move : MonoBehaviour
 
     void PlayerJump()
     {
+        if (playerUpper != null && playerUpper.IsHit) return;
         if (cct.isGrounded && !isJumpPending)
         {
             anim.SetTrigger("Jump");
