@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b1bd81438d6a254f9db8a8d937920e0, type: 3}
+  m_Name: Player_Data
+  m_EditorClassIdentifier: Assembly-CSharp::Player_Data
+  strName: "\uD50C\uB808\uC774\uC5B4"
+  strDesc: "\uD50C\uB808\uC774\uC5B4 \uC785\uB2C8\uB2E4"
+  fAttackDamage: 5
+  fHp: 100
+  fMaxHp: 100
+  fArmor: 5
+  fResistance: 5
+  fMaxResistance: 15
+  fWalkSpeed: 2
+  fRunSpeed: 4
+  fAnimSpeed: 3
+  fJumpAmount: 10

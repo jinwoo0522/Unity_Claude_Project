@@ -1,0 +1,73 @@
+using UnityEngine;
+
+// 직선 발사체 스킬 — 이동, 파티클 이펙트 전환, 풀 반환 담당
+public class SkillProjectile : Skill
+{
+    [Header("이펙트")]
+    public GameObject projectileEffect; // 비행 중 이펙트
+    public GameObject hitEffect;        // 충돌 시 이펙트
+
+    private Vector3        vMoveDir;
+    private float          fCurrentSpeed; // 현재 속도 (초기값=fSpeed, 매 프레임 fAcceleration 누적)
+    private float          fElapsed;      // 비행 경과 시간 (수명 초과 감지용)
+    private float          fHitElapsed;   // 히트 이펙트 활성화 후 경과 시간 (첫 프레임 레이스 방지)
+    private ParticleSystem hitParticle;   // hitEffect의 파티클 시스템 캐시
+
+    // 발사체 전용 초기화 — 방향/속도 설정 후 base 호출
+    public override void Init(SkillType type, SkillData data, Vector3 position, Vector3 direction, GameObject owner)
+    {
+        base.Init(type, data, position, direction, owner);
+        vMoveDir      = direction.normalized;
+        fCurrentSpeed = data.fSpeed;
+    }
+
+    // 재사용 시 발사체 상태 초기화
+    protected override void OnEnable()
+    {
+        base.OnEnable();
+        if (Data == null) return;
+        fElapsed    = 0f;
+        fHitElapsed = 0f;
+        hitParticle = hitEffect.GetComponent<ParticleSystem>();
+        projectileEffect.SetActive(true);
+        hitEffect.SetActive(false);
+    }
+
+    void Update()
+    {
+        if (Data == null) return;
+
+        if (!bHitShown)
+        {
+            // 가속 이동 및 수명 감시
+            fCurrentSpeed += Data.fAcceleration * Time.deltaTime;
+            transform.position += vMoveDir * fCurrentSpeed * Time.deltaTime;
+            fElapsed += Time.deltaTime;
+            if (fElapsed >= Data.fLifeTime) ShowHit();
+        }
+        else
+        {
+            // 히트 이펙트 파티클 종료 감시 (첫 프레임 레이스 방지: 0.05s 후부터 체크)
+            fHitElapsed += Time.deltaTime;
+            if (fHitElapsed > 0.05f && hitParticle != null && !hitParticle.IsAlive(true))
+                SkillPool.Instance.Return(this);
+        }
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (bHitShown) return;
+        if (other.CompareTag("Player")) return;
+        OnHitEnemy(other);
+        ShowHit();
+    }
+
+    // 충돌 또는 수명 만료 시 이펙트 전환, 이후 파티클 수명으로 풀 반환 결정
+    protected override void ShowHit()
+    {
+        base.ShowHit(); // bHitShown = true
+        fHitElapsed = 0f;
+        projectileEffect.SetActive(false);
+        hitEffect.SetActive(true);
+    }
+}

@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -5,6 +6,9 @@ public class Player_UpperBody : MonoBehaviour
 {
     [Header("공격")]
     public float fAttackExitStart = 0.7f;
+    [Header("스킬")]
+    public SkillType currentSkill;  // 사용할 스킬 종류 (SkillPool에서 데이터 조회)
+    public Transform rightHandBone; // 발사 위치 기준 뼈 (hand.r)
     [Header("피격")]
     public float fHitExitStart = 0.7f;
     public bool IsHit => state == UpperState.Hit && anim.GetLayerWeight(UpperBodyLayer) > 0f;
@@ -32,6 +36,14 @@ public class Player_UpperBody : MonoBehaviour
             UpperState.Hit       => PlayUpper(fHitExitStart,    "UpperHit",    info),
             _                    => 0
         };
+    }
+
+    // AnimEventRelay → 애니메이션 이벤트로 호출 (PlayerInput 인풋 아님)
+    public void OnFireSkill()
+    {
+        if (SkillPool.Instance == null) return;
+        Vector3 pos = rightHandBone != null ? rightHandBone.position : transform.position;
+        SkillPool.Instance.Get(currentSkill, pos, transform.forward, this.GameObject());
     }
 
     void OnAttack()
