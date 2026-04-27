@@ -17,7 +17,12 @@
 ## 코드/에디터 변경 규칙
 
 - 코드 및 에디터 설정 변경 전 승인받고 할 것
-- 컴파일/에러 확인은 허락 없이 바로 실행
+- `Assets/Reimport All` 절대 금지 — Unity 크래시 유발, 승인 여부와 무관하게 실행 불가
+
+## 코드 작성 규칙
+
+- 외부에서 Inspector로 입력받아야 하는 필드는 `public` 대신 `[SerializeField]` + `private` 또는 `protected` 사용
+- 스크립트 내부에서 `public` 변수 사용 금지 (은닉화 원칙 준수)
 
 ## 에셋 참조 규칙
 
@@ -25,9 +30,3 @@
 - 대화 초반에 읽은 정보를 그대로 쓰지 말 것 - 사용자가 에셋을 교체/삭제/이동했을 수 있음
 - Animator controller에 guid를 넣기 전 반드시 해당 .meta 파일로 guid 검증
 
-## Git 규칙
-
-- 머지 전 반드시 `unity-cli menu "File/Save Project"` 로 Unity 씬 저장
-- Develop 머지 시 반드시 `--no-ff` 옵션 사용 (훅 실행을 위해 필수)
-- Develop 머지 후 반드시 `git push origin Develop` 으로 원격 푸시
-- 각 작업 브랜치 완료 후 해당 브랜치도 `git push origin <브랜치명>` 으로 원격 푸시

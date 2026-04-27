@@ -1,0 +1,40 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(C:/Users/kim05/AppData/Local/unity-cli/unity-cli editor *)",
+      "Bash(C:/Users/kim05/AppData/Local/unity-cli/unity-cli console *)",
+      "Bash(C:/Users/kim05/AppData/Local/unity-cli/unity-cli status *)",
+      "Bash(git add *)",
+      "Bash(git commit -m ' *)",
+      "Bash(git push *)",
+      "Bash(git checkout *)",
+      "Bash(git merge *)",
+      "Bash(git stash *)",
+      "Bash(xargs grep *)",
+      "Bash(grep -v \"\\\\.meta$\")",
+      "Bash(git commit *)",
+      "Bash(python3)",
+      "Bash(C:/Users/kim05/AppData/Local/unity-cli/unity-cli menu *)",
+      "Bash(awk 'NR>=320840 && NR<=320920')",
+      "Bash(python3 *)",
+      "Bash(unity-cli editor *)",
+      "Bash(unity-cli console *)",
+      "Bash(unity-cli menu *)",
+      "Bash(msg * *)",
+      "Bash(powershell -ExecutionPolicy Bypass -File \"C:/Users/kim05/.claude/notify.ps1\" *)",
+      "Bash(unity-cli status *)",
+      "PowerShell(Get-Content \"C:/Users/kim05/.claude/settings.json\" | ConvertFrom-Json | Select-Object -ExpandProperty hooks | Select-Object -ExpandProperty Stop | ForEach-Object { $_.hooks } | Select-Object type, command)",
+      "PowerShell($s = Get-Content \"C:/Users/kim05/.claude/settings.json\" -Raw | ConvertFrom-Json; $s.hooks.PermissionRequest[0].hooks | ForEach-Object { Write-Host \"type=$\\($_.type\\) async=$\\($_.async\\) cmd=$\\($_.command\\)\" })",
+      "Bash(rm *)",
+      "WebFetch(domain:skills.sh)",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:awesome-copilot.github.com)",
+      "mcp__notion__notion-search",
+      "mcp__notion__notion-fetch",
+      "mcp__notion__notion-update-page",
+      "PowerShell(python --version 2>&1; python3 --version 2>&1; where.exe python 2>&1)",
+      "Skill(update-config)",
+      "PowerShell(Get-ItemProperty *)"
+    ]
+  }
+}
