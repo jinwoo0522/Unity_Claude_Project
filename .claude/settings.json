@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(unity-cli editor refresh)",
+      "Bash(unity-cli editor refresh *)",
+      "Bash(unity-cli console --type error)",
+      "Bash(unity-cli console --type error *)",
+      "Bash(unity-cli status)",
+      "Bash(unity-cli status *)",
+      "Bash(C:/Users/kim05/AppData/Local/unity-cli/unity-cli editor refresh *)",
+      "Bash(C:/Users/kim05/AppData/Local/unity-cli/unity-cli console *)",
+      "Bash(C:/Users/kim05/AppData/Local/unity-cli/unity-cli status *)"
+    ]
+  }
+}

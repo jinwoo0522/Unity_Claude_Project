@@ -4,10 +4,20 @@ using System.IO;
 
 public class FbxAnimExtractor
 {
+    [MenuItem("Tools/FBX → Humanoid Anim 추출 및 삭제 (GolemAni)")]
+    public static void ExtractAndDeleteGolemAni()
+    {
+        ExtractFolder("Assets/Animation/GolemAni");
+    }
+
     [MenuItem("Tools/FBX → Humanoid Anim 추출 및 삭제")]
     public static void ExtractAndDelete()
     {
-        string folderPath = "Assets/Animation";
+        ExtractFolder("Assets/Animation");
+    }
+
+    static void ExtractFolder(string folderPath)
+    {
         string[] guids = AssetDatabase.FindAssets("t:Object", new[] { folderPath });
 
         int successCount = 0;
@@ -21,7 +31,6 @@ public class FbxAnimExtractor
 
             string fbxName = Path.GetFileNameWithoutExtension(assetPath);
 
-            // 1. Rig → Humanoid 설정
             ModelImporter importer = AssetImporter.GetAtPath(assetPath) as ModelImporter;
             if (importer == null)
             {
@@ -33,7 +42,6 @@ public class FbxAnimExtractor
             importer.animationType = ModelImporterAnimationType.Human;
             importer.SaveAndReimport();
 
-            // 2. mixamo.com 클립 찾기
             Object[] allAssets = AssetDatabase.LoadAllAssetsAtPath(assetPath);
             AnimationClip sourceClip = null;
             foreach (Object obj in allAssets)
@@ -52,7 +60,6 @@ public class FbxAnimExtractor
                 continue;
             }
 
-            // 3. 클립 복사 후 FBX 이름으로 저장
             AnimationClip newClip = new AnimationClip();
             EditorUtility.CopySerialized(sourceClip, newClip);
             newClip.name = fbxName;
@@ -60,7 +67,6 @@ public class FbxAnimExtractor
             string animPath = $"{folderPath}/{fbxName}.anim";
             AssetDatabase.CreateAsset(newClip, animPath);
 
-            // 4. FBX 삭제
             AssetDatabase.DeleteAsset(assetPath);
 
             Debug.Log($"[FbxAnimExtractor] 완료: {fbxName}.anim 생성, FBX 삭제");

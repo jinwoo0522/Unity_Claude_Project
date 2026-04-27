@@ -5,25 +5,19 @@ using UnityEngine.InputSystem;
 
 public class Player_Move : MonoBehaviour
 {
-    [Header("이동")]
-    public float fWalkSpeed = 3f;
-    public float fRunSpeed  = 6f;
-    [Header("점프")]
-    public float fJumpAmount = 5f;
-    public float fGravity = -9.8f;
-    public float fJumpDelay = 0.1f;
-    [Header("애니메이션")]
-    public float fAnimSpeed = 3f;
-    private bool isSprint = false;
-    private Vector2 MoveDir;
-    private float verticalVelocity = 0f;
+    [SerializeField]
+    protected Player_Data playerData;
 
-    private Vector2 vAnimLerp;
-    private bool isJumpPending = false;
+    protected bool isSprint = false;
+    protected Vector2 MoveDir;
+    protected float verticalVelocity = 0f;
 
-    CharacterController               cct;
-    Animator                          anim;
-    Player_UpperBody                  playerUpper;
+    protected Vector2 vAnimLerp;
+    protected bool isJumpPending = false;
+
+    protected CharacterController               cct;
+    protected Animator                          anim;
+    protected Player_UpperBody                  playerUpper;
 
     void Awake()
     {
@@ -45,7 +39,7 @@ public class Player_Move : MonoBehaviour
         Anim_Manage();
     }
 
-    void RotateWithCamera()
+    protected virtual void RotateWithCamera()
     {
         transform.rotation = Quaternion.Euler(0f, Camera.main.transform.eulerAngles.y, 0f);
     }
@@ -59,37 +53,38 @@ public class Player_Move : MonoBehaviour
     {
         isSprint = value.Get<float>() > 0.5f;
     }
-    void PlayerMove()
+    protected virtual void PlayerMove()
     {
         Vector3 vMoveDir = transform.right * MoveDir.x + transform.forward * MoveDir.y;
 
-        float fSpeed = isSprint ? fRunSpeed : fWalkSpeed;
+        float fSpeed = isSprint ? playerData.fRunSpeed : playerData.fWalkSpeed;
         vMoveDir *= fSpeed;
 
         // 중력 처리
         if (cct.isGrounded && verticalVelocity < 0f)
             verticalVelocity = -2f; // 바닥 감지를 위한 최소 하강값
         else if (!cct.isGrounded)
-            verticalVelocity += fGravity * Time.deltaTime;
+            verticalVelocity += playerData.fGravity * Time.deltaTime;
 
         vMoveDir.y = verticalVelocity;
         cct.Move(vMoveDir * Time.deltaTime);
     }
 
-    void Anim_Manage()
+    protected virtual void Anim_Manage()
     {
         // 이동 중이면 해당 방향/속도로, 멈추면 0으로 보간
         float fTargetScale = isSprint ? 1f : 0.5f;
         Vector2 vTarget = MoveDir.magnitude > 0.1f ? MoveDir.normalized * fTargetScale
         : Vector2.zero;
-        vAnimLerp = Vector2.Lerp(vAnimLerp, vTarget, Time.deltaTime * fAnimSpeed);
+        vAnimLerp = Vector2.Lerp(vAnimLerp, vTarget, Time.deltaTime * playerData.fAnimSpeed);
 
         anim.SetFloat("MoveX", vAnimLerp.x);
         anim.SetFloat("MoveZ", vAnimLerp.y);
+        anim.SetBool("IsMove", vTarget == Vector2.zero ? false : true);
         anim.SetBool("IsGrounded", cct.isGrounded && !isJumpPending);
     }
 
-    void PlayerJump()
+    protected virtual void PlayerJump()
     {
         if (playerUpper != null && playerUpper.IsHit) return;
         if (cct.isGrounded && !isJumpPending)
@@ -102,8 +97,8 @@ public class Player_Move : MonoBehaviour
 
     IEnumerator JumpDelay()
     {
-        yield return new WaitForSeconds(fJumpDelay);
-        verticalVelocity = fJumpAmount;
+        yield return new WaitForSeconds(playerData.fJumpDelay);
+        verticalVelocity = playerData.fJumpAmount;
         isJumpPending = false;
     }
 
