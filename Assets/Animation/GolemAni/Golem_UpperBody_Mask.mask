@@ -6,14 +6,10 @@ AvatarMask:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Player_UpperBody_Mask
+  m_Name: Golem_UpperBody_Mask
   m_Mask: 00000000010000000100000000000000000000000100000001000000010000000100000001000000010000000100000001000000
   m_Elements:
   - m_Path: 
-    m_Weight: 1
-  - m_Path: Cloak
-    m_Weight: 1
-  - m_Path: Magician_RIO
     m_Weight: 1
   - m_Path: root
     m_Weight: 1
@@ -136,4 +132,14 @@ AvatarMask:
   - m_Path: root/root.x/thigh_stretch.r/leg_stretch.r/leg_twist.r
     m_Weight: 1
   - m_Path: root/root.x/thigh_stretch.r/thigh_twist.r
+    m_Weight: 1
+  - m_Path: Tors
+    m_Weight: 1
+  - m_Path: Tors.002
+    m_Weight: 1
+  - m_Path: Tors.003
+    m_Weight: 1
+  - m_Path: Tors.004
+    m_Weight: 1
+  - m_Path: Tors.005
     m_Weight: 1

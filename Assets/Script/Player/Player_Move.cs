@@ -1,9 +1,9 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Unity.Netcode;
 
-
-public class Player_Move : MonoBehaviour
+public class Player_Move : NetworkBehaviour
 {
     [SerializeField]
     protected Player_Data playerData;
@@ -18,6 +18,10 @@ public class Player_Move : MonoBehaviour
     protected CharacterController               cct;
     protected Animator                          anim;
     protected Player_UpperBody                  playerUpper;
+
+    NetworkVariable<int> test = new NetworkVariable<int>(0 
+    , NetworkVariableReadPermission.Everyone, 
+    NetworkVariableWritePermission.Server);
 
     void Awake()
     {
@@ -34,6 +38,7 @@ public class Player_Move : MonoBehaviour
 
     void Update()
     {
+        if(IsOwner == false) return;
         RotateWithCamera();
         PlayerMove();
         Anim_Manage();
@@ -55,6 +60,7 @@ public class Player_Move : MonoBehaviour
     }
     protected virtual void PlayerMove()
     {
+
         Vector3 vMoveDir = transform.right * MoveDir.x + transform.forward * MoveDir.y;
 
         float fSpeed = isSprint ? playerData.fRunSpeed : playerData.fWalkSpeed;

@@ -34,7 +34,15 @@
       "mcp__notion__notion-update-page",
       "PowerShell(python --version 2>&1; python3 --version 2>&1; where.exe python 2>&1)",
       "Skill(update-config)",
-      "PowerShell(Get-ItemProperty *)"
+      "PowerShell(Get-ItemProperty *)",
+      "Bash(git -C \"C:/Users/kim05/.claude\" init)",
+      "Bash(git -C \"C:/Users/kim05/.claude\" add CLAUDE.md settings.json skills/ projects/ .gitignore)",
+      "Bash(git -C \"C:/Users/kim05/.claude\" status)",
+      "Bash(git -C \"C:/Users/kim05/.claude\" add skills/)",
+      "Bash(git -C \"C:/Users/kim05/.claude\" -c user.name=\"GiJungSUk\" -c user.email=\"kim05220808@gmail.com\" commit -m \"feat: notion-summary 스킬에 .claude git repo 기반 변경이력 추적 추가\")",
+      "Bash(claude --version)",
+      "Bash(git -C \"C:/Users/kim05/.claude\" add settings.json)",
+      "Bash(git -C \"C:/Users/kim05/.claude\" -c user.name=\"GiJungSUk\" -c user.email=\"kim05220808@gmail.com\" commit -m \"Day7 작업 중 변경사항\")"
     ]
   }
 }
