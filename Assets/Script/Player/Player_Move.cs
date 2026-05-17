@@ -25,15 +25,19 @@ public class Player_Move : NetworkBehaviour
 
     void Awake()
     {
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible   = false;
     }
 
     void Start()
     {
+        if(IsOwner == false) return;
+
         cct      = GetComponent<CharacterController>();
         anim     = GetComponentInChildren<Animator>();
         playerUpper = GetComponent<Player_UpperBody>();
+
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible   = false;
+
     }
 
     void Update()

@@ -23,6 +23,6 @@ MonoBehaviour:
   fWalkSpeed: 2
   fRunSpeed: 4
   fAnimSpeed: 3
-  fJumpAmount: 10
+  fJumpAmount: 5
   fGravity: -9.8
   fJumpDelay: 0.1

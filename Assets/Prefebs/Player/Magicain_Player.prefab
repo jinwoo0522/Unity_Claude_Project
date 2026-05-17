@@ -15,6 +15,8 @@ GameObject:
   - component: {fileID: 6442714420104610010}
   - component: {fileID: 6507041873999971818}
   - component: {fileID: 6868506850384270390}
+  - component: {fileID: 8707130197351642024}
+  - component: {fileID: 4569105646352619157}
   m_Layer: 0
   m_Name: Magicain_Player
   m_TagString: Player
@@ -157,10 +159,70 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8f8ea2147a4d2d409d84253690008f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Magician_UpperBody
+  ShowTopMostFoldoutHeaderGroup: 1
   fAttackExitStart: 0.7
   fHitExitStart: 0.7
   currentSkill: 0
   rightHandBone: {fileID: 1660563736776286475}
+--- !u!114 &8707130197351642024
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7576251448233022070}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2942a90be255067408600d1cbbe380c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Player_NetworkSpawn
+  ShowTopMostFoldoutHeaderGroup: 1
+--- !u!114 &4569105646352619157
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7576251448233022070}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e96cb6065543e43c4a752faaa1468eb1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.Components.NetworkTransform
+  ShowTopMostFoldoutHeaderGroup: 1
+  NetworkTransformExpanded: 0
+  AutoOwnerAuthorityTickOffset: 1
+  PositionInterpolationType: 0
+  RotationInterpolationType: 0
+  ScaleInterpolationType: 0
+  PositionLerpSmoothing: 1
+  PositionMaxInterpolationTime: 0.1
+  RotationLerpSmoothing: 1
+  RotationMaxInterpolationTime: 0.1
+  ScaleLerpSmoothing: 1
+  ScaleMaxInterpolationTime: 0.1
+  AuthorityMode: 1
+  TickSyncChildren: 0
+  UseUnreliableDeltas: 0
+  SyncPositionX: 1
+  SyncPositionY: 1
+  SyncPositionZ: 1
+  SyncRotAngleX: 1
+  SyncRotAngleY: 1
+  SyncRotAngleZ: 1
+  SyncScaleX: 0
+  SyncScaleY: 0
+  SyncScaleZ: 0
+  PositionThreshold: 0.001
+  RotAngleThreshold: 0.01
+  ScaleThreshold: 0.01
+  UseQuaternionSynchronization: 0
+  UseQuaternionCompression: 0
+  UseHalfFloatPrecision: 0
+  InLocalSpace: 0
+  SwitchTransformSpaceWhenParented: 0
+  Interpolate: 1
+  SlerpPosition: 0
 --- !u!1001 &8869774581937780488
 PrefabInstance:
   m_ObjectHideFlags: 0
