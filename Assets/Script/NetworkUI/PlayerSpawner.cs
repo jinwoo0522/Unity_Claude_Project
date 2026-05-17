@@ -24,23 +24,37 @@ public class PlayerSpawner : NetworkBehaviour
     [SerializeField]
     CinemachineCamera PlayerCamera;
 
-    void Start()
+
+    public override void OnNetworkSpawn()
     {
+        Debug.Log($" : 버튼 연결 전");
+
+        GameObject parent =Golem_Btn.GetComponent<Transform>().parent.gameObject;
+
         Magician_Btn.onClick.AddListener(() =>
-         RequestSpawnPlayerServerRpc(PLAYER_INDEX.MAGICIAN));
+        {
+             RequestSpawnPlayerServerRpc(PLAYER_INDEX.MAGICIAN);
+             parent.SetActive(false);
+        });
 
         Golem_Btn.onClick.AddListener(() =>
-         RequestSpawnPlayerServerRpc(PLAYER_INDEX.GOLEM));
+        {
+             RequestSpawnPlayerServerRpc(PLAYER_INDEX.GOLEM);
+             parent.SetActive(false);
+        });
+
+        Debug.Log($" : 버튼 연결 후"); 
     }
 
     void ChoicePlayer(ulong clientID , PLAYER_INDEX index)
     {
-        if(IsClient == false)
+        if(IsServer == false)
             return;
         
         GameObject Player = Instantiate(
         PlayerPrefebs[(int)index], 
-        SpawnPoints[(int)index]);
+        SpawnPoints[(int)index].position,
+        SpawnPoints[(int)index].rotation);
 
         if(Player == null)
         {
@@ -50,16 +64,14 @@ public class PlayerSpawner : NetworkBehaviour
 
         Debug.Log($"{clientID} : 플레이어 프리펩 생성 성공");
 
-        PlayerCamera.Target.TrackingTarget = Player.GetComponent<Transform>();
-
+        //해당 객체의 주인을 받아온 클라 id로 바꾸는 것
         Player.GetComponent<NetworkObject>().SpawnAsPlayerObject(clientID);
-
-        Golem_Btn.GetComponent<Transform>().parent.gameObject.SetActive(false);
     }
 
     [ServerRpc(RequireOwnership = false)]
     private void RequestSpawnPlayerServerRpc(PLAYER_INDEX characterIndex, ServerRpcParams rpcParams = default)
     {
+        Debug.Log($"{NetworkManager.Singleton.LocalClientId} : 플레이어 생성 버튼 호출!");
     // 이 RPC를 호출한 클라이언트의 ID
         ulong clientId = rpcParams.Receive.SenderClientId;
         ChoicePlayer(clientId, characterIndex);

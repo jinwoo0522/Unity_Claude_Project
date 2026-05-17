@@ -1,6 +1,6 @@
 using UnityEngine;
-
-public abstract class Player_UpperBody : MonoBehaviour
+using Unity.Netcode;
+public abstract class Player_UpperBody : NetworkBehaviour
 {
     [Header("공격")]
     public float fAttackExitStart = 0.7f;
@@ -14,7 +14,7 @@ public abstract class Player_UpperBody : MonoBehaviour
     private float fAccLerpTime;
     private UpperState state;
 
-    protected virtual void Start()
+    public override void OnNetworkSpawn()
     {
         anim = GetComponentInChildren<Animator>();
         anim.SetLayerWeight(UpperBodyLayer, 0f);
@@ -22,6 +22,8 @@ public abstract class Player_UpperBody : MonoBehaviour
 
     void Update()
     {
+        if(IsOwner == false) return;
+        
         if (anim.GetLayerWeight(UpperBodyLayer) <= 0f) return;
 
         AnimatorStateInfo info = anim.GetCurrentAnimatorStateInfo(UpperBodyLayer);
