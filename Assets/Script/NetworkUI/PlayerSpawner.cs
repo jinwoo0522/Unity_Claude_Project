@@ -29,6 +29,8 @@ public class PlayerSpawner : NetworkBehaviour
     {
         Debug.Log($" : 버튼 연결 전");
 
+        if (!IsClient) return;
+
         GameObject parent =Golem_Btn.GetComponent<Transform>().parent.gameObject;
 
         Magician_Btn.onClick.AddListener(() =>
@@ -50,6 +52,12 @@ public class PlayerSpawner : NetworkBehaviour
     {
         if(IsServer == false)
             return;
+
+        if (NetworkManager.Singleton.ConnectedClients[clientID].PlayerObject != null)
+        {
+            Debug.Log($"{clientID} : 이미 플레이어가 있음");
+            return;
+        }
         
         GameObject Player = Instantiate(
         PlayerPrefebs[(int)index], 

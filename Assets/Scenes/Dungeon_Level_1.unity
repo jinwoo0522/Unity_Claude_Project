@@ -58491,6 +58491,7 @@ GameObject:
   - component: {fileID: 1335234832}
   - component: {fileID: 1335234835}
   - component: {fileID: 1335234837}
+  - component: {fileID: 1335234838}
   m_Layer: 0
   m_Name: Camera
   m_TagString: MainCamera
@@ -58648,6 +58649,19 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
   CustomBlends: {fileID: 0}
+--- !u!114 &1335234838
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1335234831}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a83bf3861c95e8e4a8cb112304fc957e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::RegistCamera
+  cameraTag: 0
 --- !u!1001 &1337785472
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -69700,6 +69714,7 @@ GameObject:
   - component: {fileID: 1606784511}
   - component: {fileID: 1606784513}
   - component: {fileID: 1606784509}
+  - component: {fileID: 1606784514}
   m_Layer: 0
   m_Name: Player Camera
   m_TagString: MainCamera
@@ -69932,6 +69947,19 @@ MonoBehaviour:
     NearLimit: 5
     FarLimit: 30
     MaxQualityBoost: 0.2
+--- !u!114 &1606784514
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1606784504}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a6ea5a516ae38fd4b8cbc85a1bf967f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::RegistChinemachine
+  cinemachineTag: 0
 --- !u!1001 &1606945609
 PrefabInstance:
   m_ObjectHideFlags: 0
