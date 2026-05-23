@@ -19,20 +19,6 @@ public class NetworkBtn : MonoBehaviour
         _ServerBtn?.onClick.AddListener(() => NetworkManager.Singleton.StartServer());
         _ClientBtn?.onClick.AddListener(() => NetworkManager.Singleton.StartClient());
         
-        Button[] btns = {_HostBtn ,_ServerBtn, _ClientBtn };
-        AddEvent_SceneChange(btns);
-    }
-
-    void AddEvent_SceneChange(Button[] btns)
-    {
-        foreach(var btn in btns)
-        {
-            btn.onClick.AddListener(()
-            => NetworkManager.Singleton.SceneManager.LoadScene(SceneName , 
-            UnityEngine.SceneManagement.LoadSceneMode.Single));
-            // single -> 전 씬 삭제 , additvie -> 전 씬 유지
-        }
-
     }
 
 }
