@@ -1,3 +1,4 @@
+using Unity.Netcode;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -9,10 +10,23 @@ public class Magician_UpperBody : Player_UpperBody
     [SerializeField]
     private Transform rightHandBone;
 
-    public override void NormalAttack()
+    public override void OnFireSkill()
     {
-        if (SkillPool.Instance == null) return;
+        if(IsOwner == true)
+            NormalAttack_ServerRpc();
+    }
+    
+
+    [ServerRpc]
+    public override void NormalAttack_ServerRpc()
+    {
+        if (GameManager.Instance.skillPool == null)
+        {
+            GameManager.Instance.DebugMessage<Magician_UpperBody>("스킬 풀 NULL");
+            return;
+        } 
         Vector3 pos = rightHandBone != null ? rightHandBone.position : transform.position;
-        SkillPool.Instance.Get(currentSkill, pos, transform.forward, this.GameObject());
+        GameManager.Instance.skillPool.
+        UseSkill(currentSkill, pos, transform.forward, GetComponent<NetworkObject>().OwnerClientId);
     }
 }

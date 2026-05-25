@@ -1,0 +1,90 @@
+using System;
+using System.Collections.Generic;
+using Unity.Netcode;
+using UnityEngine.Pool;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+
+// SkillType을 키로 Skill을 풀링 관리하는 싱글턴
+public class SkillPool
+{
+    private List<SkillData> SkillDatas = new List<SkillData>();
+    private Dictionary<SkillType , PooledHandler> SkillPools
+     = new Dictionary<SkillType , PooledHandler>(); 
+    private int max_Size;
+    private int min_Size;
+
+    public SkillPool(int min , int max)
+    {
+        min_Size = min;
+        max_Size = max;
+
+        Init();
+    }
+
+    private void ResourceLoad()
+    {
+        SkillData skill = Resources.Load<SkillData>("Data/SkillData/ElectricSkillData");
+        if(skill == null)
+        {
+            GameManager.Instance.DebugMessage<SkillPool>("스킬 NULL");
+            return;
+        }
+        SkillDatas.Add(skill); 
+
+    }
+
+    private void Init()
+    {
+        ResourceLoad();
+
+        int enumLength = System.Enum.GetValues(typeof(SkillType)).Length;
+
+        for(int i = 0 ; i < enumLength ; i++)
+        {
+            PooledHandler handle = new PooledHandler(SkillDatas[i].prefab ,min_Size , max_Size);
+            SkillPools.Add((SkillType)i , handle);
+
+            NetworkManager.Singleton.PrefabHandler.
+            AddHandler(SkillDatas[i].prefab, handle);
+        }
+
+        NetworkManager.Singleton.OnClientStarted += ClientStart;
+         
+    }
+    
+    public void UseSkill(SkillType type, Vector3 pos, Vector3 dir, ulong clinetID)
+    {
+        Debug.Log("스킬 사용!");
+        SkillData skilldata = SkillDatas[(int)type];
+
+        // NGO가 스폰 → 핸들러 Instantiate(풀에서 Get)를 가로채서 호출함
+        var netObj = NetworkManager.Singleton.SpawnManager.InstantiateAndSpawn(
+            SkillDatas[(int)type].prefab.GetComponent<NetworkObject>(),
+            ownerClientId: clinetID,
+            position: pos,
+            rotation: Quaternion.LookRotation(dir)
+        );
+
+        netObj.GetComponent<SkillProjectile>().Init(type, skilldata, pos, dir, clinetID);
+    }
+
+    public void PreCreate(int count)
+    {
+        foreach(var skillpool in SkillPools)
+        {
+            skillpool.Value.Prewarm(count);
+        }
+    }
+
+    void OnSceneLoaded(string sceneName, LoadSceneMode mode,
+                   List<ulong> clientsCompleted, List<ulong> clientsTimedOut)
+    {
+        PreCreate(30);
+    }
+
+    void ClientStart()
+    {
+       NetworkManager.Singleton.SceneManager.OnLoadEventCompleted += OnSceneLoaded; 
+    }
+}

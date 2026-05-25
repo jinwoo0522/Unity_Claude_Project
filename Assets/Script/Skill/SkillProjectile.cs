@@ -1,3 +1,4 @@
+using Unity.Netcode;
 using UnityEngine;
 
 // 직선 발사체 스킬 — 이동, 파티클 이펙트 전환, 풀 반환 담당
@@ -14,9 +15,9 @@ public class SkillProjectile : Skill
     private ParticleSystem hitParticle;   // hitEffect의 파티클 시스템 캐시
 
     // 발사체 전용 초기화 — 방향/속도 설정 후 base 호출
-    public override void Init(SkillType type, SkillData data, Vector3 position, Vector3 direction, GameObject owner)
+    public override void Init(SkillType type, SkillData data, Vector3 position, Vector3 direction, ulong clinetID)
     {
-        base.Init(type, data, position, direction, owner);
+        base.Init(type, data, position, direction, clinetID);
         vMoveDir      = direction.normalized;
         fCurrentSpeed = data.fSpeed;
     }
@@ -26,9 +27,11 @@ public class SkillProjectile : Skill
     {
         base.OnEnable();
         if (Data == null) return;
+
         fElapsed    = 0f;
         fHitElapsed = 0f;
         hitParticle = hitEffect.GetComponent<ParticleSystem>();
+
         projectileEffect.SetActive(true);
         hitEffect.SetActive(false);
     }
@@ -50,7 +53,10 @@ public class SkillProjectile : Skill
             // 히트 이펙트 파티클 종료 감시 (첫 프레임 레이스 방지: 0.05s 후부터 체크)
             fHitElapsed += Time.deltaTime;
             if (fHitElapsed > 0.05f && hitParticle != null && !hitParticle.IsAlive(true))
-                SkillPool.Instance.Return(this);
+              {
+                if (!IsServer) return;
+                gameObject.GetComponent<NetworkObject>().Despawn();
+              }
         }
     }
 

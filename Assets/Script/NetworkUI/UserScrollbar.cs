@@ -52,6 +52,9 @@ public class UserScrollbar : NetworkBehaviour
              UserCountUI.text = $"{net_uiCount.Value} / 10";
         };
 
+        if(IsServer)
+            net_uiCount.Value = NetworkManager.Singleton.ConnectedClientsList.Count;
+
     }
     public void AddUser(NetworkManager nm, ConnectionEventData data)
     {
@@ -62,6 +65,7 @@ public class UserScrollbar : NetworkBehaviour
 
         if(IsServer == true)
         {
+            net_uiCount.Value = nm.ConnectedClientsList.Count;
             CreateTexts_ClientRpc();
         }
     }
@@ -89,8 +93,7 @@ public class UserScrollbar : NetworkBehaviour
     
             Debug.Log("텍스트 생성");
         }
-
-        net_uiCount.Value = index;
+        
         
     }
 
