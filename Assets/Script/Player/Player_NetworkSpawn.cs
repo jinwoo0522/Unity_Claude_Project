@@ -35,16 +35,26 @@ public class Player_NetworkSpawn : NetworkBehaviour
             }
 
             Debug.Log($"{NetworkManager.Singleton.LocalClientId} : 카메라 연결 성공!");
+
             canvas.worldCamera = MainCamera;
             PlayerCamera.Target.TrackingTarget = GetComponent<Transform>();
 
             TextMeshProUGUI Text = ClientText.GetComponent<TextMeshProUGUI>();
             Text.text = $"client : { NetworkManager.Singleton.LocalClientId }"; 
         }
-    
 
+        if(IsServer == true)
+        {
+            UpdateName_ClientRpc($"client : { GetComponent<NetworkObject>().OwnerClientId }");
+        }
     }
 
-    
+    [ClientRpc]
+    void UpdateName_ClientRpc(string strName)
+    {
+        TextMeshProUGUI Text = ClientText.GetComponent<TextMeshProUGUI>();
+        Text.text = strName;
+    }
+
     // Update is called once per frame
 }

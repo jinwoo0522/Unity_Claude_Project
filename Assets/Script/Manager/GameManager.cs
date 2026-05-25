@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
     private Camera PlayerCamera;
 
     public CameraManager cameraManager {get; private set;}
+    public SkillPool skillPool {get; private set;}
     public static GameManager Instance
     {
         get
@@ -36,9 +37,21 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
         }
 
+
+    }
+
+    private void Start()
+    {
         if(cameraManager == null)
             cameraManager = new CameraManager();
 
+        if(skillPool == null)
+            skillPool = new SkillPool(20 , 100);
+    }
+
+    public void DebugMessage<T>(string message)
+    {
+        Debug.Log(typeof(T).Name + ": 디버그 메세지 발생! " + message);
     }
 
 }

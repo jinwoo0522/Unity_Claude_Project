@@ -224,6 +224,7 @@ GameObject:
   - component: {fileID: 4073698129115108413}
   - component: {fileID: 6260658875756805855}
   - component: {fileID: 4675530157904216181}
+  - component: {fileID: 4226320898784612850}
   m_Layer: 0
   m_Name: Canvas
   m_TagString: Untagged
@@ -316,6 +317,18 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &4226320898784612850
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4261412695334374876}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31d8b304c9d25da488200c098d6d5b0c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UI_Billboard
 --- !u!1 &5983181979282885769
 GameObject:
   m_ObjectHideFlags: 0
@@ -460,6 +473,7 @@ GameObject:
   - component: {fileID: 8707130197351642024}
   - component: {fileID: 4569105646352619157}
   - component: {fileID: 4900217680015483059}
+  - component: {fileID: 1017917137168610125}
   m_Layer: 0
   m_Name: Magicain_Player
   m_TagString: Player
@@ -713,6 +727,29 @@ MonoBehaviour:
       Synchronize: 1
       ParameterType: 4
   AnimatorParametersExpanded: 0
+--- !u!136 &1017917137168610125
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7576251448233022070}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.3
+  m_Height: 1.5
+  m_Direction: 1
+  m_Center: {x: 0, y: -0.14, z: 0}
 --- !u!1 &8304582804339889416
 GameObject:
   m_ObjectHideFlags: 0

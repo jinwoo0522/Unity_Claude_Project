@@ -52,10 +52,16 @@ public abstract class Player_UpperBody : NetworkBehaviour
     }
 
     // AnimEventRelay → 애니메이션 이벤트로 호출
-    public void OnFireSkill() => NormalAttack();
+    virtual public void OnFireSkill() => NormalAttack();
 
-    // 자식에서 반드시 재정의 — 캐릭터별 공격 구현
-    public abstract void NormalAttack();
+    // 캐릭터별 공격 구현
+    virtual public void NormalAttack()
+    {
+    }
+    [ServerRpc]
+    virtual public void NormalAttack_ServerRpc()
+    {
+    }
 
     void OnAttack()
     {
