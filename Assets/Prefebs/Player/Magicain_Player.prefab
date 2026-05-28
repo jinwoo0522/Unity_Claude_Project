@@ -473,7 +473,6 @@ GameObject:
   - component: {fileID: 8707130197351642024}
   - component: {fileID: 4569105646352619157}
   - component: {fileID: 4900217680015483059}
-  - component: {fileID: 1017917137168610125}
   m_Layer: 0
   m_Name: Magicain_Player
   m_TagString: Player
@@ -535,7 +534,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
-  GlobalObjectIdHash: 3019987179
+  GlobalObjectIdHash: 2912079774
   InScenePlacedSourceGlobalObjectIdHash: 0
   DeferredDespawnTick: 0
   Ownership: 1
@@ -727,29 +726,6 @@ MonoBehaviour:
       Synchronize: 1
       ParameterType: 4
   AnimatorParametersExpanded: 0
---- !u!136 &1017917137168610125
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7576251448233022070}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.3
-  m_Height: 1.5
-  m_Direction: 1
-  m_Center: {x: 0, y: -0.14, z: 0}
 --- !u!1 &8304582804339889416
 GameObject:
   m_ObjectHideFlags: 0

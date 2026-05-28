@@ -8,7 +8,7 @@ public abstract class Skill : NetworkBehaviour
     public SkillData Data { get; private set; }
 
     protected ulong  ClinetID;
-    protected bool       bHitShown;
+    protected bool   bHitShown;
 
     // 공통 초기화 — SetActive는 SkillPool.Get()에서 호출해 OnEnable 타이밍을 제어
     public virtual void Init(SkillType type, SkillData data, Vector3 position, Vector3 direction, ulong clinetID)
@@ -35,7 +35,7 @@ public abstract class Skill : NetworkBehaviour
     }
 
     // 공통 데미지 계산 — 필요 시 자식에서 오버라이드
-    protected virtual void OnHitEnemy(Collider other)
+    protected virtual void OnHitEnemy(GameObject other)
     {
         // var targetStat = other.GetComponent<Stat>();
         // var ownerStat  = Owner?.GetComponent<Stat>();
