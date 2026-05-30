@@ -604,6 +604,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Stat
   Stat_Data: {fileID: 11400000, guid: 79965e81d4b08054f960f4cb2c0f142e, type: 2}
+  Slider: {fileID: 6322650544270869095}
+  hpSlider: {fileID: 4250055752721901362}
 --- !u!114 &6868506850384270390
 MonoBehaviour:
   m_ObjectHideFlags: 0

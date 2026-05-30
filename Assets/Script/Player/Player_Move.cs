@@ -27,10 +27,6 @@ public class Player_Move : NetworkBehaviour
     protected NetworkAnimator                   net_anim;
     protected Player_UpperBody                  playerUpper;
 
-    NetworkVariable<int> test = new NetworkVariable<int>(0 
-    , NetworkVariableReadPermission.Everyone, 
-    NetworkVariableWritePermission.Server);
-
     public override void OnNetworkSpawn()
     {
         // 이 객체들은 서버에서도 갱신 되어야 하기 때문에 실행해야함

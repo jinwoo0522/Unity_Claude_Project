@@ -441,7 +441,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -0.00000217794}
+  m_AnchoredPosition: {x: 0, y: 0.00088438566}
   m_SizeDelta: {x: 0, y: 1000}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &649634450
@@ -1792,7 +1792,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::UserScrollbar
   ShowTopMostFoldoutHeaderGroup: 1
   StartBtn: {fileID: 1491095281}
-  uiSize: 110
   UserCountText: {fileID: 1135542482}
   SceneName: Dungeon_Level_1
   TextPrefeb: {fileID: 3509151052776128267, guid: bd827e120e6e15b48a90faef27057e5c, type: 3}
@@ -1879,7 +1878,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 649634451}
   m_Direction: 2
   m_Value: 0
-  m_Size: 0.99998635
+  m_Size: 0.9999988
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:

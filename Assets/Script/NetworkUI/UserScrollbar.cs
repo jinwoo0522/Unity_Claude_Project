@@ -8,8 +8,6 @@ public class UserScrollbar : NetworkBehaviour
     [SerializeField]
     private Button StartBtn;
     [SerializeField]
-    private int uiSize = 110;
-    [SerializeField]
     private GameObject UserCountText;
     [SerializeField]
     string SceneName;
@@ -41,11 +39,17 @@ public class UserScrollbar : NetworkBehaviour
     {
         if (NetworkManager.Singleton == null)
             Debug.Log("네트워크 매니저 NULL , UserScrollbar.cs");
+
         NetworkManager.Singleton.OnConnectionEvent += AddUser;
 
         StartBtn.onClick.AddListener(()
-            => NetworkManager.Singleton.SceneManager.LoadScene(SceneName , 
-            UnityEngine.SceneManagement.LoadSceneMode.Single));
+            =>
+        {
+            NetworkManager.Singleton.SceneManager.LoadScene(SceneName , 
+            UnityEngine.SceneManagement.LoadSceneMode.Single);
+            
+            NetworkManager.Singleton.OnConnectionEvent -= AddUser;
+        });
 
         net_uiCount.OnValueChanged += (int pre , int next) =>
         {

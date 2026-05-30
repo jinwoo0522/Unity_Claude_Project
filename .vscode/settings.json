@@ -67,6 +67,6 @@
         "*.sln": "*.csproj",
         "*.slnx": "*.csproj"
     },
-    "dotnet.defaultSolution": "My project.slnx",
+    "dotnet.defaultSolution": "Golem_VS_Magician.slnx",
     "dotnet.enableWorkspaceBasedDevelopment": false
 }

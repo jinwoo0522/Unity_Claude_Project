@@ -4,8 +4,7 @@
         {
             "name": "Attach to Unity",
             "type": "vstuc",
-            "request": "attach",
-            "port": 56004
+            "request": "attach"
         }
-    ]
+     ]
 }

@@ -14,6 +14,8 @@ public class SkillProjectile : Skill
     private float          fHitElapsed;   // 히트 이펙트 활성화 후 경과 시간 (첫 프레임 레이스 방지)
     private ParticleSystem hitParticle;   // hitEffect의 파티클 시스템 캐시
 
+    private float fDamage;
+
     private Vector3 prePos;
 
     private float fRadius;
@@ -25,6 +27,7 @@ public class SkillProjectile : Skill
         vMoveDir      = direction.normalized;
         fCurrentSpeed = data.fSpeed;
         fRadius       = data.fRadius;
+        fDamage       = data.fDamage;
         hitParticle = hitEffect.GetComponent<ParticleSystem>();
     }
 
@@ -67,9 +70,17 @@ public class SkillProjectile : Skill
         {
             if(output.collider.CompareTag("Player"))
             {
-                if(output.collider.GetComponent<NetworkObject>().OwnerClientId 
-                == GetComponent<NetworkObject>().OwnerClientId)
-                return;
+                // 같은 클라의 발사체가 자신에게 데미지를 주는 경우 방지
+                if(output.collider.GetComponent<NetworkObject>().OwnerClientId == GetComponent<NetworkObject>().OwnerClientId)
+                    return;
+
+                Stat targetStat = output.collider.GetComponent<Stat>();
+
+                if(targetStat != null)
+                {
+                    targetStat.pHp = -fDamage;
+                }
+                
             }
             
             OnHit_ClientRpc();
@@ -109,14 +120,6 @@ public class SkillProjectile : Skill
         }
     }
 
-    void OnTriggerEnter(Collider other)
-    {
-        // if (bHitShown) return;
-        // if (other.CompareTag("Player")) return;
-        // OnHitEnemy(other);
-        // ShowHit();
-    }
-
     // 충돌 또는 수명 만료 시 이펙트 전환, 이후 파티클 수명으로 풀 반환 결정
     protected override void ShowHit()
     {
@@ -137,5 +140,6 @@ public class SkillProjectile : Skill
     void DespawnSkill_ServerRpc()
     {
         gameObject.GetComponent<NetworkObject>().Despawn();
+        
     }
 }

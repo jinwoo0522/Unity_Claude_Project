@@ -1,35 +1,59 @@
+using Unity.Netcode;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class Stat : MonoBehaviour
+public class Stat : NetworkBehaviour
 {
-   [SerializeField]
+    [SerializeField]
     private Entity_Data Stat_Data;
-
-    private float fHp;
-    public float pHp {get => fHp; set
+    [SerializeField]
+    private Slider hpSlider;
+   
+    public float pHp {get => fHp.Value; set
         {
-            float fCurHp = fHp + value;
+            float fCurHp = fHp.Value + value;
             if(fCurHp <= 0)   
                 Die();
 
-            fHp = Mathf.Clamp(fCurHp , 0 , pMaxHp);
+            fHp.Value = Mathf.Clamp(fCurHp , 0 , pMaxHp);
         }}
     public float pDamage {get; private set;}
     public float pResistance {get; private set;}
-    public float pMaxHp{get; private set;}
+    public float pMaxHp{get => fMaxHp.Value; set => fMaxHp.Value = value;}
 
-    void Start()
+    NetworkVariable<float> fHp = new NetworkVariable<float>(0f 
+    , NetworkVariableReadPermission.Everyone, 
+    NetworkVariableWritePermission.Server);
+
+    NetworkVariable<float> fMaxHp = new NetworkVariable<float>(0f 
+    , NetworkVariableReadPermission.Everyone, 
+    NetworkVariableWritePermission.Server);
+
+    public override void OnNetworkSpawn()
     {
+        if (hpSlider == null)
+        {
+            Debug.Log("Slider Null 발생! , Stat.cs");
+            return;
+        }
+
+        fHp.OnValueChanged += (float pre , float next) =>
+        {
+            hpSlider.value = next;
+        };
+
+        fMaxHp.OnValueChanged += (float pre , float next) =>
+        {
+            hpSlider.maxValue = next;
+        };
+
+        hpSlider.maxValue = fMaxHp.Value;
+        hpSlider.value = fHp.Value;
+
         pDamage = Stat_Data.fAttackDamage;
         pResistance = Stat_Data.fResistance;
         pMaxHp = Stat_Data.fMaxHp;
         pHp = Stat_Data.fHp;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     void Die()
