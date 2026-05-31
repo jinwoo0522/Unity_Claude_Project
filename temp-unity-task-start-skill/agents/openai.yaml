@@ -1,7 +1,0 @@
-interface:
-  display_name: "/unity-task-start"
-  short_description: "Start a Unity TASK workflow safely"
-  default_prompt: "Use $unity-task-start to begin a Unity task by reading AGENTS.md and TASK.md, restating requirements, and preparing an approval-gated plan."
-
-policy:
-  allow_implicit_invocation: false
