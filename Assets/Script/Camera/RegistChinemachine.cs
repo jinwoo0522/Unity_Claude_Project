@@ -23,6 +23,7 @@ public class RegistChinemachine : MonoBehaviour
 
     private void OnDestroy()
     {
-        GameManager.Instance.cameraManager.Remove_Cinemachine(cinemachineTag);
+        if (GameManager.Instance != null)
+            GameManager.Instance.cameraManager.Remove_Cinemachine(cinemachineTag);
     }
 }
