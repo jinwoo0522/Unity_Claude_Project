@@ -53,6 +53,8 @@ public abstract class Player_UpperBody : NetworkBehaviour
 
     // AnimEventRelay → 애니메이션 이벤트로 호출
     virtual public void OnFireSkill() => NormalAttack();
+    virtual public void OnAttackHitboxOn() {}
+    virtual public void OnAttackHitboxOff() {}
 
     // 캐릭터별 공격 구현
     virtual public void NormalAttack()

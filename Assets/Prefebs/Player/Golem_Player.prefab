@@ -419,6 +419,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Golem_Move
   ShowTopMostFoldoutHeaderGroup: 1
   playerData: {fileID: 11400000, guid: 7859729af18cf0643b19b95b32aca4cc, type: 2}
+  fKnockbackDecay: 6
 --- !u!114 &675806104163836388
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -434,6 +435,8 @@ MonoBehaviour:
   ShowTopMostFoldoutHeaderGroup: 1
   fAttackExitStart: 0.7
   fHitExitStart: 0.7
+  hitbox: {fileID: 9008650080228964606}
+  fKnockbackStrength: 4
 --- !u!114 &6478216061000630281
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1079,6 +1082,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 7088600385777052897, guid: 0b61d617ad0871e44acc43a49be710cf, type: 3}
       insertIndex: -1
       addedObject: {fileID: 8589641532457174480}
+    - targetCorrespondingSourceObject: {fileID: 7088600385777052897, guid: 0b61d617ad0871e44acc43a49be710cf, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8435650462897315164}
   m_SourcePrefab: {fileID: 100100000, guid: 0b61d617ad0871e44acc43a49be710cf, type: 3}
 --- !u!1 &1469450630138063814 stripped
 GameObject:
@@ -1101,6 +1107,18 @@ MonoBehaviour:
   trailRenderer_1: {fileID: 3525005583933164229}
   trailRenderer_2: {fileID: 1566994309705463754}
   trailRenderer_3: {fileID: 304910233856320595}
+--- !u!114 &8435650462897315164
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1469450630138063814}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0792060dff022e64f96df6c1f81d77e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AnimEventRelay
 --- !u!4 &2247112855778898300 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7571699769823753819, guid: 0b61d617ad0871e44acc43a49be710cf, type: 3}
@@ -1116,3 +1134,14 @@ Animator:
   m_CorrespondingSourceObject: {fileID: 4608369919061240865, guid: 0b61d617ad0871e44acc43a49be710cf, type: 3}
   m_PrefabInstance: {fileID: 8519488806387861287}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &9008650080228964606 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 810201989785665497, guid: 0b61d617ad0871e44acc43a49be710cf, type: 3}
+  m_PrefabInstance: {fileID: 8519488806387861287}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65fb65dbb19bd4042b54f1371790c175, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Golem_AttackHitbox

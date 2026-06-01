@@ -534,7 +534,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
-  GlobalObjectIdHash: 2912079774
+  GlobalObjectIdHash: 3019987179
   InScenePlacedSourceGlobalObjectIdHash: 0
   DeferredDespawnTick: 0
   Ownership: 1
@@ -561,6 +561,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Magician_Move
   ShowTopMostFoldoutHeaderGroup: 1
   playerData: {fileID: 11400000, guid: 79965e81d4b08054f960f4cb2c0f142e, type: 2}
+  fKnockbackDecay: 6
 --- !u!114 &6442714420104610010
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -603,8 +604,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 048b225c255bfd5448c4c4ea581638ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Stat
+  ShowTopMostFoldoutHeaderGroup: 1
   Stat_Data: {fileID: 11400000, guid: 79965e81d4b08054f960f4cb2c0f142e, type: 2}
-  Slider: {fileID: 6322650544270869095}
   hpSlider: {fileID: 4250055752721901362}
 --- !u!114 &6868506850384270390
 MonoBehaviour:
