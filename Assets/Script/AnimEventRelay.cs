@@ -14,4 +14,14 @@ public class AnimEventRelay : MonoBehaviour
     {
         playerUpper?.OnFireSkill();
     }
+
+    void OnGolemAttackStart()
+    {
+        playerUpper?.OnAttackHitboxOn();
+    }
+
+    void OnGolemAttackEnd()
+    {
+        playerUpper?.OnAttackHitboxOff();
+    }
 }

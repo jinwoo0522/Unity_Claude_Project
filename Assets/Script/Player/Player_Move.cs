@@ -20,6 +20,9 @@ public class Player_Move : NetworkBehaviour
     protected bool isJumpPending = false;
     protected float fCamYaw;
 
+    [SerializeField] private float fKnockbackDecay = 5f;
+    protected Vector3 vKnockback;
+
 
     protected CharacterController               cct;
     protected Animator                          anim;
@@ -105,7 +108,16 @@ public class Player_Move : NetworkBehaviour
             verticalVelocity += playerData.fGravity * Time.deltaTime;
 
         vMoveDir.y = verticalVelocity;
+        vMoveDir.x += vKnockback.x;
+        vMoveDir.z += vKnockback.z;
         cct.Move(vMoveDir * Time.deltaTime);
+        vKnockback = Vector3.MoveTowards(vKnockback, Vector3.zero, fKnockbackDecay * Time.deltaTime);
+    }
+
+    public void ApplyKnockback(Vector3 dir, float strength)
+    {
+        dir.y = 0f;
+        vKnockback = dir.normalized * strength;
     }
 
     protected virtual void AnimManage()
