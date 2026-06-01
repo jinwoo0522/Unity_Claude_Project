@@ -14,6 +14,7 @@
 *.csproj
 *.sln
 *.slnx
+*.lscache
 
 # 서드파티 에셋 (에셋스토어 구매 에셋 제외)
 Assets/Fab_content/
