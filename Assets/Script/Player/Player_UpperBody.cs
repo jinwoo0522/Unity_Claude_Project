@@ -61,7 +61,7 @@ public abstract class Player_UpperBody : NetworkBehaviour
     {
     }
     [ServerRpc]
-    virtual public void NormalAttack_ServerRpc()
+    virtual public void NormalAttack_ServerRpc(Vector3 pos = default, Vector3 dir = default)
     {
     }
 
