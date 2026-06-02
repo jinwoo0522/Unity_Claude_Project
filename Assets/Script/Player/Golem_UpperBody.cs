@@ -21,10 +21,9 @@ public class Golem_UpperBody : Player_UpperBody
             return;
         if (tgt.NetworkObjectId == NetworkObjectId) return;
 
-        Stat targetStat = tgt.GetComponent<Stat>();
-        if (targetStat == null) return;
-
-        targetStat.pHp = -GetComponent<Stat>().pDamage;
+        Player_UpperBody targetUpper = tgt.GetComponent<Player_UpperBody>();
+        if (targetUpper == null) return;
+        targetUpper.TakeHit(GetComponent<Stat>().pDamage);
 
         Vector3 dir = tgt.transform.position - transform.position;
         dir.y = 0f;

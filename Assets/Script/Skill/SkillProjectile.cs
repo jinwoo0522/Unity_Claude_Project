@@ -80,12 +80,8 @@ public class SkillProjectile : Skill
                 if(output.collider.GetComponent<NetworkObject>().OwnerClientId == GetComponent<NetworkObject>().OwnerClientId)
                     return;
 
-                Stat targetStat = output.collider.GetComponent<Stat>();
-
-                if(targetStat != null)
-                {
-                    targetStat.pHp = -fDamage;
-                }
+                Player_UpperBody targetUpper = output.collider.GetComponent<Player_UpperBody>();
+                if (targetUpper != null) targetUpper.TakeHit(fDamage);
                 
             }
             

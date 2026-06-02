@@ -17,7 +17,9 @@ public class Player_Move : NetworkBehaviour
     // 아래 값은 서버에서는 ServerRpc를 통해 값을 바꾸지만 클라는 값이 안바뀌어있음
     protected float verticalVelocity = 0f;
     protected Vector2 vAnimLerp;
-    protected bool isJumpPending = false;
+    // 착지 기반 점프 게이트 — 서버가 착지 시점에만 false로 리셋
+    protected NetworkVariable<bool> net_isJumpPending = new NetworkVariable<bool>(
+        false, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server);
     protected float fCamYaw;
 
     [SerializeField] private float fKnockbackDecay = 5f;
@@ -131,33 +133,34 @@ public class Player_Move : NetworkBehaviour
         anim.SetFloat("MoveX", vAnimLerp.x);
         anim.SetFloat("MoveZ", vAnimLerp.y);
         anim.SetBool("IsMove", vTarget == Vector2.zero ? false : true);
-        anim.SetBool("IsGrounded", cct.isGrounded && !isJumpPending);
+        anim.SetBool("IsGrounded", cct.isGrounded && !net_isJumpPending.Value);
     }
 
     protected virtual void PlayerJump()
     {
         if (playerUpper != null && playerUpper.IsHit) return;
-
-        Debug.Log($"점프 1단 예외처리 isGrounded{ cct.isGrounded } isJump {isJumpPending}" );
-
-        if (!isJumpPending)
-        {
-            Debug.Log("점프 2단 예외처리");
-
-            net_anim.SetTrigger("Jump");
-            isJumpPending = true;
-
-            SubmitJumpPending_ServerRpc(isJumpPending);
-            StartCoroutine(JumpDelay());
-        }
+        if (net_isJumpPending.Value) return;       // 착지 전 재점프 차단
+        net_anim.SetTrigger("Jump");               // 오너 즉시 애니(반응성 유지)
+        Jump_ServerRpc();                          // 서버 검증·적용 요청
     }
 
-    IEnumerator JumpDelay()
+    [ServerRpc]
+    void Jump_ServerRpc()
+    {
+        if (net_isJumpPending.Value) return;
+        if (!cct.isGrounded) return;               // 서버 검증: 클라 입력 불신
+        net_isJumpPending.Value = true;
+        StartCoroutine(JumpRoutine());
+    }
+
+    // 착지 시점에만 게이트를 해제 — 공중 연속 점프 방지
+    IEnumerator JumpRoutine()
     {
         yield return new WaitForSeconds(playerData.fJumpDelay);
-        SubmitVelocity_ServerRpc(playerData.fJumpAmount);
-        SubmitJumpPending_ServerRpc(false);
-        isJumpPending = false;
+        verticalVelocity = playerData.fJumpAmount;          // 서버에서 직접 적용
+        yield return new WaitUntil(() => !cct.isGrounded);  // 이륙 대기
+        yield return new WaitUntil(() => cct.isGrounded);   // 착지 대기
+        net_isJumpPending.Value = false;                    // 착지 시점에만 해제
     }
 
     [ServerRpc]
@@ -167,21 +170,9 @@ public class Player_Move : NetworkBehaviour
     }
 
     [ServerRpc]
-    void SubmitVelocity_ServerRpc(float Input)
-    {
-        verticalVelocity = Input;
-    }
-
-    [ServerRpc]
     void SubmitMoveInput_ServerRpc(Vector2 _Input)
     {
         MoveDir = _Input;
-    }
-
-    [ServerRpc]
-    void SubmitJumpPending_ServerRpc(bool _Input)
-    {
-        isJumpPending = _Input;
     }
 
     [ServerRpc]
