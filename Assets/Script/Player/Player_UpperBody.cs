@@ -74,11 +74,26 @@ public abstract class Player_UpperBody : NetworkBehaviour
             StartUpper("UpperAttack", UpperState.Attacking);
     }
 
-    [ContextMenu("TakeHit 디버그")]
-    public void TakeHit()
+    // 서버 전용 — 피격: 체력 감소 + 피격 애니메이션(진행 중 공격 클립 대체)
+    public void TakeHit(float damage)
     {
-        if (IsHit) return;
-        StartUpper("UpperHit", UpperState.Hit);
+        if (!IsServer) return;
+
+        GetComponent<Stat>().pHp = -damage;          // 체력 감소(서버 권위)
+
+        state = UpperState.Hit;
+        net_AccLerpTime.Value = 1f;
+        net_AnimWeight.Value = 1f;                    // 상부 레이어 활성(전 클라 동기화)
+        anim.Play("UpperHit", UpperBodyLayer, 0f);    // 서버 즉시 재생
+        PlayHitAnim_ClientRpc();                       // 전 클라 동기화
+    }
+
+    [ClientRpc]
+    void PlayHitAnim_ClientRpc()
+    {
+        state = UpperState.Hit;          // 오너 IsHit 게이트 즉시 true
+        if (IsServer) return;            // 호스트는 이미 재생
+        anim.Play("UpperHit", UpperBodyLayer, 0f);
     }
 
     void StartUpper(string stateName, UpperState nextState)
