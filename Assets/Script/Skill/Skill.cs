@@ -20,10 +20,9 @@ public abstract class Skill : NetworkBehaviour
         transform.forward  = direction.normalized;
     }
 
-    // 풀 생성 시(Data=null)에도 호출되므로 null 가드 필수
+    // 풀 생성·재사용 시 공통 리셋 — bHitShown은 Data 없이도 항상 초기화
     protected virtual void OnEnable()
     {
-        if (Data == null) return;
         bHitShown = false;
     }
 

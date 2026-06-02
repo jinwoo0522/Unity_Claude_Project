@@ -20,7 +20,14 @@ public class SkillProjectile : Skill
 
     private float fRadius;
 
-    // 발사체 전용 초기화 — 방향/속도 설정 후 base 호출
+    // Awake에서 캐싱 — 서버뿐 아니라 모든 피어에서 OnEnable 전에 1회 실행되므로,
+    // Init(서버 전용)을 기다리지 않아도 hitParticle이 항상 유효
+    void Awake()
+    {
+        hitParticle = hitEffect.GetComponent<ParticleSystem>();
+    }
+
+    // 발사체 전용 초기화 — 방향/속도 설정 후 base 호출 (서버에서만 호출)
     public override void Init(SkillType type, SkillData data, Vector3 position, Vector3 direction, ulong clinetID)
     {
         base.Init(type, data, position, direction, clinetID);
@@ -28,22 +35,21 @@ public class SkillProjectile : Skill
         fCurrentSpeed = data.fSpeed;
         fRadius       = data.fRadius;
         fDamage       = data.fDamage;
-        hitParticle = hitEffect.GetComponent<ParticleSystem>();
     }
 
-    // 재사용 시 발사체 상태 초기화
+    // 재사용 시 발사체 상태 초기화 — Data 여부와 무관하게 항상 리셋
+    // (클라 인스턴스는 Init이 호출되지 않아 Data==null이지만 시각 리셋은 반드시 필요)
     protected override void OnEnable()
     {
         base.OnEnable();
-        if (Data == null) return;
 
         fElapsed    = 0f;
         fHitElapsed = 0f;
-        
+
         prePos = transform.position;
         projectileEffect.SetActive(true);
         hitEffect.SetActive(false);
-        hitParticle.Clear();
+        hitParticle?.Clear();
     }
 
     void Update()
