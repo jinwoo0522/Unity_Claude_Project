@@ -6,10 +6,13 @@ public abstract class Player_UpperBody : NetworkBehaviour
     public float fAttackExitStart = 0.7f;
     [Header("피격")]
     public float fHitExitStart = 0.7f;
-    public bool IsHit => state == UpperState.Hit && anim.GetLayerWeight(UpperBodyLayer) > 0f;
+    public bool IsHit      => state == UpperState.Hit      && anim.GetLayerWeight(UpperBodyLayer) > 0f;
+    // 기본공격 중 여부 — UseSkill_ServerRpc에서 스킬 발동 차단에 사용
+    public bool IsAttacking => state == UpperState.Attacking && anim.GetLayerWeight(UpperBodyLayer) > 0f;
 
     private enum UpperState { Attacking, Hit }
-    private Animator anim;
+    private Animator     anim;
+    private Player_Skill skill;
     private const int UpperBodyLayer = 1;
     private UpperState state;
 
@@ -25,7 +28,8 @@ public abstract class Player_UpperBody : NetworkBehaviour
 
     public override void OnNetworkSpawn()
     {
-        anim = GetComponentInChildren<Animator>();
+        anim  = GetComponentInChildren<Animator>();
+        skill = GetComponent<Player_Skill>();
 
         anim.SetLayerWeight(UpperBodyLayer, net_AnimWeight.Value);
         net_AnimWeight.OnValueChanged = (pre, next) =>
@@ -68,10 +72,11 @@ public abstract class Player_UpperBody : NetworkBehaviour
     void OnAttack()
     {
         if(IsOwner == false)  return;
-        
+
         if (IsHit) return;
+        if (skill != null && skill.IsSkilling) return; // 스킬 중 기본공격 차단
         if (anim.GetLayerWeight(UpperBodyLayer) > 0f) return;
-            StartUpper("UpperAttack", UpperState.Attacking);
+        StartUpper("UpperAttack", UpperState.Attacking);
     }
 
     // 서버 전용 — 피격: 체력 감소 + 피격 애니메이션(진행 중 공격 클립 대체)

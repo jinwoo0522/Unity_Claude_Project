@@ -356,6 +356,7 @@ GameObject:
   - component: {fileID: 5765010421665568576}
   - component: {fileID: 4120633991251001047}
   - component: {fileID: 5528147988313170608}
+  - component: {fileID: 5007854344547407432}
   m_Layer: 0
   m_Name: Golem_Player
   m_TagString: Player
@@ -392,7 +393,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
-  GlobalObjectIdHash: 427886385
+  GlobalObjectIdHash: 3296484378
   InScenePlacedSourceGlobalObjectIdHash: 0
   DeferredDespawnTick: 0
   Ownership: 1
@@ -611,7 +612,26 @@ MonoBehaviour:
       NameHash: 1236215618
       Synchronize: 1
       ParameterType: 4
+    - name: SkillState
+      NameHash: 929763974
+      Synchronize: 1
+      ParameterType: 3
   AnimatorParametersExpanded: 0
+--- !u!114 &5007854344547407432
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4754220212716445872}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e46260708f04b71987479195470876b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Golem_Skill
+  ShowTopMostFoldoutHeaderGroup: 1
+  qSkillData: {fileID: 11400000, guid: 365b5a33ebf6480cb2a9988e8f41c18e, type: 2}
+  mouseSkillData: {fileID: 11400000, guid: 7d181ed0011d4ce68d65d4be397509fe, type: 2}
 --- !u!1 &6995575323198121855
 GameObject:
   m_ObjectHideFlags: 0
@@ -1010,7 +1030,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4608369919061240865, guid: 0b61d617ad0871e44acc43a49be710cf, type: 3}
       propertyPath: m_ApplyRootMotion
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7088600385777052897, guid: 0b61d617ad0871e44acc43a49be710cf, type: 3}
       propertyPath: m_Name
@@ -1022,15 +1042,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7571699769823753819, guid: 0b61d617ad0871e44acc43a49be710cf, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7571699769823753819, guid: 0b61d617ad0871e44acc43a49be710cf, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7571699769823753819, guid: 0b61d617ad0871e44acc43a49be710cf, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7571699769823753819, guid: 0b61d617ad0871e44acc43a49be710cf, type: 3}
       propertyPath: m_LocalPosition.x

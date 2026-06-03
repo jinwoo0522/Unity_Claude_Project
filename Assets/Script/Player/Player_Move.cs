@@ -31,14 +31,16 @@ public class Player_Move : NetworkBehaviour
 
     protected NetworkAnimator                   net_anim;
     protected Player_UpperBody                  playerUpper;
+    private   Player_Skill                      skill;
 
     public override void OnNetworkSpawn()
     {
         // 이 객체들은 서버에서도 갱신 되어야 하기 때문에 실행해야함
-        cct      = GetComponent<CharacterController>();
-        anim     = GetComponentInChildren<Animator>();
-        net_anim = GetComponent<NetworkAnimator>();
+        cct         = GetComponent<CharacterController>();
+        anim        = GetComponentInChildren<Animator>();
+        net_anim    = GetComponent<NetworkAnimator>();
         playerUpper = GetComponent<Player_UpperBody>();
+        skill       = GetComponent<Player_Skill>();
 
         if(IsOwner == false)
             return;
@@ -97,11 +99,16 @@ public class Player_Move : NetworkBehaviour
     //서버가 클라에서 수행한 인풋값을 모르기때문에 인자로 넘겨줘야함
     protected virtual void PlayerMove()
     {
-        
-        Vector3 vMoveDir = transform.right * MoveDir.x + transform.forward * MoveDir.y;
 
-        float fSpeed = isSprint ? playerData.fRunSpeed : playerData.fWalkSpeed;
-        vMoveDir *= fSpeed;
+        // 스킬 중에는 수평 입력 이동 차단 — 루트모션과의 간섭 방지(중력·넉백은 유지)
+        Vector3 vMoveDir = Vector3.zero;
+        if (skill == null || !skill.IsSkilling)
+        {
+            vMoveDir = transform.right * MoveDir.x + transform.forward * MoveDir.y;
+
+            float fSpeed = isSprint ? playerData.fRunSpeed : playerData.fWalkSpeed;
+            vMoveDir *= fSpeed;
+        }
 
         // 중력 처리
         if (cct.isGrounded && verticalVelocity < 0f)
@@ -139,7 +146,8 @@ public class Player_Move : NetworkBehaviour
     protected virtual void PlayerJump()
     {
         if (playerUpper != null && playerUpper.IsHit) return;
-        if (net_isJumpPending.Value) return;       // 착지 전 재점프 차단
+        if (skill != null && skill.IsSkilling) return;  // 스킬 중 점프 차단
+        if (net_isJumpPending.Value) return;            // 착지 전 재점프 차단
         net_anim.SetTrigger("Jump");               // 오너 즉시 애니(반응성 유지)
         Jump_ServerRpc();                          // 서버 검증·적용 요청
     }
