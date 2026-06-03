@@ -473,6 +473,7 @@ GameObject:
   - component: {fileID: 8707130197351642024}
   - component: {fileID: 4569105646352619157}
   - component: {fileID: 4900217680015483059}
+  - component: {fileID: 5546488184616999483}
   m_Layer: 0
   m_Name: Magicain_Player
   m_TagString: Player
@@ -950,6 +951,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0792060dff022e64f96df6c1f81d77e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AnimEventRelay
+--- !u!114 &5546488184616999483
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7576251448233022070}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 88a19844216b41049501f9f4222b7231, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::Magician_Skill
+  qSkillData: {fileID: 11400000, guid: 7824e62328a64f3aaf5818b1c3f1d5e1, type: 2}
+  mouseSkillData: {fileID: 11400000, guid: 477143663ce74237b977f2909193eceb, type: 2}
 --- !u!4 &8979471227274776803 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 9547c738ea76d0441bd4c030b5fe9a7e, type: 3}
