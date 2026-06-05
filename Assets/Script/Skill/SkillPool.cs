@@ -40,6 +40,14 @@ public class SkillPool
         }
         SkillDatas.Add(Magician_Q_Skill); 
 
+        SkillData Golem_Mouse_Skill = Resources.Load<SkillData>("Data/SkillData/Golem_Mouse_Skill");
+        if(Golem_Mouse_Skill == null)
+        {
+            GameManager.Instance.DebugMessage<SkillPool>("Golem_Mouse_Skill 스킬 NULL");
+            return;
+        }
+        SkillDatas.Add(Golem_Mouse_Skill); 
+
     }
 
     private void Init()
