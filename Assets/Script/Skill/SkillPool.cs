@@ -27,10 +27,26 @@ public class SkillPool
         SkillData skill = Resources.Load<SkillData>("Data/SkillData/ElectricSkillData");
         if(skill == null)
         {
-            GameManager.Instance.DebugMessage<SkillPool>("스킬 NULL");
+            GameManager.Instance.DebugMessage<SkillPool>("ElectricSkill 스킬 NULL");
             return;
         }
         SkillDatas.Add(skill); 
+
+        SkillData Magician_Q_Skill = Resources.Load<SkillData>("Data/SkillData/Magician_Q_Skill");
+        if(Magician_Q_Skill == null)
+        {
+            GameManager.Instance.DebugMessage<SkillPool>("Magician_Q_Skill 스킬 NULL");
+            return;
+        }
+        SkillDatas.Add(Magician_Q_Skill); 
+
+        SkillData Golem_Mouse_Skill = Resources.Load<SkillData>("Data/SkillData/Golem_Mouse_Skill");
+        if(Golem_Mouse_Skill == null)
+        {
+            GameManager.Instance.DebugMessage<SkillPool>("Golem_Mouse_Skill 스킬 NULL");
+            return;
+        }
+        SkillDatas.Add(Golem_Mouse_Skill); 
 
     }
 
@@ -53,10 +69,16 @@ public class SkillPool
          
     }
     
-    public void UseSkill(SkillType type, Vector3 pos, Vector3 dir, ulong clinetID)
+    public SkillData UseSkill(SkillType type, Vector3 pos, Vector3 dir, ulong clinetID)
     {
         Debug.Log("스킬 사용!");
         SkillData skilldata = SkillDatas[(int)type];
+
+        if(skilldata == null)
+        {
+            GameManager.Instance.DebugMessage<SkillPool>("스킬 데이터 NULL");
+            return null;
+        }
 
         // NGO가 스폰 → 핸들러 Instantiate(풀에서 Get)를 가로채서 호출함
         var netObj = NetworkManager.Singleton.SpawnManager.InstantiateAndSpawn(
@@ -67,6 +89,7 @@ public class SkillPool
         );
 
         netObj.GetComponent<SkillProjectile>().Init(type, skilldata, pos, dir, clinetID);
+        return skilldata;
     }
 
     public void PreCreate(int count)

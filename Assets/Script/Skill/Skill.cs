@@ -34,12 +34,21 @@ public abstract class Skill : NetworkBehaviour
     }
 
     // 공통 데미지 계산 — 필요 시 자식에서 오버라이드
-    protected virtual void OnHitEnemy(GameObject other)
+    protected virtual void OnHitEnemy(Collider output , float fDamage)
     {
-        // var targetStat = other.GetComponent<Stat>();
-        // var ownerStat  = Owner?.GetComponent<Stat>();
-        // if (targetStat == null) return;
-        // float dmg = Data.fDamage + (ownerStat != null ? ownerStat.pDamage : 0f);
-        // targetStat.pHp = -dmg;
+        if(output.CompareTag("Player"))
+        {
+            // 같은 클라의 발사체가 자신에게 데미지를 주는 경우 방지
+            if(output.GetComponent<NetworkObject>().OwnerClientId == GetComponent<NetworkObject>().OwnerClientId)
+                return;
+            Player_UpperBody targetUpper = output.GetComponent<Player_UpperBody>();
+            if (targetUpper != null) targetUpper.TakeHit(fDamage);
+        }
+    }
+
+    [ServerRpc]
+    protected virtual void DespawnSkill_ServerRpc()
+    {
+        gameObject.GetComponent<NetworkObject>().Despawn();
     }
 }

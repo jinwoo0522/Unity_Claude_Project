@@ -11,14 +11,14 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6421ef99e0d356d4b997246a50f612c8, type: 3}
   m_Name: Magician_Q_Skill
-  m_EditorClassIdentifier:
-  strName: "마법사 Q 스킬"
+  m_EditorClassIdentifier: 
+  strName: "\uB9C8\uBC95\uC0AC Q \uC2A4\uD0AC"
   fSpeed: 10
   fAcceleration: 5
   fLifeTime: 3
   fDamage: 10
   fRadius: 1
   nPoolSize: 5
-  prefab: {fileID: 0}
+  prefab: {fileID: 8318284260995122833, guid: 1a0953df719ae48419faf46f9ad66289, type: 3}
   _fCooldown: 10
   _strSkillState: Standing 2H Magic Area Attack 02

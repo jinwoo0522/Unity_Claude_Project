@@ -2,4 +2,6 @@
 public enum SkillType
 {
     Electric,
+    IceExplosion,
+    FireExplosion,
 }

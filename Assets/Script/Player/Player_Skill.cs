@@ -11,7 +11,7 @@ public abstract class Player_Skill : NetworkBehaviour
     [SerializeField] protected SkillData qSkillData;
     [SerializeField] protected SkillData mouseSkillData;
 
-    [SerializeField] protected float fAnimmLerpSpeed = 3f;
+    [SerializeField] protected float fAnimLerpSpeed = 3f;
 
     // 서브클래스(Golem_Skill)에서 deltaPosition 접근용
     protected Animator       anim;
@@ -75,6 +75,10 @@ public abstract class Player_Skill : NetworkBehaviour
     private void UseSkill_ServerRpc(int slot)
     {
         SkillData data = GetSkillData(slot);
+        
+        // data = GameManager.Instance.skillPool
+        // .UseSkill(data.Type, transform.position, transform.forward, OwnerClientId);
+
         if (data == null) return;
 
         double now = NetworkManager.ServerTime.Time;
@@ -120,12 +124,14 @@ public abstract class Player_Skill : NetworkBehaviour
         AnimatorStateInfo info = anim.GetCurrentAnimatorStateInfo(SkillLayer);
         if (info.IsName(_activeState) && info.normalizedTime >= 0.7f)
         {
-            net_SkillWeight.Value = Mathf.Clamp01(net_SkillWeight.Value -= Time.deltaTime * fAnimmLerpSpeed);
+            net_SkillWeight.Value = Mathf.Clamp01(net_SkillWeight.Value -= Time.deltaTime * fAnimLerpSpeed);
 
             if(net_SkillWeight.Value <= 0f)
                 OnSkillEnd();
         }
     }
+
+    
 
     // 서브클래스 훅 — 스킬 시작/종료 시 추가 처리용
     protected virtual void OnSkillStart(int slot) { }
