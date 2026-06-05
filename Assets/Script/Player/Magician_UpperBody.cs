@@ -10,7 +10,7 @@ public class Magician_UpperBody : Player_UpperBody
     [SerializeField]
     private Transform rightHandBone;
 
-    public override void OnFireSkill()
+    public override void FireSkill()
     {
         if(IsOwner == true)
             NormalAttack_ServerRpc(

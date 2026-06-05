@@ -28,7 +28,8 @@ public abstract class Player_UpperBody : NetworkBehaviour
 
     public override void OnNetworkSpawn()
     {
-        anim  = GetComponentInChildren<Animator>();
+        // Animator가 루트로 이동됐으므로 GetComponent로 직접 참조
+        anim  = GetComponent<Animator>();
         skill = GetComponent<Player_Skill>();
 
         anim.SetLayerWeight(UpperBodyLayer, net_AnimWeight.Value);
@@ -55,8 +56,8 @@ public abstract class Player_UpperBody : NetworkBehaviour
         }
     }
 
-    // AnimEventRelay → 애니메이션 이벤트로 호출
-    virtual public void OnFireSkill() => NormalAttack();
+    // AnimEventRelay → 애니메이션 이벤트로 호출 (이름 충돌 방지: AnimEventRelay의 OnFireSkill과 분리)
+    virtual public void FireSkill() => NormalAttack();
     virtual public void OnAttackHitboxOn() {}
     virtual public void OnAttackHitboxOff() {}
 

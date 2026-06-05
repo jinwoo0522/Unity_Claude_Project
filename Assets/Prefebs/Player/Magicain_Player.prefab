@@ -474,6 +474,8 @@ GameObject:
   - component: {fileID: 4569105646352619157}
   - component: {fileID: 4900217680015483059}
   - component: {fileID: 5546488184616999483}
+  - component: {fileID: 6276525980467593750}
+  - component: {fileID: 8807639835629801873}
   m_Layer: 0
   m_Name: Magicain_Player
   m_TagString: Player
@@ -701,7 +703,7 @@ MonoBehaviour:
   ShowTopMostFoldoutHeaderGroup: 1
   NetworkAnimatorExpanded: 0
   AuthorityMode: 0
-  m_Animator: {fileID: 3061692747228383897}
+  m_Animator: {fileID: 6276525980467593750}
   TransitionStateInfoList: []
   AnimatorParameterEntries:
     ParameterEntries:
@@ -730,6 +732,55 @@ MonoBehaviour:
       Synchronize: 1
       ParameterType: 4
   AnimatorParametersExpanded: 0
+--- !u!114 &5546488184616999483
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7576251448233022070}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 88a19844216b41049501f9f4222b7231, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Magician_Skill
+  ShowTopMostFoldoutHeaderGroup: 1
+  qSkillData: {fileID: 11400000, guid: 7824e62328a64f3aaf5818b1c3f1d5e1, type: 2}
+  mouseSkillData: {fileID: 11400000, guid: 477143663ce74237b977f2909193eceb, type: 2}
+--- !u!95 &6276525980467593750
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7576251448233022070}
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: 9547c738ea76d0441bd4c030b5fe9a7e, type: 3}
+  m_Controller: {fileID: 9100000, guid: a60e8d6e97a02d2428eb73ed0d04ab77, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 1
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &8807639835629801873
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7576251448233022070}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0792060dff022e64f96df6c1f81d77e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AnimEventRelay
 --- !u!1 &8304582804339889416
 GameObject:
   m_ObjectHideFlags: 0
@@ -916,55 +967,17 @@ PrefabInstance:
       propertyPath: m_ApplyRootMotion
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5866666021909216657, guid: 9547c738ea76d0441bd4c030b5fe9a7e, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 9547c738ea76d0441bd4c030b5fe9a7e, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 3556848388608467529}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9547c738ea76d0441bd4c030b5fe9a7e, type: 3}
 --- !u!4 &1660563736776286475 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7790177421927552515, guid: 9547c738ea76d0441bd4c030b5fe9a7e, type: 3}
   m_PrefabInstance: {fileID: 8869774581937780488}
   m_PrefabAsset: {fileID: 0}
---- !u!95 &3061692747228383897 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 5866666021909216657, guid: 9547c738ea76d0441bd4c030b5fe9a7e, type: 3}
-  m_PrefabInstance: {fileID: 8869774581937780488}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &8635279744821987929 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 9547c738ea76d0441bd4c030b5fe9a7e, type: 3}
-  m_PrefabInstance: {fileID: 8869774581937780488}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &3556848388608467529
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8635279744821987929}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0792060dff022e64f96df6c1f81d77e8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::AnimEventRelay
---- !u!114 &5546488184616999483
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7576251448233022070}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 88a19844216b41049501f9f4222b7231, type: 3}
-  m_Name:
-  m_EditorClassIdentifier: Assembly-CSharp::Magician_Skill
-  qSkillData: {fileID: 11400000, guid: 7824e62328a64f3aaf5818b1c3f1d5e1, type: 2}
-  mouseSkillData: {fileID: 11400000, guid: 477143663ce74237b977f2909193eceb, type: 2}
 --- !u!4 &8979471227274776803 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 9547c738ea76d0441bd4c030b5fe9a7e, type: 3}

@@ -37,7 +37,8 @@ public class Player_Move : NetworkBehaviour
     {
         // 이 객체들은 서버에서도 갱신 되어야 하기 때문에 실행해야함
         cct         = GetComponent<CharacterController>();
-        anim        = GetComponentInChildren<Animator>();
+        // Animator가 루트로 이동됐으므로 GetComponent로 직접 참조
+        anim        = GetComponent<Animator>();
         net_anim    = GetComponent<NetworkAnimator>();
         playerUpper = GetComponent<Player_UpperBody>();
         skill       = GetComponent<Player_Skill>();
