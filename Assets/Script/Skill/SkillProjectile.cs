@@ -72,19 +72,10 @@ public class SkillProjectile : Skill
     
         Vector3 dist = transform.position - prePos;
         RaycastHit output; 
-        if(Physics.SphereCast(prePos , fRadius, Vector3.Normalize(dist) , out output , dist.magnitude))
-        {
-            if(output.collider.CompareTag("Player"))
-            {
-                // 같은 클라의 발사체가 자신에게 데미지를 주는 경우 방지
-                if(output.collider.GetComponent<NetworkObject>().OwnerClientId == GetComponent<NetworkObject>().OwnerClientId)
-                    return;
 
-                Player_UpperBody targetUpper = output.collider.GetComponent<Player_UpperBody>();
-                if (targetUpper != null) targetUpper.TakeHit(fDamage);
-                
-            }
-            
+        if(Physics.SphereCast(prePos , fRadius, Vector3.Normalize(dist) , out output , dist.magnitude))
+        {            
+            OnHitEnemy(output.collider , fDamage);
             OnHit_ClientRpc();
         }
     }
@@ -127,6 +118,7 @@ public class SkillProjectile : Skill
     {
         if(bHitShown == true)
             return;
+
         base.ShowHit(); // bHitShown = true
         fHitElapsed = 0f;
         projectileEffect.SetActive(false);
@@ -138,10 +130,5 @@ public class SkillProjectile : Skill
     {
         ShowHit();
     }
-    [ServerRpc]
-    void DespawnSkill_ServerRpc()
-    {
-        gameObject.GetComponent<NetworkObject>().Despawn();
-        
-    }
+
 }
