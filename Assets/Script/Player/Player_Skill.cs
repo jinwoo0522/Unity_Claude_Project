@@ -10,6 +10,8 @@ public abstract class Player_Skill : NetworkBehaviour
     [SerializeField] protected SkillData qSkillData;
     [SerializeField] protected SkillData mouseSkillData;
 
+    [SerializeField] protected float fAnimmLerpSpeed = 3f;
+
     // 서브클래스(Golem_Skill)에서 deltaPosition 접근용
     protected Animator       anim;
     private   Player_UpperBody playerUpper;
@@ -29,7 +31,8 @@ public abstract class Player_Skill : NetworkBehaviour
 
     public override void OnNetworkSpawn()
     {
-        anim        = GetComponentInChildren<Animator>();
+        // Animator가 루트로 이동됐으므로 GetComponent로 직접 참조
+        anim        = GetComponent<Animator>();
         playerUpper = GetComponent<Player_UpperBody>();
 
         // 스폰 시점 초기 weight 즉시 반영
@@ -89,17 +92,21 @@ public abstract class Player_Skill : NetworkBehaviour
         if (!IsServer || net_SkillWeight.Value <= 0f || _activeState == null) return;
 
         AnimatorStateInfo info = anim.GetCurrentAnimatorStateInfo(SkillLayer);
-        if (info.IsName(_activeState) && info.normalizedTime >= 0.95f)
+        if (info.IsName(_activeState) && info.normalizedTime >= 0.7f)
         {
-            _activeState          = null;
-            net_SkillWeight.Value = 0f;
-            OnSkillEnd();
+            net_SkillWeight.Value = Mathf.Clamp01(net_SkillWeight.Value -= Time.deltaTime * fAnimmLerpSpeed);
+
+            if(net_SkillWeight.Value <= 0f)
+                OnSkillEnd();
         }
     }
 
     // 서브클래스 훅 — 스킬 시작/종료 시 추가 처리용
     protected virtual void OnSkillStart(int slot) { }
-    protected virtual void OnSkillEnd()            { }
+    protected virtual void OnSkillEnd()
+    {
+       _activeState          = null; 
+    }
 
     private SkillData GetSkillData(int slot) => slot == 0 ? qSkillData : mouseSkillData;
 }

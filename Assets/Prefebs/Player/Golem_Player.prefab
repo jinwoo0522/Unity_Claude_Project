@@ -357,6 +357,9 @@ GameObject:
   - component: {fileID: 4120633991251001047}
   - component: {fileID: 5528147988313170608}
   - component: {fileID: 5007854344547407432}
+  - component: {fileID: 1734756855715145631}
+  - component: {fileID: 1898331943030139423}
+  - component: {fileID: 7543415186289248004}
   m_Layer: 0
   m_Name: Golem_Player
   m_TagString: Player
@@ -393,7 +396,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
-  GlobalObjectIdHash: 3296484378
+  GlobalObjectIdHash: 427886385
   InScenePlacedSourceGlobalObjectIdHash: 0
   DeferredDespawnTick: 0
   Ownership: 1
@@ -501,8 +504,8 @@ CharacterController:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Height: 1
-  m_Radius: 0.7
+  m_Height: 2
+  m_Radius: 1
   m_SlopeLimit: 45
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
@@ -584,7 +587,7 @@ MonoBehaviour:
   ShowTopMostFoldoutHeaderGroup: 1
   NetworkAnimatorExpanded: 0
   AuthorityMode: 0
-  m_Animator: {fileID: 5318599324636539654}
+  m_Animator: {fileID: 1734756855715145631}
   TransitionStateInfoList: []
   AnimatorParameterEntries:
     ParameterEntries:
@@ -632,6 +635,57 @@ MonoBehaviour:
   ShowTopMostFoldoutHeaderGroup: 1
   qSkillData: {fileID: 11400000, guid: 365b5a33ebf6480cb2a9988e8f41c18e, type: 2}
   mouseSkillData: {fileID: 11400000, guid: 7d181ed0011d4ce68d65d4be397509fe, type: 2}
+  fAnimmLerpSpeed: 3
+--- !u!95 &1734756855715145631
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4754220212716445872}
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: 8d8b03aefc41c854fab32d78fb6c6386, type: 3}
+  m_Controller: {fileID: 9100000, guid: 31eb3f4b07d5ad14ea7f434127841dd5, type: 2}
+  m_CullingMode: 1
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 1
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 1
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &1898331943030139423
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4754220212716445872}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0792060dff022e64f96df6c1f81d77e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AnimEventRelay
+--- !u!114 &7543415186289248004
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4754220212716445872}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e3533170f7e6ce44ac8347d29f2c5bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Golem_TrailEmitting
+  ShowTopMostFoldoutHeaderGroup: 1
+  trailRenderer_1: {fileID: 3525005583933164229}
+  trailRenderer_2: {fileID: 1566994309705463754}
+  trailRenderer_3: {fileID: 304910233856320595}
 --- !u!1 &6995575323198121855
 GameObject:
   m_ObjectHideFlags: 0
@@ -780,7 +834,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 2}
+  m_AnchoredPosition: {x: 0, y: 2.5}
   m_SizeDelta: {x: 800, y: 600}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &6809640450817808070
@@ -1042,15 +1096,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7571699769823753819, guid: 0b61d617ad0871e44acc43a49be710cf, type: 3}
       propertyPath: m_LocalScale.x
-      value: 1
+      value: 0.7
       objectReference: {fileID: 0}
     - target: {fileID: 7571699769823753819, guid: 0b61d617ad0871e44acc43a49be710cf, type: 3}
       propertyPath: m_LocalScale.y
-      value: 1
+      value: 0.7
       objectReference: {fileID: 0}
     - target: {fileID: 7571699769823753819, guid: 0b61d617ad0871e44acc43a49be710cf, type: 3}
       propertyPath: m_LocalScale.z
-      value: 1
+      value: 0.7
       objectReference: {fileID: 0}
     - target: {fileID: 7571699769823753819, guid: 0b61d617ad0871e44acc43a49be710cf, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1092,53 +1146,15 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 4608369919061240865, guid: 0b61d617ad0871e44acc43a49be710cf, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 3727167335170927834, guid: 0b61d617ad0871e44acc43a49be710cf, type: 3}
       insertIndex: -1
       addedObject: {fileID: 6027534453458682277}
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 7088600385777052897, guid: 0b61d617ad0871e44acc43a49be710cf, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 8589641532457174480}
-    - targetCorrespondingSourceObject: {fileID: 7088600385777052897, guid: 0b61d617ad0871e44acc43a49be710cf, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 8435650462897315164}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0b61d617ad0871e44acc43a49be710cf, type: 3}
---- !u!1 &1469450630138063814 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7088600385777052897, guid: 0b61d617ad0871e44acc43a49be710cf, type: 3}
-  m_PrefabInstance: {fileID: 8519488806387861287}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &8589641532457174480
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1469450630138063814}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1e3533170f7e6ce44ac8347d29f2c5bd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Golem_TrailEmitting
-  ShowTopMostFoldoutHeaderGroup: 1
-  trailRenderer_1: {fileID: 3525005583933164229}
-  trailRenderer_2: {fileID: 1566994309705463754}
-  trailRenderer_3: {fileID: 304910233856320595}
---- !u!114 &8435650462897315164
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1469450630138063814}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0792060dff022e64f96df6c1f81d77e8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::AnimEventRelay
 --- !u!4 &2247112855778898300 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7571699769823753819, guid: 0b61d617ad0871e44acc43a49be710cf, type: 3}
@@ -1147,11 +1163,6 @@ Transform:
 --- !u!4 &5008780276787522557 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3727167335170927834, guid: 0b61d617ad0871e44acc43a49be710cf, type: 3}
-  m_PrefabInstance: {fileID: 8519488806387861287}
-  m_PrefabAsset: {fileID: 0}
---- !u!95 &5318599324636539654 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 4608369919061240865, guid: 0b61d617ad0871e44acc43a49be710cf, type: 3}
   m_PrefabInstance: {fileID: 8519488806387861287}
   m_PrefabAsset: {fileID: 0}
 --- !u!114 &9008650080228964606 stripped
