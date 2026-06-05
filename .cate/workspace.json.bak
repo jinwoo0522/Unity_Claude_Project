@@ -46,7 +46,7 @@
       {
         "panelId": "21a52d40-ffd5-43cf-88fb-98ca713d10b7",
         "panelType": "terminal",
-        "title": "C:\\WINDOWS\\system32\\cmd.exe",
+        "title": "✦  Working… (Golem_VS_Magician_Agents_1)",
         "origin": {
           "x": 1620,
           "y": 880
@@ -59,7 +59,7 @@
       {
         "panelId": "bf6ce504-a779-48dd-a752-08eb9e49e244",
         "panelType": "terminal",
-        "title": "Windows PowerShell",
+        "title": "◇  Ready (Golem_VS_Magician_Agents_1)",
         "origin": {
           "x": 1640,
           "y": 140
@@ -142,10 +142,10 @@
         "zOrder": -1000
       }
     ],
-    "zoomLevel": 0.5159172260521693,
+    "zoomLevel": 1.0190051270151483,
     "viewportOffset": {
-      "x": 118.9197461219369,
-      "y": 175.49240899610743
+      "x": -995.1501945197328,
+      "y": -866.2283648714892
     }
   },
   "dockState": {
@@ -176,7 +176,8 @@
           "type": "tabs",
           "id": "0cd8df57-2202-4b96-8d59-079c50d5d46a",
           "panelIds": [
-            "67b83a9c-c90c-4b74-ae11-425a4a1931eb"
+            "67b83a9c-c90c-4b74-ae11-425a4a1931eb",
+            "f2f05d45-cd12-4865-b555-529e875be7f2"
           ],
           "activeIndex": 0
         }
@@ -187,6 +188,11 @@
         "type": "dock",
         "zone": "center",
         "stackId": "0cd8df57-2202-4b96-8d59-079c50d5d46a"
+      },
+      "f2f05d45-cd12-4865-b555-529e875be7f2": {
+        "type": "dock",
+        "zone": "center",
+        "stackId": "0cd8df57-2202-4b96-8d59-079c50d5d46a"
       }
     }
   },
@@ -194,6 +200,11 @@
     "67b83a9c-c90c-4b74-ae11-425a4a1931eb": {
       "type": "canvas",
       "title": "Canvas"
+    },
+    "f2f05d45-cd12-4865-b555-529e875be7f2": {
+      "type": "editor",
+      "title": "TASK.md",
+      "filePath": "TASK.md"
     }
   }
 }
