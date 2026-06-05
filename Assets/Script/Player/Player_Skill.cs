@@ -3,6 +3,7 @@ using UnityEngine;
 
 // Q(Buff)·마우스 우클릭(Attack_Skill) 스킬 공통 베이스.
 // 쿨타임·발동 가부 검증은 서버에서만 수행 (서버 권위적).
+// HUD 표시용 클라 타이머는 서버가 발동을 확정한 뒤 owner에게 통지 → StartCooldown 호출.
 public abstract class Player_Skill : NetworkBehaviour
 {
     private const int SkillLayer = 2; // Animator Skill Layer index
@@ -20,6 +21,9 @@ public abstract class Player_Skill : NetworkBehaviour
     private readonly double[] _lastUseTimes = new double[2];
     // 현재 재생 중인 스킬 스테이트명 (종료 감지용, 서버 전용)
     private string _activeState;
+
+    // owner 로컬 HUD — 씬 단일 오브젝트로 OnNetworkSpawn에서 탐색
+    private SkillCooldownUI _cooldownUI;
 
     private NetworkVariable<float> net_SkillWeight = new NetworkVariable<float>(
         0f,
@@ -39,6 +43,18 @@ public abstract class Player_Skill : NetworkBehaviour
         anim.SetLayerWeight(SkillLayer, net_SkillWeight.Value);
         net_SkillWeight.OnValueChanged = (_, next) =>
             anim.SetLayerWeight(SkillLayer, next);
+
+        // owner만 HUD를 탐색해 슬롯별 쿨타임 길이를 등록한다.
+        // 씬에 HUD가 1개뿐이므로 FindObjectOfType으로 충분.
+        if (IsOwner)
+        {
+            _cooldownUI = FindObjectOfType<SkillCooldownUI>();
+            if (_cooldownUI != null)
+            {
+                _cooldownUI.SetCooldownLength(0, qSkillData != null ? qSkillData.fCooldown : 0f);
+                _cooldownUI.SetCooldownLength(1, mouseSkillData != null ? mouseSkillData.fCooldown : 0f);
+            }
+        }
     }
 
     // PlayerInput SendMessages — Q 키(Buff 액션)
@@ -75,6 +91,8 @@ public abstract class Player_Skill : NetworkBehaviour
         anim.Play(data.strSkillState, SkillLayer, 0f);
         PlaySkill_ClientRpc(data.strSkillState);
         OnSkillStart(slot);
+        // 서버가 발동을 확정한 뒤에만 owner에게 HUD 타이머 시작을 통지
+        NotifyCooldown_ClientRpc(slot);
     }
 
     // 오너·기타 클라이언트에 스킬 애니 동기화
@@ -84,6 +102,14 @@ public abstract class Player_Skill : NetworkBehaviour
         // 서버(호스트 포함)는 ServerRpc에서 이미 재생됨
         if (IsServer) return;
         anim.Play(stateName, SkillLayer, 0f);
+    }
+
+    // owner에게만 HUD 쿨타임 타이머 시작을 통지 — 서버 확정 후에만 호출되므로 UI 오작동 없음
+    [ClientRpc]
+    private void NotifyCooldown_ClientRpc(int slot)
+    {
+        if (!IsOwner) return;
+        _cooldownUI?.StartCooldown(slot);
     }
 
     // 서버 전용 — 스킬 클립 95% 도달 시 weight 복귀
