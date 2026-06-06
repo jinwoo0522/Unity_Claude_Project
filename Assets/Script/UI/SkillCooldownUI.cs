@@ -34,6 +34,12 @@ public class SkillCooldownUI : MonoBehaviour
 
     private void Update()
     {
+        
+    }
+
+    private bool IsValidSlot(int slot) => slot >= 0 && slot < 2;
+    private void CheckCooltime()
+    {
         for (int i = 0; i < 2; i++)
         {
             if (_elapsed[i] < 0f) continue;
@@ -55,6 +61,4 @@ public class SkillCooldownUI : MonoBehaviour
             }
         }
     }
-
-    private bool IsValidSlot(int slot) => slot >= 0 && slot < 2;
 }

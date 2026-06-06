@@ -7,14 +7,12 @@ using UnityEngine;
 public abstract class Player_Skill : NetworkBehaviour
 {
     private const int SkillLayer = 2; // Animator Skill Layer index
-
-    [SerializeField] protected SkillData qSkillData;
-    [SerializeField] protected SkillData mouseSkillData;
-
     [SerializeField] protected float fAnimLerpSpeed = 3f;
 
     // 서브클래스(Golem_Skill)에서 deltaPosition 접근용
     protected Animator       anim;
+    protected SkillCooldownUI _cooldownUI;
+
     private   Player_UpperBody playerUpper;
 
     // 서버 로컬 쿨타임 타임스탬프 — 슬롯별 마지막 사용 시간, 클라 입력 불신 원칙
@@ -23,8 +21,7 @@ public abstract class Player_Skill : NetworkBehaviour
     private string _activeState;
 
     // owner 로컬 HUD — 씬 단일 오브젝트로 OnNetworkSpawn에서 탐색
-    private SkillCooldownUI _cooldownUI;
-
+    
     private NetworkVariable<float> net_SkillWeight = new NetworkVariable<float>(
         0f,
         NetworkVariableReadPermission.Everyone,
@@ -48,46 +45,36 @@ public abstract class Player_Skill : NetworkBehaviour
         // 씬에 HUD가 1개뿐이므로 FindObjectOfType으로 충분.
         if (IsOwner)
         {
-            _cooldownUI = FindObjectOfType<SkillCooldownUI>();
-            if (_cooldownUI != null)
-            {
-                _cooldownUI.SetCooldownLength(0, qSkillData != null ? qSkillData.fCooldown : 0f);
-                _cooldownUI.SetCooldownLength(1, mouseSkillData != null ? mouseSkillData.fCooldown : 0f);
-            }
+            _cooldownUI = FindAnyObjectByType<SkillCooldownUI>();
         }
     }
 
     // PlayerInput SendMessages — Q 키(Buff 액션)
-    void OnBuff()
-    {
-        if (!IsOwner) return;
-        UseSkill_ServerRpc(0);
-    }
+    abstract protected void OnBuff();
 
     // PlayerInput SendMessages — 마우스 우클릭(Attack_Skill 액션)
-    void OnAttack_Skill()
-    {
-        if (!IsOwner) return;
-        UseSkill_ServerRpc(1);
-    }
+    abstract protected void OnAttack_Skill();
 
     [ServerRpc]
-    private void UseSkill_ServerRpc(int slot)
+    protected void UseSkill_ServerRpc(SkillType tag , int slot)
     {
-        SkillData data = GetSkillData(slot);
+        SkillData data;
         
-        // data = GameManager.Instance.skillPool
-        // .UseSkill(data.Type, transform.position, transform.forward, OwnerClientId);
+        data = GameManager.Instance.skillPool
+        .UseSkill(tag, transform.position, transform.forward, OwnerClientId);
 
-        if (data == null) return;
+        if (data == null) {
+            Debug.Log($"SkillData not found for tag: {tag}");
+            return;
+        }
 
         double now = NetworkManager.ServerTime.Time;
 
         // 서버 검증: 쿨타임 / 스킬 중복 / 기본공격 중 / 피격 중
-        if (now - _lastUseTimes[slot] < data.fCooldown) return;
-        if (IsSkilling) return;
-        if (playerUpper != null && playerUpper.IsAttacking) return;
-        if (playerUpper != null && playerUpper.IsHit) return;
+        if (now - _lastUseTimes[slot] < data.fCooldown) return ;
+        if (IsSkilling) return ;
+        if (playerUpper != null && playerUpper.IsAttacking) return ;
+        if (playerUpper != null && playerUpper.IsHit) return ;
 
         _lastUseTimes[slot]   = now;
         _activeState          = data.strSkillState;
@@ -121,6 +108,8 @@ public abstract class Player_Skill : NetworkBehaviour
     {
         if (!IsServer || net_SkillWeight.Value <= 0f || _activeState == null) return;
 
+        Debug.Log($"Checking skill end for state {_activeState} with weight {net_SkillWeight.Value}");
+
         AnimatorStateInfo info = anim.GetCurrentAnimatorStateInfo(SkillLayer);
         if (info.IsName(_activeState) && info.normalizedTime >= 0.7f)
         {
@@ -131,14 +120,10 @@ public abstract class Player_Skill : NetworkBehaviour
         }
     }
 
-    
-
     // 서브클래스 훅 — 스킬 시작/종료 시 추가 처리용
     protected virtual void OnSkillStart(int slot) { }
     protected virtual void OnSkillEnd()
     {
        _activeState          = null; 
     }
-
-    private SkillData GetSkillData(int slot) => slot == 0 ? qSkillData : mouseSkillData;
 }

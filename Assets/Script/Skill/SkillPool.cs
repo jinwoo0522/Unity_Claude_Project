@@ -88,7 +88,7 @@ public class SkillPool
             rotation: Quaternion.LookRotation(dir)
         );
 
-        netObj.GetComponent<SkillProjectile>().Init(type, skilldata, pos, dir, clinetID);
+        netObj.GetComponent<Skill>().Init(type, skilldata, pos, dir, clinetID);
         return skilldata;
     }
 
@@ -98,6 +98,11 @@ public class SkillPool
         {
             skillpool.Value.Prewarm(count);
         }
+    }
+
+    public SkillData GetSkillData(SkillType type)
+    {
+        return SkillDatas[(int)type];
     }
 
     void OnSceneLoaded(string sceneName, LoadSceneMode mode,
@@ -110,4 +115,6 @@ public class SkillPool
     {
        NetworkManager.Singleton.SceneManager.OnLoadEventCompleted += OnSceneLoaded; 
     }
+
+
 }

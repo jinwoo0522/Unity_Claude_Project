@@ -13,8 +13,8 @@ public class SkillRange : Skill
 
      void Awake()
     {
-        castParticle = CastEffect.GetComponent<ParticleSystem>();
-        rangeParticle = RangeEffect.GetComponent<ParticleSystem>();
+        if (CastEffect  != null) castParticle  = CastEffect.GetComponent<ParticleSystem>();
+        if (RangeEffect != null) rangeParticle = RangeEffect.GetComponent<ParticleSystem>();
     }
 
     private float fDamage;
@@ -72,22 +72,27 @@ public class SkillRange : Skill
 
     void CheckCastOver()
     {
-        if(castParticle == null && RangeEffect.activeSelf == false) // 캐스팅이 없으면 그냥 실행
+        if(castParticle == null) // 캐스팅이 없으면 그냥 실행
         {
-            RangeEffect.SetActive(true);
-            isCheckSphareCast = true; // 지금부터 스페어 캐스트 시작
-            fElapsed = 0f;
-            return;
+            if(RangeEffect.activeSelf == false)
+            {
+                RangeEffect.SetActive(true);
+                isCheckSphareCast = true; // 지금부터 스페어 캐스트 시작
+                fElapsed = 0f; 
+            }
         }
-
-        fElapsed += Time.deltaTime;
-        if (fElapsed > 0.05f && castParticle.IsAlive(true) == false)
+        else
         {
-            CastEffect.SetActive(false);
-            RangeEffect.SetActive(true);
-            ShowRange_ServerRpc();
-            fElapsed= 0f;
+            fElapsed += Time.deltaTime;
+            if (fElapsed > 0.05f && castParticle != null && castParticle?.IsAlive(true) == false)
+            {
+                CastEffect.SetActive(false);
+                RangeEffect.SetActive(true);
+                ShowRange_ServerRpc();
+                fElapsed= 0f;
+            }
         }
+ 
     }
 
     void CheckDespawn()
@@ -95,9 +100,11 @@ public class SkillRange : Skill
         if (RangeEffect.activeSelf == true)
         {
             fElapsed += Time.deltaTime;
-            if (fElapsed > 0.05f && rangeParticle != null && rangeParticle.IsAlive(true) == false)
+            if (fElapsed > 0.05f && rangeParticle != null && rangeParticle?.IsAlive(true) == false)
             {
                 DespawnSkill_ServerRpc();
+                CastEffect.SetActive(false);
+                RangeEffect.SetActive(false);
             }
         }
     }
