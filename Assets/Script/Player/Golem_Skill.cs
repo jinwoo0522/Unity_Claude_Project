@@ -37,4 +37,25 @@ public class Golem_Skill : Player_Skill
         if (!IsServer || !_rootMotionActive || cct == null) return;
         cct.Move(anim.deltaPosition);
     }
+
+    protected override void OnBuff()
+    {
+        if (!IsOwner) return;
+
+        if (_cooldownUI != null )
+        {
+            _cooldownUI.SetCooldownLength(0, GameManager.Instance.skillPool.
+            GetSkillData(SkillType.FireExplosion)?.fCooldown ?? 0f);
+        }
+    }
+
+    protected override void OnAttack_Skill()
+    {
+        if (!IsOwner) return;
+        if (_cooldownUI != null )
+        {
+            _cooldownUI.SetCooldownLength(1, GameManager.Instance.skillPool.
+            GetSkillData(SkillType.FireExplosion)?.fCooldown ?? 0f);
+        }
+    }
 }
