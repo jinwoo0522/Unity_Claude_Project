@@ -1,26 +1,25 @@
 using Unity.Netcode;
 using UnityEngine;
 
+// 범위형 스킬 — Cast(캐스팅) → Range(범위/데미지) → Done(소멸) 단방향 상태머신.
+// 수명·데미지 판정은 서버에서만 수행(서버 권위적). 클라는 이펙트 토글만 동기화한다.
 public class SkillRange : Skill
 {
     [Header("이펙트")]
-    public GameObject RangeEffect;  // 범위 이펙트
-    public GameObject CastEffect;   // 캐스팅 이펙트
+    [SerializeField] private GameObject RangeEffect; // 범위 이펙트
+    [SerializeField] private GameObject CastEffect;  // 캐스팅 이펙트
 
+    [Header("단계별 지속시간(초)")]
+    [SerializeField] private float fCastTime  = 0.5f; // 캐스팅 유지 시간
+    [SerializeField] private float fRangeTime = 3f;   // 범위 유지 시간(소멸까지)
 
-    private ParticleSystem castParticle; // CastEffect의 파티클 시스템 캐시
-    private ParticleSystem rangeParticle; // RangeEffect의 파티클 시스템 캐시
-
-     void Awake()
-    {
-        castParticle = CastEffect.GetComponent<ParticleSystem>();
-        rangeParticle = RangeEffect.GetComponent<ParticleSystem>();
-    }
+    // 스킬 진행 단계 — 단방향 전이만 허용해 재진입/반복을 원천 차단
+    private enum Phase { Cast, Range, Done }
+    private Phase _phase;
+    private float _timer; // 현재 단계 경과 시간(서버 전용)
 
     private float fDamage;
     private float fRadius;
-    private float fElapsed; // 범위 유지 경과 시간 (수명 초과 감지용)
-    private bool isCheckSphareCast; // 범위 내 적 탐지 여부 플래그
 
     public override void Init(SkillType type, SkillData data, Vector3 position, Vector3 direction, ulong clinetID)
     {
@@ -29,85 +28,64 @@ public class SkillRange : Skill
         fRadius = data.fRadius;
     }
 
+    // 풀 재사용 시 리셋 — 각 클라 인스턴스에서 OnEnable이 호출되므로 초기 이펙트도 로컬로 설정
     protected override void OnEnable()
     {
         base.OnEnable();
-
-        RangeEffect?.SetActive(false);
+        _phase = Phase.Cast;
+        _timer = 0f;
         CastEffect?.SetActive(true);
-        fElapsed = 0f; // 범위 유지 시간 측정 시작
-        castParticle.Clear();
+        RangeEffect?.SetActive(false);
     }
 
-    void FixedUpdate()
-    {
-        if(IsServer == true)
-        {
-            if(isCheckSphareCast == true)
-            {
-                CastSphere();
-            }
-        }
-
-    }
+    // 수명 판정은 서버 전용 — 시간 경과로 단계 전환
     void Update()
     {
-        if(IsOwner == true)
-        {
-            CheckCastOver();
-            CheckDespawn();
-        }    
-    }
+        if (!IsServer) return;
 
-    void CastSphere()
-    {
-        Collider[] hitColliders = Physics.OverlapSphere(transform.position, fRadius);
-        foreach (var hitCollider in hitColliders)
-        {
-            OnHitEnemy(hitCollider , fDamage);
-        }
+        _timer += Time.deltaTime;
 
-        isCheckSphareCast = false; // 한 번 탐지 후 플래그 리셋 (지속적으로 탐지하지 않도록)
-    }
-
-    void CheckCastOver()
-    {
-        if(castParticle == null && RangeEffect.activeSelf == false) // 캐스팅이 없으면 그냥 실행
+        switch (_phase)
         {
-            RangeEffect.SetActive(true);
-            isCheckSphareCast = true; // 지금부터 스페어 캐스트 시작
-            fElapsed = 0f;
-            return;
-        }
+            case Phase.Cast:
+                if (_timer >= fCastTime) EnterRange();
+                break;
 
-        fElapsed += Time.deltaTime;
-        if (fElapsed > 0.05f && castParticle.IsAlive(true) == false)
-        {
-            CastEffect.SetActive(false);
-            RangeEffect.SetActive(true);
-            ShowRange_ServerRpc();
-            fElapsed= 0f;
+            case Phase.Range:
+                if (_timer >= fRangeTime) EnterDone();
+                break;
         }
     }
 
-    void CheckDespawn()
+    // 캐스팅 종료 → 범위 단계 진입(이펙트 전환 + 1회 데미지 판정)
+    void EnterRange()
     {
-        if (RangeEffect.activeSelf == true)
-        {
-            fElapsed += Time.deltaTime;
-            if (fElapsed > 0.05f && rangeParticle != null && rangeParticle.IsAlive(true) == false)
-            {
-                DespawnSkill_ServerRpc();
-            }
-        }
+        _phase = Phase.Range;
+        _timer = 0f;
+        SetEffect_ClientRpc(false, true);
+        DealDamageOnce();
     }
 
-    [ServerRpc]
-    void ShowRange_ServerRpc()
+    // 범위 종료 → 소멸. 서버에서 바로 Despawn → 풀 반환
+    void EnterDone()
     {
-        CastEffect.SetActive(false);
-        RangeEffect.SetActive(true);
-        fElapsed= 0f;
+        _phase = Phase.Done;
+        GetComponent<NetworkObject>().Despawn();
     }
 
+    // 서버 1회 범위 데미지 판정
+    void DealDamageOnce()
+    {
+        Collider[] hits = Physics.OverlapSphere(transform.position, fRadius);
+        foreach (var hit in hits)
+            OnHitEnemy(hit, fDamage);
+    }
+
+    // 이펙트 켜고 끄기만 전 클라(호스트 포함) 동기화 — 수명 판정 아님
+    [ClientRpc]
+    void SetEffect_ClientRpc(bool cast, bool range)
+    {
+        CastEffect?.SetActive(cast);
+        RangeEffect?.SetActive(range);
+    }
 }
