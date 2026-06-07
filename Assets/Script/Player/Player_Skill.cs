@@ -60,8 +60,7 @@ public abstract class Player_Skill : NetworkBehaviour
     {
         SkillData data;
         
-        data = GameManager.Instance.skillPool
-        .UseSkill(tag, transform.position, transform.forward, OwnerClientId);
+        data = GameManager.Instance.skillPool.GetSkillData(tag);
 
         if (data == null) {
             Debug.Log($"SkillData not found for tag: {tag}");
@@ -75,6 +74,9 @@ public abstract class Player_Skill : NetworkBehaviour
         if (IsSkilling) return ;
         if (playerUpper != null && playerUpper.IsAttacking) return ;
         if (playerUpper != null && playerUpper.IsHit) return ;
+
+        GameManager.Instance.skillPool
+        .UseSkill(tag, transform.position, transform.forward, OwnerClientId);
 
         _lastUseTimes[slot]   = now;
         _activeState          = data.strSkillState;
@@ -107,8 +109,6 @@ public abstract class Player_Skill : NetworkBehaviour
     protected virtual void Update()
     {
         if (!IsServer || net_SkillWeight.Value <= 0f || _activeState == null) return;
-
-        Debug.Log($"Checking skill end for state {_activeState} with weight {net_SkillWeight.Value}");
 
         AnimatorStateInfo info = anim.GetCurrentAnimatorStateInfo(SkillLayer);
         if (info.IsName(_activeState) && info.normalizedTime >= 0.7f)

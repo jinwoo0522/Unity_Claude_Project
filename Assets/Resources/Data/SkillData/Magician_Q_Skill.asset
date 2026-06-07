@@ -16,8 +16,8 @@ MonoBehaviour:
   fSpeed: 10
   fAcceleration: 5
   fLifeTime: 3
-  fDamage: 10
-  fRadius: 1
+  fDamage: 20
+  fRadius: 5
   nPoolSize: 5
   prefab: {fileID: 8318284260995122833, guid: 1a0953df719ae48419faf46f9ad66289, type: 3}
   _fCooldown: 10

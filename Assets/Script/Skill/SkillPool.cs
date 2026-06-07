@@ -69,7 +69,7 @@ public class SkillPool
          
     }
     
-    public SkillData UseSkill(SkillType type, Vector3 pos, Vector3 dir, ulong clinetID)
+    public void UseSkill(SkillType type, Vector3 pos, Vector3 dir, ulong clinetID)
     {
         Debug.Log("스킬 사용!");
         SkillData skilldata = SkillDatas[(int)type];
@@ -77,7 +77,7 @@ public class SkillPool
         if(skilldata == null)
         {
             GameManager.Instance.DebugMessage<SkillPool>("스킬 데이터 NULL");
-            return null;
+            return;
         }
 
         // NGO가 스폰 → 핸들러 Instantiate(풀에서 Get)를 가로채서 호출함
@@ -89,7 +89,6 @@ public class SkillPool
         );
 
         netObj.GetComponent<Skill>().Init(type, skilldata, pos, dir, clinetID);
-        return skilldata;
     }
 
     public void PreCreate(int count)

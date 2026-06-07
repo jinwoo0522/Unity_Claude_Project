@@ -4795,7 +4795,6 @@ ParticleSystemRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: f1fdffd580de4924686798a72c3f94d4, type: 2}
-  - {fileID: 2100000, guid: f1fdffd580de4924686798a72c3f94d4, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -4901,7 +4900,7 @@ ParticleSystem:
   ringBufferMode: 0
   ringBufferLoopRange: {x: 0, y: 1}
   emitterVelocityMode: 0
-  looping: 1
+  looping: 0
   prewarm: 0
   playOnAwake: 1
   useUnscaledTime: 0
@@ -9705,7 +9704,6 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 3d215c2ddf96a0043922b17a989d2bd7, type: 2}
   - {fileID: 2100000, guid: 3d215c2ddf96a0043922b17a989d2bd7, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
@@ -14622,7 +14620,6 @@ ParticleSystemRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: a960f960ee55f6b40bcbd400499b8528, type: 2}
-  - {fileID: 2100000, guid: a960f960ee55f6b40bcbd400499b8528, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -19538,7 +19535,6 @@ ParticleSystemRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: f1fdffd580de4924686798a72c3f94d4, type: 2}
-  - {fileID: 2100000, guid: f1fdffd580de4924686798a72c3f94d4, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -24445,7 +24441,6 @@ ParticleSystemRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: 88ea6cdc7d84089489919e02d03b6590, type: 2}
-  - {fileID: 2100000, guid: 88ea6cdc7d84089489919e02d03b6590, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -24509,6 +24504,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5139793728258486507}
   - component: {fileID: 8391193574638485554}
+  - component: {fileID: 2892277435347735829}
   m_Layer: 0
   m_Name: Point Light
   m_TagString: Untagged
@@ -24539,7 +24535,7 @@ Light:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1455768185084042481}
   m_Enabled: 0
-  serializedVersion: 12
+  serializedVersion: 13
   m_Type: 2
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Intensity: 1
@@ -24591,11 +24587,40 @@ Light:
   m_UseBoundingSphereOverride: 0
   m_UseViewFrustumForShadowCasterCull: 1
   m_ForceVisible: 0
-  m_ShadowRadius: 0
+  m_ShapeRadius: 0
   m_ShadowAngle: 0
   m_LightUnit: 1
   m_LuxAtDistance: 1
   m_EnableSpotReflector: 1
+--- !u!114 &2892277435347735829
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1455768185084042481}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.RenderPipelines.Universal.Runtime::UnityEngine.Rendering.Universal.UniversalAdditionalLightData
+  m_UsePipelineSettings: 1
+  m_AdditionalLightsShadowResolutionTier: 2
+  m_CustomShadowLayers: 0
+  m_LightCookieSize: {x: 1, y: 1}
+  m_LightCookieOffset: {x: 0, y: 0}
+  m_SoftShadowQuality: 0
+  m_RenderingLayersMask:
+    serializedVersion: 0
+    m_Bits: 1
+  m_ShadowRenderingLayersMask:
+    serializedVersion: 0
+    m_Bits: 1
+  m_Version: 4
+  m_LightLayerMask: 1
+  m_ShadowLayerMask: 1
+  m_RenderingLayers: 1
+  m_ShadowRenderingLayers: 1
 --- !u!1 &2671677685187347389
 GameObject:
   m_ObjectHideFlags: 0
@@ -29390,7 +29415,6 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a960f960ee55f6b40bcbd400499b8528, type: 2}
   - {fileID: 2100000, guid: a960f960ee55f6b40bcbd400499b8528, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
@@ -34315,7 +34339,6 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 3566188cf3b51ce40b12236f001cfe46, type: 2}
   - {fileID: 2100000, guid: 3566188cf3b51ce40b12236f001cfe46, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
@@ -39270,7 +39293,6 @@ ParticleSystemRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: e94c1cacac0ccb5468ab131024dd78b3, type: 2}
-  - {fileID: 2100000, guid: e94c1cacac0ccb5468ab131024dd78b3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -44119,7 +44141,6 @@ ParticleSystemRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: 14304384608105c49a868bd3b5d24074, type: 2}
-  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -49060,7 +49081,6 @@ ParticleSystemRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: 9e65ec96c83142945850f60b4aa5cde0, type: 2}
-  - {fileID: 2100000, guid: 14304384608105c49a868bd3b5d24074, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -53975,7 +53995,6 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: f1fdffd580de4924686798a72c3f94d4, type: 2}
   - {fileID: 2100000, guid: f1fdffd580de4924686798a72c3f94d4, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
@@ -58892,7 +58911,6 @@ ParticleSystemRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: e94c1cacac0ccb5468ab131024dd78b3, type: 2}
-  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

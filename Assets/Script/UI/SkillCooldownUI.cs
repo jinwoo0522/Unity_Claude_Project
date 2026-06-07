@@ -34,7 +34,7 @@ public class SkillCooldownUI : MonoBehaviour
 
     private void Update()
     {
-        
+        CheckCooltime();
     }
 
     private bool IsValidSlot(int slot) => slot >= 0 && slot < 2;
