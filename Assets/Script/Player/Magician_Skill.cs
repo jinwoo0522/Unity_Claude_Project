@@ -6,24 +6,19 @@ public class Magician_Skill : Player_Skill
     protected override void OnBuff()
     {
         if (!IsOwner) return;
-        UseSkill_ServerRpc(SkillType.IceExplosion, 0);
 
-        if (_cooldownUI != null )
-        {
-            _cooldownUI.SetCooldownLength(0, GameManager.Instance.skillPool.
-            GetSkillData(SkillType.IceExplosion)?.fCooldown ?? 0f);
-        }
+        if (CheckCanUseSkill(SkillType.IceExplosion, 0) == null)
+            return;
+
+        UseSkill_ServerRpc(SkillType.IceExplosion);
+        Animation_Play_ServerRpc(SkillType.IceExplosion , 0);
+        SetCooldownLength(SkillType.IceExplosion, 0);
     }
 
     protected override void OnAttack_Skill()
     {
         if (!IsOwner) return;
-        UseSkill_ServerRpc(SkillType.IceExplosion, 1);
-
-        if (_cooldownUI != null)
-        {
-            _cooldownUI.SetCooldownLength(0, GameManager.Instance.skillPool.
-            GetSkillData(SkillType.IceExplosion)?.fCooldown ?? 0f);
-        }
+    
+        SetCooldownLength(SkillType.IceExplosion, 1);
     }
 }

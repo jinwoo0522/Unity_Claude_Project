@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 7734738328887169405}
   - component: {fileID: 7723781928259015556}
-  - component: {fileID: 2094058353824898271}
   - component: {fileID: 4797254427216128851}
+  - component: {fileID: 1923049669639491956}
   m_Layer: 0
   m_Name: Ice_Explosion
   m_TagString: Untagged
@@ -61,23 +61,6 @@ MonoBehaviour:
   AutoObjectParentSync: 1
   SyncOwnerTransformWhenParented: 1
   AllowOwnerToParent: 0
---- !u!114 &2094058353824898271
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8318284260995122833}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b997c020813821e439cbc9f5b0001ed3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SkillRange
-  ShowTopMostFoldoutHeaderGroup: 1
-  RangeEffect: {fileID: 3285340359624044305}
-  CastEffect: {fileID: 7128884801989908573}
-  fCastTime: 1.5
-  fRangeTime: 6
 --- !u!114 &4797254427216128851
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -124,6 +107,23 @@ MonoBehaviour:
   SwitchTransformSpaceWhenParented: 0
   Interpolate: 1
   SlerpPosition: 0
+--- !u!114 &1923049669639491956
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8318284260995122833}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b997c020813821e439cbc9f5b0001ed3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SkillRange
+  ShowTopMostFoldoutHeaderGroup: 1
+  RangeEffect: {fileID: 3285340359624044305}
+  CastEffect: {fileID: 7128884801989908573}
+  fCastTime: 1.5
+  fRangeTime: 6
 --- !u!1001 &3097907168476673399
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -358,7 +358,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2005599110733439847, guid: a6105e78109c2ca4fb3d3875cb58c57d, type: 3}
       propertyPath: InitialModule.startSpeed.scalar
-      value: 0
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2005599110733439847, guid: a6105e78109c2ca4fb3d3875cb58c57d, type: 3}
       propertyPath: InitialModule.startRotationX.scalar
