@@ -12,8 +12,8 @@ public abstract class Player_Skill : NetworkBehaviour
     // 서브클래스(Golem_Skill)에서 deltaPosition 접근용
     protected Animator       anim;
     protected SkillCooldownUI _cooldownUI;
-
     private   Player_UpperBody playerUpper;
+
 
     // 서버 로컬 쿨타임 타임스탬프 — 슬롯별 마지막 사용 시간, 클라 입력 불신 원칙
     private readonly double[] _lastUseTimes = new double[2];
@@ -55,11 +55,44 @@ public abstract class Player_Skill : NetworkBehaviour
     // PlayerInput SendMessages — 마우스 우클릭(Attack_Skill 액션)
     abstract protected void OnAttack_Skill();
 
-    [ServerRpc]
-    protected void UseSkill_ServerRpc(SkillType tag , int slot)
+    protected SkillData CheckCanUseSkill(SkillType tag, int slot)
     {
         SkillData data;
         
+        data = GameManager.Instance.skillPool.GetSkillData(tag);
+
+        if (data == null) {
+            Debug.Log($"SkillData not found for tag: {tag}");
+            return null;
+        }
+
+        double now = NetworkManager.ServerTime.Time;
+
+        // 서버 검증: 쿨타임 / 스킬 중복 / 기본공격 중 / 피격 중
+        if (now - _lastUseTimes[slot] < data.fCooldown) return null;
+        if (IsSkilling) return null;
+        if (playerUpper != null && playerUpper.IsAttacking) return null;
+        if (playerUpper != null && playerUpper.IsHit) return null;
+
+        return data;
+    }
+
+    [ServerRpc]
+    protected void UseSkill_ServerRpc(SkillType tag , Vector3 point = default) // 서버에서 스킬 사용 명령 수신
+    {
+        if(point == default(Vector3))
+        {
+            point = transform.position;
+        }
+        GameManager.Instance.skillPool
+        .UseSkill(tag, point, transform.forward, OwnerClientId);
+        return;
+    }
+
+    [ServerRpc]
+    protected void Animation_Play_ServerRpc(SkillType tag , int slot)
+    {
+        SkillData data;
         data = GameManager.Instance.skillPool.GetSkillData(tag);
 
         if (data == null) {
@@ -68,21 +101,12 @@ public abstract class Player_Skill : NetworkBehaviour
         }
 
         double now = NetworkManager.ServerTime.Time;
-
-        // 서버 검증: 쿨타임 / 스킬 중복 / 기본공격 중 / 피격 중
-        if (now - _lastUseTimes[slot] < data.fCooldown) return ;
-        if (IsSkilling) return ;
-        if (playerUpper != null && playerUpper.IsAttacking) return ;
-        if (playerUpper != null && playerUpper.IsHit) return ;
-
-        GameManager.Instance.skillPool
-        .UseSkill(tag, transform.position, transform.forward, OwnerClientId);
-
-        _lastUseTimes[slot]   = now;
-        _activeState          = data.strSkillState;
         net_SkillWeight.Value = 1f;
+        _activeState = data.strSkillState;
         anim.Play(data.strSkillState, SkillLayer, 0f);
         PlaySkill_ClientRpc(data.strSkillState);
+
+        _lastUseTimes[slot]   = now;
         OnSkillStart(slot);
         // 서버가 발동을 확정한 뒤에만 owner에게 HUD 타이머 시작을 통지
         NotifyCooldown_ClientRpc(slot);
@@ -125,5 +149,12 @@ public abstract class Player_Skill : NetworkBehaviour
     protected virtual void OnSkillEnd()
     {
        _activeState          = null; 
+    }
+
+    protected void SetCooldownLength(SkillType tag, int slot)
+    {
+        if (!IsOwner || _cooldownUI == null) return;
+        float cooldown = GameManager.Instance.skillPool.GetSkillData(tag)?.fCooldown ?? 0f;
+        _cooldownUI.SetCooldownLength(slot, cooldown);
     }
 }
