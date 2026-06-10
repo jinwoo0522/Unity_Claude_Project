@@ -25,6 +25,10 @@ public class Player_Move : NetworkBehaviour
     [SerializeField] private float fKnockbackDecay = 5f;
     protected Vector3 vKnockback;
 
+    // isGrounded 플리커 대응 — 서버 전용, fLastGroundedTime 기준으로 유예 판정
+    private float fLastGroundedTime;
+    private const float GroundedGraceTime = 0.15f;
+
 
     protected CharacterController               cct;
     protected Animator                          anim;
@@ -121,6 +125,7 @@ public class Player_Move : NetworkBehaviour
         vMoveDir.x += vKnockback.x;
         vMoveDir.z += vKnockback.z;
         cct.Move(vMoveDir * Time.deltaTime);
+        if (cct.isGrounded) fLastGroundedTime = Time.time; // 접지 시각 갱신 (유예 판정용)
         vKnockback = Vector3.MoveTowards(vKnockback, Vector3.zero, fKnockbackDecay * Time.deltaTime);
     }
 
@@ -149,16 +154,17 @@ public class Player_Move : NetworkBehaviour
         if (playerUpper != null && playerUpper.IsHit) return;
         if (skill != null && skill.IsSkilling) return;  // 스킬 중 점프 차단
         if (net_isJumpPending.Value) return;            // 착지 전 재점프 차단
-        net_anim.SetTrigger("Jump");               // 오너 즉시 애니(반응성 유지)
-        Jump_ServerRpc();                          // 서버 검증·적용 요청
+        Jump_ServerRpc();                               // 서버 검증·적용 요청 (애니 트리거는 서버 승인 후)
     }
 
     [ServerRpc]
     void Jump_ServerRpc()
     {
         if (net_isJumpPending.Value) return;
-        if (!cct.isGrounded) return;               // 서버 검증: 클라 입력 불신
+        // 서버 검증: isGrounded 플리커 대응 — 유예 시간(0.15s) 내 접지 이력이 있으면 통과
+        if (Time.time - fLastGroundedTime > GroundedGraceTime) return;
         net_isJumpPending.Value = true;
+        net_anim.SetTrigger("Jump"); // 서버 승인 후 트리거 — 기각 시 애니 깜빡임 제거
         StartCoroutine(JumpRoutine());
     }
 

@@ -3,35 +3,35 @@
   "workspaceId": "18148f74-2d5d-4d8c-b350-77758f2ae08a",
   "focusedNodeId": null,
   "nodes": {
-    "1be8082e-5d4f-4c6c-b33b-3075b1b29563": {
-      "panelId": "1be8082e-5d4f-4c6c-b33b-3075b1b29563",
+    "b445542e-b629-4c10-b352-e00455747f04": {
+      "panelId": "b445542e-b629-4c10-b352-e00455747f04",
       "zOrder": 0,
       "creationIndex": 0,
-      "ptyId": "terminal-1780658335132-ssrmawi"
+      "ptyId": "terminal-1781080942527-4rmpfub"
     },
-    "2724d79a-516f-4790-81ab-1a92edd5deae": {
-      "panelId": "2724d79a-516f-4790-81ab-1a92edd5deae",
+    "d46a4667-65bb-4cf3-83e9-f8edbdf8a7a0": {
+      "panelId": "d46a4667-65bb-4cf3-83e9-f8edbdf8a7a0",
       "zOrder": 1,
       "creationIndex": 1,
-      "ptyId": "terminal-1780658335175-d8m0o2u"
+      "ptyId": "terminal-1781080944152-prwuy5w"
     },
-    "9c8197bd-0e85-4ef8-a8d8-ce004a33d5fe": {
-      "panelId": "9c8197bd-0e85-4ef8-a8d8-ce004a33d5fe",
+    "7bfd4434-ee1f-4efc-b37c-a23859ef5e6e": {
+      "panelId": "7bfd4434-ee1f-4efc-b37c-a23859ef5e6e",
       "zOrder": 2,
       "creationIndex": 2,
-      "ptyId": "terminal-1780658335218-gnj43ur"
+      "ptyId": "terminal-1781080944189-0ebvhe5"
     },
-    "21a52d40-ffd5-43cf-88fb-98ca713d10b7": {
-      "panelId": "21a52d40-ffd5-43cf-88fb-98ca713d10b7",
+    "7eea8209-9a33-41a8-9b92-8cc378a73c8f": {
+      "panelId": "7eea8209-9a33-41a8-9b92-8cc378a73c8f",
       "zOrder": 3,
       "creationIndex": 3,
-      "ptyId": "terminal-1780658335258-zxkk5nd"
+      "ptyId": "terminal-1781080944226-rmlq94h"
     },
-    "bf6ce504-a779-48dd-a752-08eb9e49e244": {
-      "panelId": "bf6ce504-a779-48dd-a752-08eb9e49e244",
+    "6247fe0d-e4e9-4bb6-b324-560c55c24097": {
+      "panelId": "6247fe0d-e4e9-4bb6-b324-560c55c24097",
       "zOrder": 4,
       "creationIndex": 4,
-      "ptyId": "terminal-1780658335298-pt9sllp"
+      "ptyId": "terminal-1781080944266-dbhwgyj"
     }
   }
 }

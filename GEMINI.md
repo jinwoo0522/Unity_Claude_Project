@@ -24,4 +24,3 @@
 - 대화 초반에 읽은 정보를 그대로 쓰지 말 것 - 사용자가 에셋을 교체/삭제/이동했을 수 있음
 - Animator controller에 guid를 넣기 전 반드시 해당 .meta 파일로 guid 검증
 - 에셋 검색/참조 확인은 반드시 `unity-scanner`를 사용할 것 (Read/Grep 대신 사용하여 토큰 절약)
-

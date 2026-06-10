@@ -43,3 +43,9 @@ This is a mandatory step. You MUST verify the project using the Unity CLI to ens
 - Include a **"Plan & Task Alignment"** section.
 - Include a **"Static Code Review"** section highlighting any logic errors or defects identified.
 - Include a **"Build Validation"** section detailing the successful outcome of the `unity-cli` compilation/build process.
+
+### 5. Code Review File Generation
+- **Action:** Create or update a file named `Code_Review.md` in the project root directory.
+- **Content:** Write the complete code review report (from Step 4) into this file.
+- **Language:** Ensure the entire content of `Code_Review.md` is written entirely in Korean (한국어).
+- If the file already exists, overwrite its content with the new report. This ensures a persistent record of the review is available in the codebase.

@@ -5,22 +5,23 @@
   "canvas": {
     "nodes": [
       {
-        "panelId": "1be8082e-5d4f-4c6c-b33b-3075b1b29563",
+        "panelId": "b445542e-b629-4c10-b352-e00455747f04",
         "panelType": "terminal",
-        "title": "✳ Claude Code",
+        "title": "⠂ Test remote commit with agent_1",
         "origin": {
           "x": 45.39574669486558,
-          "y": 411.89651834051347
+          "y": 405.1927291252116
         },
         "size": {
           "width": 640,
           "height": 400
-        }
+        },
+        "regionId": "150d6ece-5334-499f-bc43-e7e5fe41dda1"
       },
       {
-        "panelId": "2724d79a-516f-4790-81ab-1a92edd5deae",
+        "panelId": "d46a4667-65bb-4cf3-83e9-f8edbdf8a7a0",
         "panelType": "terminal",
-        "title": "✳ Claude Code",
+        "title": "C:\\WINDOWS\\system32\\cmd.exe",
         "origin": {
           "x": 760,
           "y": 420
@@ -31,22 +32,23 @@
         }
       },
       {
-        "panelId": "9c8197bd-0e85-4ef8-a8d8-ce004a33d5fe",
+        "panelId": "7bfd4434-ee1f-4efc-b37c-a23859ef5e6e",
         "panelType": "terminal",
-        "title": "✳ Claude Code",
+        "title": "C:\\WINDOWS\\system32\\cmd.exe",
         "origin": {
-          "x": 300,
-          "y": 980
+          "x": 418.04903603989897,
+          "y": 998.8878457663839
         },
         "size": {
           "width": 875.3113269815884,
           "height": 593.6105854911804
-        }
+        },
+        "regionId": "b926e6be-d12f-4583-8efb-db4f11fe0476"
       },
       {
-        "panelId": "21a52d40-ffd5-43cf-88fb-98ca713d10b7",
+        "panelId": "7eea8209-9a33-41a8-9b92-8cc378a73c8f",
         "panelType": "terminal",
-        "title": "✦  Working… (Golem_VS_Magician_Agents_1)",
+        "title": "◇  Ready (Golem_VS_Magician_Agents_1)",
         "origin": {
           "x": 1620,
           "y": 880
@@ -57,7 +59,7 @@
         }
       },
       {
-        "panelId": "bf6ce504-a779-48dd-a752-08eb9e49e244",
+        "panelId": "6247fe0d-e4e9-4bb6-b324-560c55c24097",
         "panelType": "terminal",
         "title": "◇  Ready (Golem_VS_Magician_Agents_1)",
         "origin": {
@@ -72,7 +74,7 @@
     ],
     "regions": [
       {
-        "id": "c3798864-9537-4083-a937-1c9b20994da0",
+        "id": "150d6ece-5334-499f-bc43-e7e5fe41dda1",
         "origin": {
           "x": 16.597091925288595,
           "y": 391.96171045153125
@@ -86,7 +88,7 @@
         "zOrder": -1000
       },
       {
-        "id": "caac7a23-a9fc-49f7-bf45-35b008136c04",
+        "id": "705f19e6-5521-4853-87fd-4abdd4abebe6",
         "origin": {
           "x": 739.4795953080915,
           "y": 394.12679774747903
@@ -100,10 +102,10 @@
         "zOrder": -1000
       },
       {
-        "id": "4959f5f6-133d-4507-a460-68d6e5bff491",
+        "id": "b926e6be-d12f-4583-8efb-db4f11fe0476",
         "origin": {
-          "x": 233.8074894387907,
-          "y": 928.4675972676315
+          "x": 381.76228127546403,
+          "y": 972.5392373891938
         },
         "size": {
           "width": 998.3275179461184,
@@ -114,10 +116,10 @@
         "zOrder": -1000
       },
       {
-        "id": "0ad289ce-a202-48a5-8b5b-9f989bed8c89",
+        "id": "b5c8b77f-6bab-4c3b-b409-633b828623af",
         "origin": {
-          "x": 1544.7904859180394,
-          "y": 821.9817798041838
+          "x": 1546.838962014183,
+          "y": 817.8848276118969
         },
         "size": {
           "width": 1047.7995280856082,
@@ -128,10 +130,10 @@
         "zOrder": -1000
       },
       {
-        "id": "12199283-6c96-4e41-9da9-d63d8d03f79f",
+        "id": "305d36a8-053d-4ea0-a1e7-b2f60bec160d",
         "origin": {
-          "x": 1585.867371303143,
-          "y": 94.85828533372293
+          "x": 1596.9726124084625,
+          "y": 88.70831840959795
         },
         "size": {
           "width": 747.2819462708062,
@@ -142,10 +144,10 @@
         "zOrder": -1000
       }
     ],
-    "zoomLevel": 1.0190051270151483,
+    "zoomLevel": 1.4253401128846297,
     "viewportOffset": {
-      "x": -995.1501945197328,
-      "y": -866.2283648714892
+      "x": 368.6698975246134,
+      "y": -452.2795053006797
     }
   },
   "dockState": {
@@ -177,7 +179,7 @@
           "id": "0cd8df57-2202-4b96-8d59-079c50d5d46a",
           "panelIds": [
             "67b83a9c-c90c-4b74-ae11-425a4a1931eb",
-            "f2f05d45-cd12-4865-b555-529e875be7f2"
+            "b3729434-a313-4fa8-8cb4-d4ffbb580d94"
           ],
           "activeIndex": 0
         }
@@ -189,7 +191,7 @@
         "zone": "center",
         "stackId": "0cd8df57-2202-4b96-8d59-079c50d5d46a"
       },
-      "f2f05d45-cd12-4865-b555-529e875be7f2": {
+      "b3729434-a313-4fa8-8cb4-d4ffbb580d94": {
         "type": "dock",
         "zone": "center",
         "stackId": "0cd8df57-2202-4b96-8d59-079c50d5d46a"
@@ -201,7 +203,7 @@
       "type": "canvas",
       "title": "Canvas"
     },
-    "f2f05d45-cd12-4865-b555-529e875be7f2": {
+    "b3729434-a313-4fa8-8cb4-d4ffbb580d94": {
       "type": "editor",
       "title": "TASK.md",
       "filePath": "TASK.md"
