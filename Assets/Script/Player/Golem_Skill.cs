@@ -11,6 +11,7 @@ public class Golem_Skill : Player_Skill
     [SerializeField] private GameObject[] M_Effects; // 마우스 스킬
 
     [SerializeField] private Transform AxePoint;
+    [SerializeField] private Transform BottomPoint;
 
     private List<ParticleSystem> _qEffectParticles = new List<ParticleSystem>();
     private List<ParticleSystem> _mEffectParticles = new List<ParticleSystem>();
@@ -108,7 +109,9 @@ public class Golem_Skill : Player_Skill
         
         if (IsOwner)
         { 
-            UseSkill_ServerRpc(SkillType.FireExplosion, AxePoint.position);
+            Vector3 spawnPosition = AxePoint.position;
+            spawnPosition.y = BottomPoint.position.y; // Y 좌표를 BottomPoint의 높이로 고정
+            UseSkill_ServerRpc(SkillType.FireExplosion, spawnPosition);
         }
 
         if (IsServer)

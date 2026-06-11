@@ -22,3 +22,7 @@ MonoBehaviour:
   prefab: {fileID: 4690530322022716621, guid: d87ba73ae71ec4249ba1a88555353f67, type: 3}
   _fCooldown: 5
   _strSkillState: Standing Melee Run Jump Attack
+  _fKnockback: 0
+  _fLaunchForce: 8
+  _fSlowMultiplier: 0.5
+  _fSlowDuration: 2

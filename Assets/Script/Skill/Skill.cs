@@ -42,7 +42,22 @@ public abstract class Skill : NetworkBehaviour
             if(output.GetComponent<NetworkObject>().OwnerClientId == GetComponent<NetworkObject>().OwnerClientId)
                 return;
             Player_UpperBody targetUpper = output.GetComponent<Player_UpperBody>();
-            if (targetUpper != null) targetUpper.TakeHit(fDamage);
+            if (targetUpper != null)
+            {
+                targetUpper.TakeHit(fDamage);
+                // fKnockback > 0 가드: 0인 스킬이 진행 중인 넉백을 강제로 0으로 덮어쓰는 버그 방지
+                if (Data.fKnockback > 0f)
+                {
+                    Vector3 dir = output.transform.position - transform.position;
+                    output.GetComponent<Player_Move>().ApplyKnockback(dir, Data.fKnockback);
+                }
+                // 공중 띄움 — fLaunchForce > 0인 스킬에서만 발동
+                if (Data.fLaunchForce > 0f)
+                    output.GetComponent<StatusEffect_Airborne>().Apply(Data.fLaunchForce);
+                // 슬로우 — fSlowDuration > 0인 스킬에서만 발동
+                if (Data.fSlowDuration > 0f)
+                    output.GetComponent<StatusEffect_Slow>().Apply(Data.fSlowMultiplier, Data.fSlowDuration);
+            }
         }
     }
 

@@ -22,8 +22,13 @@ public class Player_Move : NetworkBehaviour
         false, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server);
     protected float fCamYaw;
 
-    [SerializeField] private float fKnockbackDecay = 5f;
+    // 지수 감쇠 계수 — 값이 클수록 넉백이 빠르게 소멸 (Inspector에서 튜닝)
+    [SerializeField] private float fKnockbackDecay = 12f;
     protected Vector3 vKnockback;
+
+    // isGrounded 플리커 대응 — 서버 전용, fLastGroundedTime 기준으로 유예 판정
+    private float fLastGroundedTime;
+    private const float GroundedGraceTime = 0.15f;
 
 
     protected CharacterController               cct;
@@ -32,6 +37,8 @@ public class Player_Move : NetworkBehaviour
     protected NetworkAnimator                   net_anim;
     protected Player_UpperBody                  playerUpper;
     private   Player_Skill                      skill;
+    private   StatusEffect_Airborne             _airborne;
+    private   StatusEffect_Slow                 _slow;
 
     public override void OnNetworkSpawn()
     {
@@ -42,6 +49,8 @@ public class Player_Move : NetworkBehaviour
         net_anim    = GetComponent<NetworkAnimator>();
         playerUpper = GetComponent<Player_UpperBody>();
         skill       = GetComponent<Player_Skill>();
+        _airborne   = GetComponent<StatusEffect_Airborne>();
+        _slow       = GetComponent<StatusEffect_Slow>();
 
         if(IsOwner == false)
             return;
@@ -108,8 +117,13 @@ public class Player_Move : NetworkBehaviour
             vMoveDir = transform.right * MoveDir.x + transform.forward * MoveDir.y;
 
             float fSpeed = isSprint ? playerData.fRunSpeed : playerData.fWalkSpeed;
-            vMoveDir *= fSpeed;
+            // 슬로우 배율 적용 — 서버에서만 읽히므로 로컬 float으로 충분
+            vMoveDir *= fSpeed * _slow.SpeedMultiplier;
         }
+
+        // 공중 띄움 펜딩 상승속도 1회 소비 — 점프와 동일 경로로 verticalVelocity에 주입
+        if (_airborne.ConsumePendingLaunch(out float launchForce))
+            verticalVelocity = launchForce;
 
         // 중력 처리
         if (cct.isGrounded && verticalVelocity < 0f)
@@ -117,11 +131,18 @@ public class Player_Move : NetworkBehaviour
         else if (!cct.isGrounded)
             verticalVelocity += playerData.fGravity * Time.deltaTime;
 
+        // 중력 적용
         vMoveDir.y = verticalVelocity;
-        vMoveDir.x += vKnockback.x;
+        // 넉백 적용 (수평)
+        vMoveDir.x += vKnockback.x; 
         vMoveDir.z += vKnockback.z;
+        
         cct.Move(vMoveDir * Time.deltaTime);
-        vKnockback = Vector3.MoveTowards(vKnockback, Vector3.zero, fKnockbackDecay * Time.deltaTime);
+        if (cct.isGrounded) fLastGroundedTime = Time.time; // 접지 시각 갱신 (유예 판정용)
+        
+        // 지수 감쇠: 초기에 큰 힘을 주고 급격히 줄어드는 방식 — 미끄러지듯 멈추는 현상 방지
+        vKnockback *= Mathf.Exp(-fKnockbackDecay * Time.deltaTime);
+        if (vKnockback.sqrMagnitude < 0.01f) vKnockback = Vector3.zero;
     }
 
     public void ApplyKnockback(Vector3 dir, float strength)
@@ -141,7 +162,8 @@ public class Player_Move : NetworkBehaviour
         anim.SetFloat("MoveX", vAnimLerp.x);
         anim.SetFloat("MoveZ", vAnimLerp.y);
         anim.SetBool("IsMove", vTarget == Vector2.zero ? false : true);
-        anim.SetBool("IsGrounded", cct.isGrounded && !net_isJumpPending.Value);
+        // 공중 상태 포함 — 띄움 직후 IsGrounded 플리커 차단, 점프와 동일 애니 판정 보장
+        anim.SetBool("IsGrounded", cct.isGrounded && !net_isJumpPending.Value && !_airborne.IsAirborne);
     }
 
     protected virtual void PlayerJump()
@@ -149,16 +171,19 @@ public class Player_Move : NetworkBehaviour
         if (playerUpper != null && playerUpper.IsHit) return;
         if (skill != null && skill.IsSkilling) return;  // 스킬 중 점프 차단
         if (net_isJumpPending.Value) return;            // 착지 전 재점프 차단
-        net_anim.SetTrigger("Jump");               // 오너 즉시 애니(반응성 유지)
-        Jump_ServerRpc();                          // 서버 검증·적용 요청
+        if (_airborne.IsAirborne) return;               // 공중 띄움 중 점프 차단
+        Jump_ServerRpc();                               // 서버 검증·적용 요청 (애니 트리거는 서버 승인 후)
     }
 
     [ServerRpc]
     void Jump_ServerRpc()
     {
         if (net_isJumpPending.Value) return;
-        if (!cct.isGrounded) return;               // 서버 검증: 클라 입력 불신
+        if (_airborne.IsAirborne) return;               // 서버 재검증: RPC 위조 클라의 공중 점프 차단
+        // 서버 검증: isGrounded 플리커 대응 — 유예 시간(0.15s) 내 접지 이력이 있으면 통과
+        if (Time.time - fLastGroundedTime > GroundedGraceTime) return;
         net_isJumpPending.Value = true;
+        net_anim.SetTrigger("Jump"); // 서버 승인 후 트리거 — 기각 시 애니 깜빡임 제거
         StartCoroutine(JumpRoutine());
     }
 

@@ -20,3 +20,4 @@ MonoBehaviour:
   fRadius: 0.1
   nPoolSize: 5
   prefab: {fileID: 4427000628938413266, guid: 5733935386b21e043be715cb61760e7a, type: 3}
+  _fKnockback: 5
