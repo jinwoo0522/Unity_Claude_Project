@@ -17,4 +17,20 @@ public class SkillData : ScriptableObject
     [SerializeField] private string _strSkillState;
     public float  fCooldown     => _fCooldown;
     public string strSkillState => _strSkillState;
+
+    // 피격 시 대상에게 가할 넉백 힘 — 0이면 넉백 없음(기존 스킬 동작 유지)
+    [SerializeField] private float _fKnockback = 0f;
+    public float fKnockback => _fKnockback;
+
+    // 피격 시 대상을 공중으로 띄우는 상승 속도 — 0이면 효과 없음
+    [SerializeField] private float _fLaunchForce = 0f;
+    public float fLaunchForce => _fLaunchForce;
+
+    // 슬로우 이동 속도 배율 — 1이면 효과 없음(0~1)
+    [SerializeField] private float _fSlowMultiplier = 1f;
+    public float fSlowMultiplier => _fSlowMultiplier;
+
+    // 슬로우 지속 시간(초) — 0이면 슬로우 없음
+    [SerializeField] private float _fSlowDuration = 0f;
+    public float fSlowDuration => _fSlowDuration;
 }

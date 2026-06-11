@@ -20,8 +20,9 @@ public class SkillRange : Skill
 
     protected override void OnEnable()
     {
-        base.OnEnable();
         RangeEffect?.SetActive(true);
+
+        if (!IsServer) return;
         HitOnce();
         _timer = 0f;
     }
@@ -41,8 +42,10 @@ public class SkillRange : Skill
 
     void HitOnce()
     {
-        Collider[] hits = Physics.OverlapSphere(transform.position, fRadius);
+        Collider[] hits = new Collider[NetworkManager.Singleton.ConnectedClientsList.Count];
+        Physics.OverlapSphereNonAlloc(transform.position, fRadius , hits, LayerMask.GetMask("Player"));
         foreach (var hit in hits)
             OnHitEnemy(hit, fDamage);
     }
+
 }

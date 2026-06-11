@@ -1,14 +1,17 @@
 ## 계획 검증 결과
 
 ### 요구사항 대조 (TASK.md → PLAN.md)
-- [✅] 점프 버그 수정 : 스페이스바 입력 시 점프가 발생하지 않고 Idle로 돌아가는 문제 해결 계획 반영됨.
-- [✅] Golem/Magician 공통 적용 : 공통 부모 클래스인 `Player_Move.cs`를 수정하여 두 캐릭터 모두에 적용됨.
+- [✅] 공중 띄움 : Golem 우클릭 스킬(FireExplosion) 피격 시 플레이어를 공중으로 띄움
+- [✅] 점프 동일 판정 : 기존 점프와 동일한 verticalVelocity 흐름을 사용하고 코루틴을 통해 착지 시점 관리
+- [✅] 공중 행동 제한 : 공중에 떠 있는 동안 점프 및 스킬 사용 불가 처리 (Player_Move, Player_Skill 수정)
+- [✅] 슬로우 : 피격 순간부터 일정 시간 동안 이동 속도 감소 적용
+- [✅] 상태이상 모듈화 : StatusEffect_Airborne, StatusEffect_Slow 2개의 컴포넌트로 분리하여 독립된 함수 호출로 발동
 
 ### 이슈 목록
-- 1. [심각도: 낮음] `PLAN.md`에서 언급된 `Player_Data` 에셋은 실제로는 `Assets/Resources/Data/PlayerData/` 폴더 내에 `Golem_Data.asset` 및 `Magicain_Data.asset`으로 존재합니다. 계획에서 해당 에셋을 수정하지 않기로 명시했으므로 실제 작업에는 영향이 없으나, 경로 참조 시 주의가 필요합니다.
+- 없음. (에셋 및 스크립트 경로가 모두 실제 프로젝트에 존재하며, GEMINI.md의 서버 권위적 설계 및 은닉화 지침을 잘 따르고 있습니다.)
 
 ### 확인 필요 항목
 - 없음.
 
 ### 최종 판정
-[통과]
+통과

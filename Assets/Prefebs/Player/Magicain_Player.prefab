@@ -476,7 +476,9 @@ GameObject:
   - component: {fileID: 5546488184616999483}
   - component: {fileID: 6276525980467593750}
   - component: {fileID: 8807639835629801873}
-  m_Layer: 0
+  - component: {fileID: 7930384350956626270}
+  - component: {fileID: 740541800891769049}
+  m_Layer: 7
   m_Name: Magicain_Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -745,8 +747,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Magician_Skill
   ShowTopMostFoldoutHeaderGroup: 1
-  qSkillData: {fileID: 11400000, guid: 7824e62328a64f3aaf5818b1c3f1d5e1, type: 2}
-  mouseSkillData: {fileID: 11400000, guid: 477143663ce74237b977f2909193eceb, type: 2}
+  fAnimLerpSpeed: 3
 --- !u!95 &6276525980467593750
 Animator:
   serializedVersion: 7
@@ -781,6 +782,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0792060dff022e64f96df6c1f81d77e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AnimEventRelay
+--- !u!114 &7930384350956626270
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7576251448233022070}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d82227305984980468a08d962d1e03b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::StatusEffect_Airborne
+  ShowTopMostFoldoutHeaderGroup: 1
+--- !u!114 &740541800891769049
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7576251448233022070}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef749d2150b42004a873cd8b82619500, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::StatusEffect_Slow
+  ShowTopMostFoldoutHeaderGroup: 1
 --- !u!1 &8304582804339889416
 GameObject:
   m_ObjectHideFlags: 0

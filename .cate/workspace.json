@@ -5,21 +5,20 @@
   "canvas": {
     "nodes": [
       {
-        "panelId": "b445542e-b629-4c10-b352-e00455747f04",
+        "panelId": "32b29f46-2037-414c-9c6b-5be7390d7c05",
         "panelType": "terminal",
-        "title": "⠂ Test remote commit with agent_1",
+        "title": "C:\\WINDOWS\\system32\\cmd.exe",
         "origin": {
           "x": 45.39574669486558,
-          "y": 405.1927291252116
+          "y": 411.89651834051347
         },
         "size": {
           "width": 640,
           "height": 400
-        },
-        "regionId": "150d6ece-5334-499f-bc43-e7e5fe41dda1"
+        }
       },
       {
-        "panelId": "d46a4667-65bb-4cf3-83e9-f8edbdf8a7a0",
+        "panelId": "b273a9b7-31b2-4abb-9bfa-b19c611244cf",
         "panelType": "terminal",
         "title": "C:\\WINDOWS\\system32\\cmd.exe",
         "origin": {
@@ -32,36 +31,36 @@
         }
       },
       {
-        "panelId": "7bfd4434-ee1f-4efc-b37c-a23859ef5e6e",
+        "panelId": "2e668088-de35-4870-a831-d5727b9aadea",
         "panelType": "terminal",
-        "title": "C:\\WINDOWS\\system32\\cmd.exe",
+        "title": "✳ Debug Golem FireExplosion skill pooling lag",
         "origin": {
-          "x": 418.04903603989897,
-          "y": 998.8878457663839
+          "x": 276.94692247102455,
+          "y": 981.440817345561
         },
         "size": {
-          "width": 875.3113269815884,
-          "height": 593.6105854911804
+          "width": 904.5761871876525,
+          "height": 602.1761430396213
         },
-        "regionId": "b926e6be-d12f-4583-8efb-db4f11fe0476"
+        "regionId": "e69ccd10-e6b7-4f05-9a79-5e05538f9547"
       },
       {
-        "panelId": "7eea8209-9a33-41a8-9b92-8cc378a73c8f",
+        "panelId": "0cb6be49-fb26-4b94-be75-9219ae747be7",
         "panelType": "terminal",
-        "title": "◇  Ready (Golem_VS_Magician_Agents_1)",
+        "title": "Windows PowerShell",
         "origin": {
           "x": 1620,
           "y": 880
         },
         "size": {
-          "width": 878.2899513737605,
-          "height": 682.9693172563404
+          "width": 877.1201677625188,
+          "height": 689.5362048468651
         }
       },
       {
-        "panelId": "6247fe0d-e4e9-4bb6-b324-560c55c24097",
+        "panelId": "0f76a556-7f66-423d-88a4-39bb3b103395",
         "panelType": "terminal",
-        "title": "◇  Ready (Golem_VS_Magician_Agents_1)",
+        "title": "C:\\WINDOWS\\system32\\cmd.exe",
         "origin": {
           "x": 1640,
           "y": 140
@@ -74,7 +73,7 @@
     ],
     "regions": [
       {
-        "id": "150d6ece-5334-499f-bc43-e7e5fe41dda1",
+        "id": "e6382f4d-49f7-4282-bea3-e444760345b3",
         "origin": {
           "x": 16.597091925288595,
           "y": 391.96171045153125
@@ -88,7 +87,7 @@
         "zOrder": -1000
       },
       {
-        "id": "705f19e6-5521-4853-87fd-4abdd4abebe6",
+        "id": "bc441a0d-d76b-4f06-b33c-d336a8fe1a8a",
         "origin": {
           "x": 739.4795953080915,
           "y": 394.12679774747903
@@ -102,10 +101,10 @@
         "zOrder": -1000
       },
       {
-        "id": "b926e6be-d12f-4583-8efb-db4f11fe0476",
+        "id": "e69ccd10-e6b7-4f05-9a79-5e05538f9547",
         "origin": {
-          "x": 381.76228127546403,
-          "y": 972.5392373891938
+          "x": 233.8074894387907,
+          "y": 928.4675972676315
         },
         "size": {
           "width": 998.3275179461184,
@@ -116,10 +115,10 @@
         "zOrder": -1000
       },
       {
-        "id": "b5c8b77f-6bab-4c3b-b409-633b828623af",
+        "id": "851db556-0089-408a-9514-73cbfd541155",
         "origin": {
-          "x": 1546.838962014183,
-          "y": 817.8848276118969
+          "x": 1533.7907765136436,
+          "y": 803.9009694561822
         },
         "size": {
           "width": 1047.7995280856082,
@@ -130,10 +129,10 @@
         "zOrder": -1000
       },
       {
-        "id": "305d36a8-053d-4ea0-a1e7-b2f60bec160d",
+        "id": "d64fb500-95cc-43d8-a7c6-0b91b605ec1a",
         "origin": {
-          "x": 1596.9726124084625,
-          "y": 88.70831840959795
+          "x": 1585.867371303143,
+          "y": 94.85828533372293
         },
         "size": {
           "width": 747.2819462708062,
@@ -144,10 +143,10 @@
         "zOrder": -1000
       }
     ],
-    "zoomLevel": 1.0905482562830873,
+    "zoomLevel": 0.974168721180939,
     "viewportOffset": {
-      "x": 377.2355145896172,
-      "y": -86.6237738801201
+      "x": -929.3006667633206,
+      "y": -942.3079895052053
     }
   },
   "dockState": {
@@ -176,37 +175,26 @@
         "size": 0,
         "layout": {
           "type": "tabs",
-          "id": "0cd8df57-2202-4b96-8d59-079c50d5d46a",
+          "id": "6a7e2474-83c2-4d17-9d09-c3021d3111a0",
           "panelIds": [
-            "67b83a9c-c90c-4b74-ae11-425a4a1931eb",
-            "b3729434-a313-4fa8-8cb4-d4ffbb580d94"
+            "ed81ec52-21f2-4acd-b670-44664159df40"
           ],
           "activeIndex": 0
         }
       }
     },
     "locations": {
-      "67b83a9c-c90c-4b74-ae11-425a4a1931eb": {
+      "ed81ec52-21f2-4acd-b670-44664159df40": {
         "type": "dock",
         "zone": "center",
-        "stackId": "0cd8df57-2202-4b96-8d59-079c50d5d46a"
-      },
-      "b3729434-a313-4fa8-8cb4-d4ffbb580d94": {
-        "type": "dock",
-        "zone": "center",
-        "stackId": "0cd8df57-2202-4b96-8d59-079c50d5d46a"
+        "stackId": "6a7e2474-83c2-4d17-9d09-c3021d3111a0"
       }
     }
   },
   "dockPanels": {
-    "67b83a9c-c90c-4b74-ae11-425a4a1931eb": {
+    "ed81ec52-21f2-4acd-b670-44664159df40": {
       "type": "canvas",
       "title": "Canvas"
-    },
-    "b3729434-a313-4fa8-8cb4-d4ffbb580d94": {
-      "type": "editor",
-      "title": "TASK.md",
-      "filePath": "TASK.md"
     }
   }
 }

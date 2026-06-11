@@ -360,7 +360,9 @@ GameObject:
   - component: {fileID: 1734756855715145631}
   - component: {fileID: 1898331943030139423}
   - component: {fileID: 7543415186289248004}
-  m_Layer: 0
+  - component: {fileID: 5105996620483371284}
+  - component: {fileID: 5418210882481543367}
+  m_Layer: 7
   m_Name: Golem_Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -382,6 +384,7 @@ Transform:
   m_Children:
   - {fileID: 4025716764232513649}
   - {fileID: 2247112855778898300}
+  - {fileID: 2740712411653127757}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &6504052176004744969
@@ -396,7 +399,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
-  GlobalObjectIdHash: 3296484378
+  GlobalObjectIdHash: 427886385
   InScenePlacedSourceGlobalObjectIdHash: 0
   DeferredDespawnTick: 0
   Ownership: 1
@@ -638,6 +641,7 @@ MonoBehaviour:
   M_Effects:
   - {fileID: 4223287964565808981}
   AxePoint: {fileID: 6027534453458682277}
+  BottomPoint: {fileID: 2740712411653127757}
 --- !u!95 &1734756855715145631
 Animator:
   serializedVersion: 7
@@ -688,6 +692,63 @@ MonoBehaviour:
   trailRenderer_1: {fileID: 3525005583933164229}
   trailRenderer_2: {fileID: 1566994309705463754}
   trailRenderer_3: {fileID: 304910233856320595}
+--- !u!114 &5105996620483371284
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4754220212716445872}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d82227305984980468a08d962d1e03b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::StatusEffect_Airborne
+  ShowTopMostFoldoutHeaderGroup: 1
+--- !u!114 &5418210882481543367
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4754220212716445872}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef749d2150b42004a873cd8b82619500, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::StatusEffect_Slow
+  ShowTopMostFoldoutHeaderGroup: 1
+--- !u!1 &4993173485944839245
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2740712411653127757}
+  m_Layer: 0
+  m_Name: BottomPosition
+  m_TagString: Untagged
+  m_Icon: {fileID: 419385456094870383, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2740712411653127757
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4993173485944839245}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 124523891963633087}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6995575323198121855
 GameObject:
   m_ObjectHideFlags: 0
@@ -982,6 +1043,14 @@ PrefabInstance:
     - target: {fileID: 786889566517218708, guid: 6433a6bc9fc8d5d4585ba35e39927206, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 4850381029571369237, guid: 6433a6bc9fc8d5d4585ba35e39927206, type: 3}
+      propertyPath: CollisionModule.enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4850381029571411523, guid: 6433a6bc9fc8d5d4585ba35e39927206, type: 3}
+      propertyPath: CollisionModule.enabled
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

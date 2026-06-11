@@ -62,7 +62,7 @@ public class UserScrollbar : NetworkBehaviour
     }
     public void AddUser(NetworkManager nm, ConnectionEventData data)
     {
-        if(IsHost == true && net_uiCount.Value >= 2)
+        if(IsHost == true && net_uiCount.Value >= 1)
         {
             StartBtn.gameObject.SetActive(true);
         }
