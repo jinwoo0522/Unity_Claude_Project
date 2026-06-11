@@ -34,7 +34,7 @@ MonoBehaviour:
       - Key: LoadInBackGroundClipSizeThresholdBytes
         Value: 204800
     - PlatformGroup:
-        m_String: Android
+        m_String: Standalone
       m_SerializedParams:
       - Key: StreamingAssetsFolderSizeLimit
         Value: 50
@@ -51,7 +51,7 @@ MonoBehaviour:
       - Key: LoadInBackGroundClipSizeThresholdBytes
         Value: 204800
     - PlatformGroup:
-        m_String: Standalone
+        m_String: WebGL
       m_SerializedParams:
       - Key: StreamingAssetsFolderSizeLimit
         Value: 50
