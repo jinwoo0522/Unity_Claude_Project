@@ -16,15 +16,15 @@ public class SkillRange : Skill
         base.Init(type, data, position, direction, clinetID);
         fDamage = data.fDamage;
         fRadius = data.fRadius;
+
+        if (!IsServer) return;
+        _timer = 0f;
+        HitOnce();
     }
 
     protected override void OnEnable()
     {
         RangeEffect?.SetActive(true);
-
-        if (!IsServer) return;
-        HitOnce();
-        _timer = 0f;
     }
 
     void Update()
