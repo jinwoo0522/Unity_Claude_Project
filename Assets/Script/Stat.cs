@@ -37,6 +37,17 @@ public class Stat : NetworkBehaviour
             return;
         }
 
+        if(IsServer == true)
+        {
+            pDamage = Stat_Data.fAttackDamage;
+            pResistance = Stat_Data.fResistance;
+            pMaxHp = Stat_Data.fMaxHp;
+            pHp = Stat_Data.fHp;
+        }
+
+        hpSlider.maxValue = fMaxHp.Value;
+        hpSlider.value = fHp.Value;
+
         fHp.OnValueChanged += (float pre , float next) =>
         {
             hpSlider.value = next;
@@ -46,14 +57,6 @@ public class Stat : NetworkBehaviour
         {
             hpSlider.maxValue = next;
         };
-
-        hpSlider.maxValue = fMaxHp.Value;
-        hpSlider.value = fHp.Value;
-
-        pDamage = Stat_Data.fAttackDamage;
-        pResistance = Stat_Data.fResistance;
-        pMaxHp = Stat_Data.fMaxHp;
-        pHp = Stat_Data.fHp;
     }
 
     void Die()
