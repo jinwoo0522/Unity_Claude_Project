@@ -22,3 +22,8 @@ MonoBehaviour:
   prefab: {fileID: 8318284260995122833, guid: 1a0953df719ae48419faf46f9ad66289, type: 3}
   _fCooldown: 10
   _strSkillState: Standing 2H Magic Area Attack 02
+  _fKnockback: 0
+  _fLaunchForce: 0
+  _fSlowMultiplier: 1
+  _fSlowDuration: 0
+  _fFreezeDuration: 3

@@ -30,14 +30,14 @@ public abstract class Player_Skill : NetworkBehaviour
     // 스킬 레이어 weight > 0 → 스킬 발동 중
     public bool IsSkilling => net_SkillWeight.Value > 0f;
 
-    private StatusEffect_Airborne _airborne;
+    private Player_Status _status;
 
     public override void OnNetworkSpawn()
     {
         // Animator가 루트로 이동됐으므로 GetComponent로 직접 참조
         anim        = GetComponent<Animator>();
         playerUpper = GetComponent<Player_UpperBody>();
-        _airborne   = GetComponent<StatusEffect_Airborne>();
+        _status     = GetComponent<Player_Status>();
 
         // 스폰 시점 초기 weight 즉시 반영
         anim.SetLayerWeight(SkillLayer, net_SkillWeight.Value);
@@ -76,7 +76,8 @@ public abstract class Player_Skill : NetworkBehaviour
         if (IsSkilling) return null;
         if (playerUpper != null && playerUpper.IsAttacking) return null;
         if (playerUpper != null && playerUpper.IsHit) return null;
-        if (_airborne != null && _airborne.IsAirborne) return null;
+        if (_status != null && _status.IsAirborne) return null;
+        if (_status != null && _status.IsFrozen) return null;
 
         return data;
     }

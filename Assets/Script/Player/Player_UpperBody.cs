@@ -11,8 +11,9 @@ public abstract class Player_UpperBody : NetworkBehaviour
     public bool IsAttacking => state == UpperState.Attacking && anim.GetLayerWeight(UpperBodyLayer) > 0f;
 
     private enum UpperState { Attacking, Hit }
-    private Animator     anim;
-    private Player_Skill skill;
+    private Animator      anim;
+    private Player_Skill  skill;
+    private Player_Status _status;
     private const int UpperBodyLayer = 1;
     private UpperState state;
 
@@ -29,8 +30,9 @@ public abstract class Player_UpperBody : NetworkBehaviour
     public override void OnNetworkSpawn()
     {
         // Animator가 루트로 이동됐으므로 GetComponent로 직접 참조
-        anim  = GetComponent<Animator>();
-        skill = GetComponent<Player_Skill>();
+        anim    = GetComponent<Animator>();
+        skill   = GetComponent<Player_Skill>();
+        _status = GetComponent<Player_Status>();
 
         anim.SetLayerWeight(UpperBodyLayer, net_AnimWeight.Value);
         net_AnimWeight.OnValueChanged = (pre, next) =>
@@ -76,22 +78,29 @@ public abstract class Player_UpperBody : NetworkBehaviour
 
         if (IsHit) return;
         if (skill != null && skill.IsSkilling) return; // 스킬 중 기본공격 차단
+        if (_status.IsFrozen) return;                  // 빙결 중 기본공격 차단 (owner 측 게이트, 현행 패턴과 동일)
         if (anim.GetLayerWeight(UpperBodyLayer) > 0f) return;
         StartUpper("UpperAttack", UpperState.Attacking);
     }
 
     // 서버 전용 — 피격: 체력 감소 + 피격 애니메이션(진행 중 공격 클립 대체)
-    public void TakeHit(float damage)
+    public void TakeHit(float damage , bool isHitAni = true)
     {
         if (!IsServer) return;
 
         GetComponent<Stat>().pHp = -damage;          // 체력 감소(서버 권위)
 
-        state = UpperState.Hit;
-        net_AccLerpTime.Value = 1f;
-        net_AnimWeight.Value = 1f;                    // 상부 레이어 활성(전 클라 동기화)
-        anim.Play("UpperHit", UpperBodyLayer, 0f);    // 서버 즉시 재생
-        PlayHitAnim_ClientRpc();                       // 전 클라 동기화
+        Debug.Log(isHitAni + "빙결 히트 애니 플래그");
+        
+        if(isHitAni == true)
+        {
+            anim.Play("UpperHit", UpperBodyLayer, 0f);    // 서버 즉시 재생
+            PlayHitAnim_ClientRpc();                       // 전 클라 동기화
+            state = UpperState.Hit;
+            net_AccLerpTime.Value = 1f;
+            net_AnimWeight.Value = 1f;                    // 상부 레이어 활성(전 클라 동기화)
+        }
+
     }
 
     [ClientRpc]

@@ -33,4 +33,8 @@ public class SkillData : ScriptableObject
     // 슬로우 지속 시간(초) — 0이면 슬로우 없음
     [SerializeField] private float _fSlowDuration = 0f;
     public float fSlowDuration => _fSlowDuration;
+
+    // 빙결 지속 시간(초) — 0이면 빙결 없음
+    [SerializeField] private float _fFreezeDuration = 0f;
+    public float fFreezeDuration => _fFreezeDuration;
 }
