@@ -120,6 +120,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SkillRange
   ShowTopMostFoldoutHeaderGroup: 1
+  isHitAnim: 0
   RangeEffect: {fileID: 3285340359624044305}
   CastEffect: {fileID: 7128884801989908573}
   fCastTime: 1.5

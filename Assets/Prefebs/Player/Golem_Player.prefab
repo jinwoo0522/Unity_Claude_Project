@@ -360,8 +360,7 @@ GameObject:
   - component: {fileID: 1734756855715145631}
   - component: {fileID: 1898331943030139423}
   - component: {fileID: 7543415186289248004}
-  - component: {fileID: 5105996620483371284}
-  - component: {fileID: 5418210882481543367}
+  - component: {fileID: 8777450751401349420}
   m_Layer: 7
   m_Name: Golem_Player
   m_TagString: Player
@@ -692,7 +691,7 @@ MonoBehaviour:
   trailRenderer_1: {fileID: 3525005583933164229}
   trailRenderer_2: {fileID: 1566994309705463754}
   trailRenderer_3: {fileID: 304910233856320595}
---- !u!114 &5105996620483371284
+--- !u!114 &8777450751401349420
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -701,22 +700,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 4754220212716445872}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d82227305984980468a08d962d1e03b2, type: 3}
+  m_Script: {fileID: 11500000, guid: 979878442021c5d44b3dc49973ecddf7, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::StatusEffect_Airborne
-  ShowTopMostFoldoutHeaderGroup: 1
---- !u!114 &5418210882481543367
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4754220212716445872}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ef749d2150b42004a873cd8b82619500, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::StatusEffect_Slow
+  m_EditorClassIdentifier: Assembly-CSharp::Player_Status
   ShowTopMostFoldoutHeaderGroup: 1
 --- !u!1 &4993173485944839245
 GameObject:

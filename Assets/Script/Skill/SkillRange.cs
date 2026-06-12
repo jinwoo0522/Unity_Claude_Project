@@ -6,6 +6,7 @@ public class SkillRange : Skill
     [Header("이펙트")]
     [SerializeField] private GameObject RangeEffect; // 범위 이펙트
     [SerializeField] private float fRangeTime = 3f;   // 범위 유지 시간(소멸까지)
+
     private float fDamage;
     private float fRadius;
 
@@ -45,7 +46,6 @@ public class SkillRange : Skill
         Collider[] hits = new Collider[NetworkManager.Singleton.ConnectedClientsList.Count];
         Physics.OverlapSphereNonAlloc(transform.position, fRadius , hits, LayerMask.GetMask("Player"));
         foreach (var hit in hits)
-            OnHitEnemy(hit, fDamage);
+            OnHitEnemy(hit, fDamage, isHitAnim);
     }
-
 }

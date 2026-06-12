@@ -78,7 +78,7 @@ public class SkillCastRange : Skill
     {
         Collider[] hits = Physics.OverlapSphere(transform.position, fRadius);
         foreach (var hit in hits)
-            OnHitEnemy(hit, fDamage);
+            OnHitEnemy(hit, fDamage, isHitAnim);
     }
 
     // 이펙트 켜고 끄기만 전 클라(호스트 포함) 동기화 — 수명 판정 아님

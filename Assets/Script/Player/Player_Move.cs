@@ -3,7 +3,6 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using Unity.Netcode;
 using Unity.Netcode.Components;
-
 public class Player_Move : NetworkBehaviour
 {
     // 인스펙터에서 할당된 객체들은 캐싱해서 들어가서 서버가 알고있음
@@ -37,8 +36,7 @@ public class Player_Move : NetworkBehaviour
     protected NetworkAnimator                   net_anim;
     protected Player_UpperBody                  playerUpper;
     private   Player_Skill                      skill;
-    private   StatusEffect_Airborne             _airborne;
-    private   StatusEffect_Slow                 _slow;
+    private   Player_Status                     _status;
 
     public override void OnNetworkSpawn()
     {
@@ -49,8 +47,7 @@ public class Player_Move : NetworkBehaviour
         net_anim    = GetComponent<NetworkAnimator>();
         playerUpper = GetComponent<Player_UpperBody>();
         skill       = GetComponent<Player_Skill>();
-        _airborne   = GetComponent<StatusEffect_Airborne>();
-        _slow       = GetComponent<StatusEffect_Slow>();
+        _status     = GetComponent<Player_Status>();
 
         if(IsOwner == false)
             return;
@@ -76,8 +73,12 @@ public class Player_Move : NetworkBehaviour
     {
         if(IsServer == true)
         {
+            GravityManage();
+
+            if (_status.IsFrozen) return; // 빙결 시 멈춤
             PlayerMove();
             RotateWithCamera();
+            
         }
     }
 
@@ -110,7 +111,7 @@ public class Player_Move : NetworkBehaviour
     protected virtual void PlayerMove()
     {
 
-        // 스킬 중에는 수평 입력 이동 차단 — 루트모션과의 간섭 방지(중력·넉백은 유지)
+        // 스킬 중 또는 빙결 중에는 수평 입력 이동 차단 — 중력·넉백은 유지
         Vector3 vMoveDir = Vector3.zero;
         if (skill == null || !skill.IsSkilling)
         {
@@ -118,21 +119,9 @@ public class Player_Move : NetworkBehaviour
 
             float fSpeed = isSprint ? playerData.fRunSpeed : playerData.fWalkSpeed;
             // 슬로우 배율 적용 — 서버에서만 읽히므로 로컬 float으로 충분
-            vMoveDir *= fSpeed * _slow.SpeedMultiplier;
+            vMoveDir *= fSpeed * _status.SpeedMultiplier;
         }
 
-        // 공중 띄움 펜딩 상승속도 1회 소비 — 점프와 동일 경로로 verticalVelocity에 주입
-        if (_airborne.ConsumePendingLaunch(out float launchForce))
-            verticalVelocity = launchForce;
-
-        // 중력 처리
-        if (cct.isGrounded && verticalVelocity < 0f)
-            verticalVelocity = -2f; // 바닥 감지를 위한 최소 하강값
-        else if (!cct.isGrounded)
-            verticalVelocity += playerData.fGravity * Time.deltaTime;
-
-        // 중력 적용
-        vMoveDir.y = verticalVelocity;
         // 넉백 적용 (수평)
         vMoveDir.x += vKnockback.x; 
         vMoveDir.z += vKnockback.z;
@@ -143,6 +132,23 @@ public class Player_Move : NetworkBehaviour
         // 지수 감쇠: 초기에 큰 힘을 주고 급격히 줄어드는 방식 — 미끄러지듯 멈추는 현상 방지
         vKnockback *= Mathf.Exp(-fKnockbackDecay * Time.deltaTime);
         if (vKnockback.sqrMagnitude < 0.01f) vKnockback = Vector3.zero;
+    }
+
+    void GravityManage()
+    {
+        if (cct.isGrounded && verticalVelocity < 0f)
+            verticalVelocity = -2f; // 바닥 감지를 위한 최소 하강값
+        else if (!cct.isGrounded)
+            verticalVelocity += playerData.fGravity * Time.deltaTime;
+
+        // 공중 띄움 펜딩 상승속도 1회 소비 — 점프와 동일 경로로 verticalVelocity에 주입
+        if (_status.ConsumePendingLaunch(out float launchForce))
+            verticalVelocity = launchForce;
+
+        Vector3 vGravity= Vector3.zero;
+
+        vGravity.y = verticalVelocity;
+        cct.Move(vGravity * Time.deltaTime);
     }
 
     public void ApplyKnockback(Vector3 dir, float strength)
@@ -163,7 +169,7 @@ public class Player_Move : NetworkBehaviour
         anim.SetFloat("MoveZ", vAnimLerp.y);
         anim.SetBool("IsMove", vTarget == Vector2.zero ? false : true);
         // 공중 상태 포함 — 띄움 직후 IsGrounded 플리커 차단, 점프와 동일 애니 판정 보장
-        anim.SetBool("IsGrounded", cct.isGrounded && !net_isJumpPending.Value && !_airborne.IsAirborne);
+        anim.SetBool("IsGrounded", cct.isGrounded && !net_isJumpPending.Value && !_status.IsAirborne);
     }
 
     protected virtual void PlayerJump()
@@ -171,7 +177,8 @@ public class Player_Move : NetworkBehaviour
         if (playerUpper != null && playerUpper.IsHit) return;
         if (skill != null && skill.IsSkilling) return;  // 스킬 중 점프 차단
         if (net_isJumpPending.Value) return;            // 착지 전 재점프 차단
-        if (_airborne.IsAirborne) return;               // 공중 띄움 중 점프 차단
+        if (_status.IsAirborne) return;                 // 공중 띄움 중 점프 차단
+        if (_status.IsFrozen) return;                   // 빙결 중 점프 차단
         Jump_ServerRpc();                               // 서버 검증·적용 요청 (애니 트리거는 서버 승인 후)
     }
 
@@ -179,7 +186,8 @@ public class Player_Move : NetworkBehaviour
     void Jump_ServerRpc()
     {
         if (net_isJumpPending.Value) return;
-        if (_airborne.IsAirborne) return;               // 서버 재검증: RPC 위조 클라의 공중 점프 차단
+        if (_status.IsAirborne) return;                 // 서버 재검증: RPC 위조 클라의 공중 점프 차단
+        if (_status.IsFrozen) return;                   // 서버 재검증: 빙결 중 점프 차단
         // 서버 검증: isGrounded 플리커 대응 — 유예 시간(0.15s) 내 접지 이력이 있으면 통과
         if (Time.time - fLastGroundedTime > GroundedGraceTime) return;
         net_isJumpPending.Value = true;
