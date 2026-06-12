@@ -17,7 +17,7 @@ public class Golem_Skill : Player_Skill
     private List<ParticleSystem> _mEffectParticles = new List<ParticleSystem>();
     private CharacterController cct;
 
-    private Golem_TrailEmitting _trailEmitter; // 마우스 스킬 전용 트레일 이펙터 (루트모션 이동과 시각적 연동 위해 스킬 클래스에서 직접 제어)
+    private Player_TrailEmitting _trailEmitter; // 마우스 스킬 전용 트레일 이펙터 (루트모션 이동과 시각적 연동 위해 스킬 클래스에서 직접 제어)
     private bool                _rootMotionActive;
 
 
@@ -25,7 +25,7 @@ public class Golem_Skill : Player_Skill
     {
         base.OnNetworkSpawn();
         cct = GetComponent<CharacterController>();
-        _trailEmitter = GetComponent<Golem_TrailEmitting>();
+        _trailEmitter = GetComponent<Player_TrailEmitting>();
 
         // 이펙트 ParticleSystem 컴포넌트 캐싱 — 재생 시마다 GetComponent 호출 방지
         foreach (var effect in Q_Effects)

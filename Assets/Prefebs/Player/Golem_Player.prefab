@@ -688,9 +688,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Golem_TrailEmitting
   ShowTopMostFoldoutHeaderGroup: 1
-  trailRenderer_1: {fileID: 3525005583933164229}
-  trailRenderer_2: {fileID: 1566994309705463754}
-  trailRenderer_3: {fileID: 304910233856320595}
+  trailRenderers:
+  - {fileID: 3525005583933164229}
+  - {fileID: 1566994309705463754}
+  - {fileID: 304910233856320595}
 --- !u!114 &8777450751401349420
 MonoBehaviour:
   m_ObjectHideFlags: 0
