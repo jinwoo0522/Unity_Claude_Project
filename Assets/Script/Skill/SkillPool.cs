@@ -24,6 +24,8 @@ public class SkillPool
 
     private void ResourceLoad()
     {
+
+        //0
         SkillData skill = Resources.Load<SkillData>("Data/SkillData/ElectricSkillData");
         if(skill == null)
         {
@@ -32,6 +34,7 @@ public class SkillPool
         }
         SkillDatas.Add(skill); 
 
+        //1
         SkillData Magician_Q_Skill = Resources.Load<SkillData>("Data/SkillData/Magician_Q_Skill");
         if(Magician_Q_Skill == null)
         {
@@ -40,6 +43,7 @@ public class SkillPool
         }
         SkillDatas.Add(Magician_Q_Skill); 
 
+        //2
         SkillData Golem_Mouse_Skill = Resources.Load<SkillData>("Data/SkillData/Golem_Mouse_Skill");
         if(Golem_Mouse_Skill == null)
         {
@@ -47,6 +51,15 @@ public class SkillPool
             return;
         }
         SkillDatas.Add(Golem_Mouse_Skill); 
+
+        //3
+        SkillData Magician_Mouse_Skill = Resources.Load<SkillData>("Data/SkillData/Magician_Mouse_Skill");
+        if(Magician_Mouse_Skill == null)
+        {
+            GameManager.Instance.DebugMessage<SkillPool>("Magician_Mouse_Skill 스킬 NULL");
+            return;
+        }
+        SkillDatas.Add(Magician_Mouse_Skill); 
 
     }
 
