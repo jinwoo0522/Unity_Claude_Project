@@ -26,3 +26,5 @@ MonoBehaviour:
   fJumpAmount: 5
   fGravity: -9.8
   fJumpDelay: 0.1
+  fMaxMana: 100
+  fManaRegen: 0.5

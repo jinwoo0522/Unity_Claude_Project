@@ -476,8 +476,6 @@ GameObject:
   - component: {fileID: 5546488184616999483}
   - component: {fileID: 6276525980467593750}
   - component: {fileID: 8807639835629801873}
-  - component: {fileID: 7930384350956626270}
-  - component: {fileID: 740541800891769049}
   - component: {fileID: 5088321023875973589}
   - component: {fileID: 7197683294282090257}
   m_Layer: 7
@@ -541,7 +539,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
-  GlobalObjectIdHash: 2912079774
+  GlobalObjectIdHash: 3019987179
   InScenePlacedSourceGlobalObjectIdHash: 0
   DeferredDespawnTick: 0
   Ownership: 1
@@ -631,6 +629,7 @@ MonoBehaviour:
   fHitExitStart: 0.7
   currentSkill: 0
   rightHandBone: {fileID: 1660563736776286475}
+  _electricSkillData: {fileID: 11400000, guid: 5a3c5cf6aeb78334ab726d6857eb60e2, type: 2}
 --- !u!114 &8707130197351642024
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -750,6 +749,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Magician_Skill
   ShowTopMostFoldoutHeaderGroup: 1
   fAnimLerpSpeed: 3
+  _mouseSkillData: {fileID: 11400000, guid: 477143663ce74237b977f2909193eceb, type: 2}
 --- !u!95 &6276525980467593750
 Animator:
   serializedVersion: 7

@@ -1,0 +1,5 @@
+Warning: True color (24-bit) support not detected. Using a terminal with true color enabled will result in a better visual experience.
+Ripgrep is not available. Falling back to GrepTool.
+제공해주신 경로(`C:/Program Files/Git/unity-code-reviewer`)를 확인해 보았으나 해당 경로나 파일이 존재하지 않습니다. 
+
+혹시 `unity-code-reviewer` 스킬을 실행하여 코드 리뷰를 진행하기 원하시나요? 원하시는 작업을 조금 더 구체적으로 말씀해 주시면 도와드리겠습니다.

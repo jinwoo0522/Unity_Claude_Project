@@ -10,15 +10,19 @@ public class Magician_Skill : Player_Skill
         if (CheckCanUseSkill(SkillType.IceExplosion, 0) == null)
             return;
 
-        UseSkill_ServerRpc(SkillType.IceExplosion);
         Animation_Play_ServerRpc(SkillType.IceExplosion , 0);
+        UseSkill_ServerRpc(SkillType.IceExplosion);
         SetCooldownLength(SkillType.IceExplosion, 0);
     }
+
+
 
     protected override void OnAttack_Skill()
     {
         if (!IsOwner) return;
-    
+
         SetCooldownLength(SkillType.IceExplosion, 1);
     }
+
+
 }

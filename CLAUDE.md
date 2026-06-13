@@ -25,3 +25,22 @@
 - Animator controller에 guid를 넣기 전 반드시 해당 .meta 파일로 guid 검증
 - 에셋 검색/참조 확인은 반드시 `unity-scanner`를 사용할 것 (Read/Grep 대신 사용하여 토큰 절약)
 
+## 프로젝트 디렉토리 구조 (탐색 시 우선 참조)
+
+파일 탐색은 아래 고정 경로를 직접 겨냥한다. `Glob "**/*.cs"`처럼 프로젝트 전체를 훑으면
+`Library/PackageCache`·VFX 에셋이 수천 줄 딸려와 토큰을 낭비한다. 반드시 `Assets/` 하위로
+한정하고, 종류별 고정 경로를 먼저 본다.
+
+- 스크립트: `Assets/Script`
+- 프리팹: `Assets/Prefabs`
+- 데이터(ScriptableObject): `Assets/Resources/Data`
+- 애니메이션 클립: `Assets/Animation`
+- 애니메이터 컨트롤러: `Assets/Animator`
+- 씬: `Assets/Scenes`
+
+- 탐색은 **항상 `Assets/` 부터** 시작한다. 단, `TASK.md`·`PLAN.md`·`CLAUDE.md` 등 `.md`
+  문서를 찾을 때만 예외(워크트리 루트 기준).
+- 에셋·프리팹·참조(guid) 탐색은 raw Glob/Grep 대신 `unity-scanner`(`search`/`refs`/`read`)를
+  적극 활용한다. Glob은 위 고정 경로로 좁혀서만 사용한다.
+- 변경에 관련된 스크립트는 해당 부분을 전체 읽어 구조를 정확히 파악한다 (부분 읽기로 추측 금지).
+

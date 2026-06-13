@@ -39,8 +39,15 @@ public class Player_NetworkSpawn : NetworkBehaviour
             canvas.worldCamera = MainCamera;
             PlayerCamera.Target.TrackingTarget = GetComponent<Transform>();
 
+            // 본인 머리 위 Canvas는 owner 로컬에서만 숨김 — 타 클라이언트 인스턴스엔 영향 없음
+            canvas.gameObject.SetActive(false);
+
+            // 화면 HUD 탐색 후 Stat에 바인딩 — 이후 HP·마나 변경이 좌측 하단 바에 자동 반영
+            PlayerHUD hud = FindAnyObjectByType<PlayerHUD>();
+            GetComponent<Stat>().BindOwnerHUD(hud);
+
             TextMeshProUGUI Text = ClientText.GetComponent<TextMeshProUGUI>();
-            Text.text = $"client : { NetworkManager.Singleton.LocalClientId }"; 
+            Text.text = $"client : { NetworkManager.Singleton.LocalClientId }";
         }
 
         if(IsServer == true)

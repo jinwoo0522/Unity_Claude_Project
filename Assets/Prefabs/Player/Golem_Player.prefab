@@ -636,6 +636,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Golem_Skill
   ShowTopMostFoldoutHeaderGroup: 1
   fAnimLerpSpeed: 3
+  _qSkillData: {fileID: 11400000, guid: 365b5a33ebf6480cb2a9988e8f41c18e, type: 2}
   Q_Effects: []
   M_Effects:
   - {fileID: 4223287964565808981}

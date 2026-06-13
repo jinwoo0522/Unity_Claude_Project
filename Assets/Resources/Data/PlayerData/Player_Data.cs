@@ -7,4 +7,8 @@ public class Player_Data : Entity_Data
     public float fJumpAmount = 10f;
     public float fGravity = -9.8f;
     public float fJumpDelay = 0.1f;
+
+    [Header("마나")]
+    public float fMaxMana   = 100f;
+    public float fManaRegen = 2f;
 }

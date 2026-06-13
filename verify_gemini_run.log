@@ -1,3 +1,5 @@
+Warning: True color (24-bit) support not detected. Using a terminal with true color enabled will result in a better visual experience.
+Ripgrep is not available. Falling back to GrepTool.
 ## 계획 검증 결과
 
 ### 요구사항 대조 (TASK.md → PLAN.md)
@@ -21,3 +23,7 @@
 
 ### 최종 판정
 통과
+
+---
+
+모든 계획 점검이 성공적으로 완료되었으며 결과가 파일(`verify_gemini.md`, `verdict_gemini.json`)에 기록되었습니다. 다음 진행을 위한 지시를 기다리겠습니다.

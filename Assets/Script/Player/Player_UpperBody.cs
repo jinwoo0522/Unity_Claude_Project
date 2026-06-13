@@ -14,6 +14,7 @@ public abstract class Player_UpperBody : NetworkBehaviour
     private Animator      anim;
     private Player_Skill  skill;
     private Player_Status _status;
+    private Stat          _stat;
     private const int UpperBodyLayer = 1;
     private UpperState state;
 
@@ -33,6 +34,7 @@ public abstract class Player_UpperBody : NetworkBehaviour
         anim    = GetComponent<Animator>();
         skill   = GetComponent<Player_Skill>();
         _status = GetComponent<Player_Status>();
+        _stat   = GetComponent<Stat>();
 
         anim.SetLayerWeight(UpperBodyLayer, net_AnimWeight.Value);
         net_AnimWeight.OnValueChanged = (pre, next) =>
@@ -58,7 +60,9 @@ public abstract class Player_UpperBody : NetworkBehaviour
         }
     }
 
-    // AnimEventRelay → 애니메이션 이벤트로 호출 (이름 충돌 방지: AnimEventRelay의 OnFireSkill과 분리)
+    // 서브클래스(Magician_UpperBody)에서 override — 기본값 0은 골렘 기본공격(마나 소모 없음)
+    protected virtual float GetBasicAttackManaCost() => 0f;
+
     virtual public void FireSkill() => NormalAttack();
     virtual public void OnAttackHitboxOn() {}
     virtual public void OnAttackHitboxOff() {}
@@ -74,12 +78,14 @@ public abstract class Player_UpperBody : NetworkBehaviour
 
     void OnAttack()
     {
-        if(IsOwner == false)  return;
+        if(IsOwner == false) return;
 
         if (IsHit) return;
-        if (skill != null && skill.IsSkilling) return; // 스킬 중 기본공격 차단
-        if (_status.IsFrozen) return;                  // 빙결 중 기본공격 차단 (owner 측 게이트, 현행 패턴과 동일)
+        if (skill != null && skill.IsSkilling) return;            // 스킬 중 기본공격 차단
+        if (_status.IsFrozen) return;                             // 빙결 중 기본공격 차단
         if (anim.GetLayerWeight(UpperBodyLayer) > 0f) return;
+        // 마나 부족 시 스윙 애니 포함 전체 차단 — 서버는 NormalAttack_ServerRpc에서 TryConsumeMana로 최종 확정
+        if (_stat != null && _stat.pMana < GetBasicAttackManaCost()) return;
         StartUpper("UpperAttack", UpperState.Attacking);
     }
 
