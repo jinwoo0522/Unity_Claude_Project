@@ -72,6 +72,7 @@ public class Golem_Skill : Player_Skill
         SetCooldownLength(SkillType.FireExplosion, 0);
     }
 
+
     protected override void OnAttack_Skill()
     {
         if(CheckCanUseSkill(SkillType.FireExplosion, 1) == null)

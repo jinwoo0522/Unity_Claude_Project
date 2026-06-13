@@ -27,3 +27,4 @@ MonoBehaviour:
   _fSlowMultiplier: 1
   _fSlowDuration: 0
   _fFreezeDuration: 3
+  _fManaCost: 30

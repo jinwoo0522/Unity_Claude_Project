@@ -69,7 +69,7 @@ public class SkillPool
          
     }
     
-    public void UseSkill(SkillType type, Vector3 pos, Vector3 dir, ulong clinetID)
+    public void UseSkill(SkillType type, Vector3 pos, Vector3 dir, ulong clinetID , GameObject owner)
     {
         Debug.Log("스킬 사용!");
         SkillData skilldata = SkillDatas[(int)type];
@@ -79,6 +79,8 @@ public class SkillPool
             GameManager.Instance.DebugMessage<SkillPool>("스킬 데이터 NULL");
             return;
         }
+
+        if (!owner.GetComponent<Stat>().TryConsumeMana(skilldata.fManaCost)) return;
 
         // NGO가 스폰 → 핸들러 Instantiate(풀에서 Get)를 가로채서 호출함
         var netObj = NetworkManager.Singleton.SpawnManager.InstantiateAndSpawn(

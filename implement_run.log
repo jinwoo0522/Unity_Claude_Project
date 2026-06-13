@@ -1,0 +1,32 @@
+컴파일 에러 없음. 표시된 에러들은 모두 기존 에셋 경고(pre-existing)이며 스크립트 컴파일과 무관합니다.
+
+---
+
+## 구현 완료 보고
+
+### 구현된 태스크 목록
+
+| Step | 파일 | 내용 |
+|---|---|---|
+| 1 | `Player_Data.cs` | `fMaxMana`, `fManaRegen` 필드 추가 |
+| 2 | `SkillData.cs` | `fManaCost` SerializeField + getter 추가 |
+| 3 | `Stat.cs` | 마나 NetworkVariable 2개, `TryConsumeMana`, `Update` 재생, `BindOwnerHUD` |
+| 4 | `PlayerHUD.cs` (신규) | `SetName`, `SetHp`, `SetMana` UI 컨트롤러 |
+| 5 | `Player_NetworkSpawn.cs` | owner 머리 Canvas 숨김 + `BindOwnerHUD` 호출 |
+| 6 | `Player_Skill.cs` | 마나 게이트(`CheckCanUseSkill`), 서버 마나 확정(`Animation_Play_ServerRpc`), `IsSkilling` 투사체 게이트, `ExecuteNonPoolSkill` 헬퍼, `SetCooldownLength` 오버로드 |
+| 7 | `Golem_Skill.cs` | `_qSkillData` 필드 + `GolemQ_ServerRpc` 비풀 구현 |
+| 7 | `Magician_Skill.cs` | `_mouseSkillData` + `MagicianMouse_ServerRpc`, Q 투사체를 `OnSkillStart`로 이동 |
+| 8 | `Player_UpperBody.cs` | `GetBasicAttackManaCost` virtual + `_stat` 캐시 + `OnAttack` 마나 게이트 |
+| 8 | `Magician_UpperBody.cs` | `_electricSkillData` + `GetBasicAttackManaCost` override + `NormalAttack_ServerRpc` 마나 소모 |
+
+### 빌드 결과
+컴파일 성공 (에러 0건). 기존 에셋 경고 2건은 pre-existing 이슈.
+
+### 미해결 사항 (Step 9 — 에디터/에셋 배선, 승인 필요)
+CLAUDE.md 규칙에 따라 에디터 변경은 별도 승인 후 진행합니다:
+- `Golem_Data.asset` / `Magicain_Data.asset` — fMaxMana, fManaRegen 값 설정
+- SkillData 5종 .asset — fManaCost 설정 (표 기준)
+- `Golem_Player.prefab` — `_qSkillData` 연결, `Magicain_Player.prefab` — `_mouseSkillData` 연결, `_electricSkillData` 연결
+- `Dungeon_Level_1.unity` 씬 — 좌측 하단 HUD(PlayerHUD 컴포넌트 + 이름Text·HPSlider·ManaSlider 파란Fill) 추가 및 배선
+
+**Step 9 에셋/씬 배선을 진행해도 될까요?**

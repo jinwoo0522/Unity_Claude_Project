@@ -67,6 +67,6 @@
         "*.sln": "*.csproj",
         "*.slnx": "*.csproj"
     },
-    "dotnet.defaultSolution": "Golem_VS_Magician.slnx",
+    "dotnet.defaultSolution": "Golem_VS_Magician_Agents_1.slnx",
     "dotnet.enableWorkspaceBasedDevelopment": false
 }

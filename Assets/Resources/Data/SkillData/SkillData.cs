@@ -37,4 +37,8 @@ public class SkillData : ScriptableObject
     // 빙결 지속 시간(초) — 0이면 빙결 없음
     [SerializeField] private float _fFreezeDuration = 0f;
     public float fFreezeDuration => _fFreezeDuration;
+
+    // 스킬 발동에 필요한 마나 소모량 — 0이면 마나 소모 없음(골렘 기본공격 등)
+    [SerializeField] private float _fManaCost = 0f;
+    public float fManaCost => _fManaCost;
 }

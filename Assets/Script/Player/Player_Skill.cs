@@ -14,14 +14,11 @@ public abstract class Player_Skill : NetworkBehaviour
     protected SkillCooldownUI _cooldownUI;
     private   Player_UpperBody playerUpper;
 
-
     // 서버 로컬 쿨타임 타임스탬프 — 슬롯별 마지막 사용 시간, 클라 입력 불신 원칙
     private readonly double[] _lastUseTimes = new double[2];
     // 현재 재생 중인 스킬 스테이트명 (종료 감지용, 서버 전용)
     private string _activeState;
 
-    // owner 로컬 HUD — 씬 단일 오브젝트로 OnNetworkSpawn에서 탐색
-    
     private NetworkVariable<float> net_SkillWeight = new NetworkVariable<float>(
         0f,
         NetworkVariableReadPermission.Everyone,
@@ -32,12 +29,16 @@ public abstract class Player_Skill : NetworkBehaviour
 
     private Player_Status _status;
 
+    // 서브클래스에서 마나 게이트 및 TryConsumeMana 호출에 사용
+    protected Stat _stat;
+
     public override void OnNetworkSpawn()
     {
         // Animator가 루트로 이동됐으므로 GetComponent로 직접 참조
         anim        = GetComponent<Animator>();
         playerUpper = GetComponent<Player_UpperBody>();
         _status     = GetComponent<Player_Status>();
+        _stat       = GetComponent<Stat>();
 
         // 스폰 시점 초기 weight 즉시 반영
         anim.SetLayerWeight(SkillLayer, net_SkillWeight.Value);
@@ -60,9 +61,7 @@ public abstract class Player_Skill : NetworkBehaviour
 
     protected SkillData CheckCanUseSkill(SkillType tag, int slot)
     {
-        SkillData data;
-        
-        data = GameManager.Instance.skillPool.GetSkillData(tag);
+        SkillData data = GameManager.Instance.skillPool.GetSkillData(tag);
 
         if (data == null) {
             Debug.Log($"SkillData not found for tag: {tag}");
@@ -78,32 +77,31 @@ public abstract class Player_Skill : NetworkBehaviour
         if (playerUpper != null && playerUpper.IsHit) return null;
         if (_status != null && _status.IsAirborne) return null;
         if (_status != null && _status.IsFrozen) return null;
+        // owner 복제 마나로 사전 차단 — 서버에서 TryConsumeMana로 최종 확정
+        if (_stat != null && _stat.pMana < data.fManaCost) return null;
 
         return data;
     }
 
     [ServerRpc]
-    protected void UseSkill_ServerRpc(SkillType tag , Vector3 point = default) // 서버에서 스킬 사용 명령 수신
+    protected void UseSkill_ServerRpc(SkillType tag, Vector3 point = default)
     {
-        if(point == default(Vector3))
-        {
-            point = transform.position;
-        }
-        GameManager.Instance.skillPool
-        .UseSkill(tag, point, transform.forward, OwnerClientId);
-        return;
+        if(point == default(Vector3)) point = transform.position;
+        GameManager.Instance.skillPool.UseSkill(tag, point, transform.forward, OwnerClientId, gameObject);
     }
 
     [ServerRpc]
-    protected void Animation_Play_ServerRpc(SkillType tag , int slot)
+    protected void Animation_Play_ServerRpc(SkillType tag, int slot)
     {
-        SkillData data;
-        data = GameManager.Instance.skillPool.GetSkillData(tag);
+        SkillData data = GameManager.Instance.skillPool.GetSkillData(tag);
 
         if (data == null) {
             Debug.Log($"SkillData not found for tag: {tag}");
             return;
         }
+
+        // 서버 권위적 마나 체크 — 부족 시 애니·쿨타임·투사체 모두 미발생
+        if (!_stat.TryConsumeMana(data.fManaCost , false)) return;
 
         double now = NetworkManager.ServerTime.Time;
         net_SkillWeight.Value = 1f;
@@ -111,11 +109,12 @@ public abstract class Player_Skill : NetworkBehaviour
         anim.Play(data.strSkillState, SkillLayer, 0f);
         PlaySkill_ClientRpc(data.strSkillState);
 
-        _lastUseTimes[slot]   = now;
+        _lastUseTimes[slot] = now;
         OnSkillStart(slot);
         // 서버가 발동을 확정한 뒤에만 owner에게 HUD 타이머 시작을 통지
         NotifyCooldown_ClientRpc(slot);
     }
+
 
     // 오너·기타 클라이언트에 스킬 애니 동기화
     [ClientRpc]
@@ -153,7 +152,7 @@ public abstract class Player_Skill : NetworkBehaviour
     protected virtual void OnSkillStart(int slot) { }
     protected virtual void OnSkillEnd()
     {
-       _activeState          = null; 
+        _activeState = null;
     }
 
     protected void SetCooldownLength(SkillType tag, int slot)

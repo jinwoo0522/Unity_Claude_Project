@@ -26,3 +26,5 @@ MonoBehaviour:
   _fLaunchForce: 8
   _fSlowMultiplier: 0.5
   _fSlowDuration: 2
+  _fFreezeDuration: 0
+  _fManaCost: 20

@@ -11,8 +11,8 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6421ef99e0d356d4b997246a50f612c8, type: 3}
   m_Name: Golem_Q_Skill
-  m_EditorClassIdentifier:
-  strName: "골렘 Q 스킬"
+  m_EditorClassIdentifier: 
+  strName: "\uACE8\uB818 Q \uC2A4\uD0AC"
   fSpeed: 10
   fAcceleration: 5
   fLifeTime: 3
@@ -22,3 +22,9 @@ MonoBehaviour:
   prefab: {fileID: 0}
   _fCooldown: 10
   _strSkillState: Standing Taunt Battlecry
+  _fKnockback: 0
+  _fLaunchForce: 0
+  _fSlowMultiplier: 1
+  _fSlowDuration: 0
+  _fFreezeDuration: 0
+  _fManaCost: 20

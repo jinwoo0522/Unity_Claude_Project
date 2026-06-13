@@ -1,3 +1,5 @@
+Warning: True color (24-bit) support not detected. Using a terminal with true color enabled will result in a better visual experience.
+Ripgrep is not available. Falling back to GrepTool.
 Unity Code Reviewer 지침에 따라 최근 변경된 코드 및 기획 문서에 대한 리뷰와 유니티 컴파일 검증을 완료했습니다. 다음은 최종 코드 리뷰 보고서입니다.
 
 ## 1. Plan & Task Alignment (계획 및 요구사항 일치 여부)
