@@ -15,8 +15,6 @@ public class Player_NetworkSpawn : NetworkBehaviour
 
         if(IsOwner == true)
         {
-             Debug.Log($"[확인] GameManager.Instance null? {GameManager.Instance == null}");
-             
              CinemachineCamera PlayerCamera 
                 = GameManager.Instance.cameraManager?.Get_Cinemachine(CameraManager.CinemachineTag.PLAYER);
 
@@ -34,8 +32,6 @@ public class Player_NetworkSpawn : NetworkBehaviour
                 return;
             }
 
-            Debug.Log($"{NetworkManager.Singleton.LocalClientId} : 카메라 연결 성공!");
-
             canvas.worldCamera = MainCamera;
             PlayerCamera.Target.TrackingTarget = GetComponent<Transform>();
 
@@ -43,7 +39,7 @@ public class Player_NetworkSpawn : NetworkBehaviour
             canvas.gameObject.SetActive(false);
 
             // 화면 HUD 탐색 후 Stat에 바인딩 — 이후 HP·마나 변경이 좌측 하단 바에 자동 반영
-            PlayerHUD hud = FindAnyObjectByType<PlayerHUD>();
+            PlayerHUD hud = FindAnyObjectByType<PlayerHUD>(FindObjectsInactive.Include);
             GetComponent<Stat>().BindOwnerHUD(hud);
 
             TextMeshProUGUI Text = ClientText.GetComponent<TextMeshProUGUI>();

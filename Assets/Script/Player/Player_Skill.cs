@@ -15,7 +15,7 @@ public abstract class Player_Skill : NetworkBehaviour
     private   Player_UpperBody playerUpper;
 
     // 서버 로컬 쿨타임 타임스탬프 — 슬롯별 마지막 사용 시간, 클라 입력 불신 원칙
-    private readonly double[] _lastUseTimes = new double[2];
+    private readonly double[] _lastUseTimes = {-100d , -100d};
     // 현재 재생 중인 스킬 스테이트명 (종료 감지용, 서버 전용)
     private string _activeState;
 
@@ -49,7 +49,7 @@ public abstract class Player_Skill : NetworkBehaviour
         // 씬에 HUD가 1개뿐이므로 FindObjectOfType으로 충분.
         if (IsOwner)
         {
-            _cooldownUI = FindAnyObjectByType<SkillCooldownUI>();
+            _cooldownUI = FindAnyObjectByType<SkillCooldownUI>(FindObjectsInactive.Include);
         }
     }
 
@@ -78,6 +78,7 @@ public abstract class Player_Skill : NetworkBehaviour
         if (_status != null && _status.IsAirborne) return null;
         if (_status != null && _status.IsFrozen) return null;
         // owner 복제 마나로 사전 차단 — 서버에서 TryConsumeMana로 최종 확정
+        Debug.Log($"마나 직전");
         if (_stat != null && _stat.pMana < data.fManaCost) return null;
 
         return data;

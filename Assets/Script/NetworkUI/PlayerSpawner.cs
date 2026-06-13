@@ -22,30 +22,35 @@ public class PlayerSpawner : NetworkBehaviour
     [SerializeField]
     Button Golem_Btn;
     [SerializeField]
+    GameObject hudUI;
+    [SerializeField]
+    GameObject SkillCoolTimeUI;
+    [SerializeField]
     CinemachineCamera PlayerCamera;
 
 
     public override void OnNetworkSpawn()
     {
-        Debug.Log($" : 버튼 연결 전");
-
         if (!IsClient) return;
 
-        GameObject parent =Golem_Btn.GetComponent<Transform>().parent.gameObject;
+        GameObject parent = Golem_Btn.GetComponent<Transform>().parent.gameObject;
 
         Magician_Btn.onClick.AddListener(() =>
         {
              RequestSpawnPlayerServerRpc(PLAYER_INDEX.MAGICIAN);
              parent.SetActive(false);
+             hudUI.SetActive(true);
+             SkillCoolTimeUI.SetActive(true);
         });
 
         Golem_Btn.onClick.AddListener(() =>
         {
              RequestSpawnPlayerServerRpc(PLAYER_INDEX.GOLEM);
              parent.SetActive(false);
+             hudUI.SetActive(true);
+             SkillCoolTimeUI.SetActive(true);
         });
 
-        Debug.Log($" : 버튼 연결 후"); 
     }
 
     void ChoicePlayer(ulong clientID , PLAYER_INDEX index)
