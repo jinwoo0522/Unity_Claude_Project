@@ -7,23 +7,24 @@
       {
         "panelId": "19b31270-8651-4305-a786-036f003299aa",
         "panelType": "terminal",
-        "title": "✳ Asset and scene wiring step 9",
+        "title": "⠐ Implement dev features with token optimization",
         "origin": {
-          "x": 45.39574669486558,
+          "x": 14.192897434749284,
           "y": 411.89651834051347
         },
         "size": {
           "width": 640,
           "height": 400
-        }
+        },
+        "regionId": "37c62201-c549-40bf-9958-f4f4253f7037"
       },
       {
         "panelId": "ec71d894-4dd4-47b2-a22c-8708c616f471",
         "panelType": "terminal",
         "title": "C:\\WINDOWS\\system32\\cmd.exe",
         "origin": {
-          "x": 767.0841175575156,
-          "y": 414.33270595398744
+          "x": -215.7989259081046,
+          "y": -166.75287186037758
         },
         "size": {
           "width": 640,
@@ -47,7 +48,7 @@
       {
         "panelId": "2cef8965-3be9-4231-8d5e-1068d5623141",
         "panelType": "terminal",
-        "title": "C:\\WINDOWS\\system32\\cmd.exe",
+        "title": "◇  Ready (Golem_VS_Magician_Agents_1)",
         "origin": {
           "x": 1620,
           "y": 880
@@ -75,8 +76,8 @@
       {
         "id": "37c62201-c549-40bf-9958-f4f4253f7037",
         "origin": {
-          "x": 16.597091925288595,
-          "y": 391.96171045153125
+          "x": -5.361908287979929,
+          "y": 392.74596045914797
         },
         "size": {
           "width": 695.8900250272011,
@@ -89,8 +90,8 @@
       {
         "id": "06791bf1-6f04-49d0-9b03-57ddcfddde59",
         "origin": {
-          "x": 739.4795953080915,
-          "y": 394.12679774747903
+          "x": -243.40344815752871,
+          "y": -186.958780066886
         },
         "size": {
           "width": 705.2923424517824,
@@ -143,10 +144,10 @@
         "zOrder": -1000
       }
     ],
-    "zoomLevel": 0.9135917354582228,
+    "zoomLevel": 1.2882676449741188,
     "viewportOffset": {
-      "x": -541.9772935808469,
-      "y": 35.73747413088279
+      "x": 541.1403693968637,
+      "y": -211.16605721624114
     }
   },
   "dockState": {
@@ -178,7 +179,9 @@
           "id": "eb9b0f8d-94bb-4227-ab05-c136c1c6c010",
           "panelIds": [
             "85d7cf46-a86c-4b40-bae8-d5653ab5a44c",
-            "9a5c4528-5174-40ba-bc4d-9833e640a096"
+            "9a5c4528-5174-40ba-bc4d-9833e640a096",
+            "4e08dc23-213b-4ff7-9dda-618c57e30263",
+            "b7861750-6983-4a14-9c48-86da943612e4"
           ],
           "activeIndex": 0
         }
@@ -194,6 +197,16 @@
         "type": "dock",
         "zone": "center",
         "stackId": "eb9b0f8d-94bb-4227-ab05-c136c1c6c010"
+      },
+      "4e08dc23-213b-4ff7-9dda-618c57e30263": {
+        "type": "dock",
+        "zone": "center",
+        "stackId": "eb9b0f8d-94bb-4227-ab05-c136c1c6c010"
+      },
+      "b7861750-6983-4a14-9c48-86da943612e4": {
+        "type": "dock",
+        "zone": "center",
+        "stackId": "eb9b0f8d-94bb-4227-ab05-c136c1c6c010"
       }
     }
   },
@@ -206,6 +219,16 @@
       "type": "editor",
       "title": "TASK.md",
       "filePath": "TASK.md"
+    },
+    "4e08dc23-213b-4ff7-9dda-618c57e30263": {
+      "type": "editor",
+      "title": "C:\\Unity\\Golem_VS_Magician_Agents_1\\Code_Review.md",
+      "filePath": "Code_Review.md"
+    },
+    "b7861750-6983-4a14-9c48-86da943612e4": {
+      "type": "editor",
+      "title": "C:\\Unity\\Golem_VS_Magician_Agents_1\\CLAUDE.md",
+      "filePath": "CLAUDE.md"
     }
   }
 }

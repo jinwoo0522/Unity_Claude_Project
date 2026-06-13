@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
 
     public CameraManager cameraManager {get; private set;}
     public SkillPool skillPool {get; private set;}
+    public ScoreManager scoreManager {get; private set;}
     public static GameManager Instance
     {
         get
@@ -47,6 +48,9 @@ public class GameManager : MonoBehaviour
 
         if(skillPool == null)
             skillPool = new SkillPool(20 , 100);
+
+        if(scoreManager == null)
+            scoreManager = new ScoreManager();
     }
 
     public void DebugMessage<T>(string message)

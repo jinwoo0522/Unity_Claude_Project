@@ -89,12 +89,15 @@ public abstract class Player_UpperBody : NetworkBehaviour
         StartUpper("UpperAttack", UpperState.Attacking);
     }
 
-    // 서버 전용 — 피격: 체력 감소 + 피격 애니메이션(진행 중 공격 클립 대체)
-    public void TakeHit(float damage , bool isHitAni = true)
+    // 서버 전용 — 피격: 데미지 집계 후 체력 감소 + 피격 애니메이션
+    public void TakeHit(float damage, ulong attackerClientId, bool isHitAni = true)
     {
         if (!IsServer) return;
 
-        GetComponent<Stat>().pHp = -damage;          // 체력 감소(서버 권위)
+        Stat stat = GetComponent<Stat>();
+        stat.SetLastAttacker(attackerClientId);
+        GameManager.Instance.scoreManager.AddDamage(attackerClientId, damage);
+        stat.pHp = -damage;                          // 체력 감소(서버 권위)
 
         Debug.Log(isHitAni + "빙결 히트 애니 플래그");
         

@@ -1,21 +1,24 @@
-Unity Code Reviewer 지침에 따라 최근 변경된 코드 및 기획 문서에 대한 리뷰와 유니티 컴파일 검증을 완료했습니다. 다음은 최종 코드 리뷰 보고서입니다.
+`unity-code-reviewer` 스킬의 지침에 따라 최근 변경된 코드 및 기획 문서에 대한 코드 리뷰와 유니티 컴파일 검증을 성공적으로 마쳤습니다. 
+
+다음은 최종 코드 리뷰 보고서입니다.
 
 ## 1. Plan & Task Alignment (계획 및 요구사항 일치 여부)
 
-- **HP UI 분리 및 본인 HUD (완료)**: `Player_NetworkSpawn` 스크립트에서 스폰 시 Owner 여부를 체크하여 기존 머리 위 Canvas의 로컬 비활성화를 처리하고, 새로 생성된 `PlayerHUD` 객체를 찾아 `Stat` 컴포넌트와 성공적으로 바인딩하였습니다.
-- **마나 시스템 및 스탯 구현 (완료)**: `Stat` 컴포넌트에 `NetworkVariable<float>` 기반의 `fMana`, `fMaxMana`가 모두 정상적으로 추가되었습니다. 데이터가 `Player_Data`일 경우만 시스템을 세팅하고, `Update` 문을 통해 마나 재생 로직을 오직 서버에서만 실행되도록 완벽히 통제했습니다.
-- **마나 기반 스킬 차단 (완료)**: `Player_Skill`과 `Magician_UpperBody` 등의 스킬 발동 경로에서 Owner 클라이언트의 사전 검증을 통해 시각적 차단을 진행하고, `[ServerRpc]` 내부 및 `ExecuteNonPoolSkill`에서 서버가 직접 `TryConsumeMana`를 호출하여 권위적으로 소모하도록 설계되어 명세를 충족합니다.
-- **비풀 스킬 헬퍼 및 투사체 검증 (완료)**: 투사체가 있는 풀 스킬과 애니메이션/마나만 동작하는 비풀 스킬을 분리하고, 서버 마나 소모 확정 시에만 애니메이션 재생 및 투사체가 발동되도록 `UseSkill_ServerRpc` 경로를 일원화 및 최적화했습니다.
+- **점수판 표시 (완료)**: `Scoreboard.cs`를 통해 `Tab` 키 입력 시 반투명 Panel이 활성화/비활성화되는 기능이 올바르게 구현되었습니다. (로컬 입력 기반 토글 처리)
+- **항목 구성 (완료)**: `ScoreboardEntry.cs`와 `ScoreEntry` 네트워크 구조체를 통해 클라이언트 이름, 킬, 데스, 데미지 UI 항목이 구성되었으며, `Scoreboard`의 `CreateOrUpdateEntry`에서 접속된 인원만큼 프리팹 인스턴스화가 잘 처리되었습니다.
+- **ScoreManager 클래스 (완료)**: `ScoreManager.cs`가 순수 C# 클래스로 완벽하게 설계되었으며, `GameManager`를 통해 전역적으로 안전하게 관리됩니다.
+- **데미지, 킬, 데스 카운팅 (완료)**: `Player_UpperBody.TakeHit`에서 데미지와 마지막 공격자 ID를 추적하며, 체력이 0 이하가 되어 `Stat.Die()`가 호출될 때 중복 사망을 방지하는 플래그(`_isDead`)와 함께 `ScoreManager.RegisterKill`을 통해 킬과 데스가 각각 1회씩 정확히 집계됩니다.
+- **정렬 및 배치 (완료)**: 요구사항에 명시된 대로 `Update()` 함수를 절대 사용하지 않고, 킬 스코어가 변동되는 시점(`OnListChanged`)에만 `SortAndRearrange()`를 호출하여 Sibling Index를 기반으로 UI를 재배치하도록 최적화되었습니다.
 
 ## 2. Static Code Review (정적 코드 리뷰)
 
-- **서버 권위적 설계**: 클라이언트 측에서 `Stat.pMana`를 통해 UI와 입력을 선제적으로 제어하면서도, 최종 발동되는 쿨타임과 애니메이션, 투사체 생성은 서버 내부에서 `TryConsumeMana`가 `true`를 반환했을 때만 확정되도록 매우 올바르게 강제하고 있습니다. 클라이언트의 변조 요청을 완벽히 방어합니다.
-- **이벤트 기반 동기화**: `Stat.BindOwnerHUD`에서 `OnValueChanged` 콜백을 사용하여 매 프레임 업데이트(`Update`)가 아닌 이벤트 발생 시에만 UI를 갱신하도록 구성하여 유니티 최적화 권장 사항을 잘 지켰습니다.
-- **[낮음] 잠재적 위험 - Player_NetworkSpawn 초기화 순서**: 리뷰 내용에도 지적되었듯, 로컬 플레이어의 카메라를 찾는 로직(`if(PlayerCamera == null) return;`) 이후에 HUD 연결 및 Canvas 숨김 처리가 작성되어 있습니다. 카메라가 없으면 UI 초기화도 함께 무시(`return`)됩니다. 씬 세팅이 정상이면 문제없으나 강건함을 위해 UI 초기화는 카메라 검색 전에 수행하는 것도 고려해 볼 수 있습니다.
+- **서버 권위적 집계 (Server-Authoritative)**: 데미지 누적 및 킬/데스 점수 집계 로직(`AddPlayer`, `AddDamage`, `RegisterKill`)이 철저하게 서버 측 권위하에 실행되도록 가드 되어 있습니다. 클라이언트는 집계에 관여하지 못하고 오직 복제된 `NetworkList`를 렌더링하도록 안전하게 설계되었습니다.
+- **이벤트 기반 렌더링 최적화**: 무거운 UI 정렬 로직과 인스턴스 갱신을 `Update` 틱에서 완전히 제거했습니다. 데이터가 추가되거나 변경될 때만 발생하는 이벤트 콜백을 활용하여 유니티 환경에서의 성능 누수를 원천 차단했습니다.
+- **구조체 최적화**: `ScoreEntry`가 `INetworkSerializable`과 `IEquatable<T>` 인터페이스를 모두 완벽히 구현하여 `NetworkList`의 직렬화와 값 비교가 안전하게 이루어집니다.
 
 ## 3. Build Validation (빌드/컴파일 검증)
 
-- **검증 환경**: `unity-cli editor refresh --compile` 
-- **에러 체크**: `unity-cli console --type error` 
+- **검증 환경 및 툴**: `unity-cli editor refresh --compile`
+- **에러 검사 툴**: `unity-cli console --type error`
 - **검증 결과**: **통과 (Success)**
-  새로 추가된 `PlayerHUD.cs`와 네트워크 변수 구조가 변경된 모든 스크립트들에 대해 어떠한 문법 오류(Compiler Error)도 발견되지 않았으며, 정상적으로 유니티 프로젝트 빌드 검증이 완료되었습니다.
+- 신규 작성된 스크립트(`ScoreManager`, `ScoreData`, `Scoreboard`, `ScoreboardEntry`, `ScoreEntry`) 및 수정된 뼈대 스크립트(`GameManager`, `PlayerSpawner`, `Player_UpperBody`, `Stat`) 전반에서 C# 문법 오류나 컴파일 에러가 발견되지 않았습니다. 외부 플러그인(FabImporter)과 관련된 기존 에셋 경고를 제외하면 스크립트 컴파일이 완벽하게 완료되었습니다.

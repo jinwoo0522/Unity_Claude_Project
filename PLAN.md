@@ -1,141 +1,88 @@
 # PLAN.md
 
 ## 1. 작업 개요
-- 목표: 본인/타인 분리형 HP UI 재구성 + 서버 권위적 마나 시스템·마나 UI 구현
+- 목표: Tab 유지 시 표시되는 킬 스코어보드(이름·킬·데스·가한 데미지) UI와 서버 권위 ScoreManager 집계 시스템 구현
 - 브랜치: Agents_1
-- 작업 디렉토리: C:/Unity/Golem_VS_Magician_Agents_1
+- 작업 디렉토리: C:\Unity\Golem_VS_Magician_Agents_1
 
 ## 2. 명세 요약
-TASK.md에서 추출한 요구사항. 각 항목: 무엇을 / 어떻게 / 완료 기준.
-
-- **HP UI 분리**: 머리 위 HP UI를 본인에겐 숨기고 타 플레이어에겐 표시 / 머리 위 월드 Canvas를 owner 로컬에서만 비활성, 타 인스턴스는 유지 / 본인 화면에 안 보이고 상대 머리 위엔 보임
-- **본인 HP HUD**: 본인 HP를 화면 좌측 하단에 클라이언트 이름 + HP바로 표시 / 씬의 기존 화면 Canvas에 좌측 하단 HUD(이름·HP바) 추가 / 스폰 시 owner의 Stat HP가 좌측 하단 바에 동기화 표시
-- **스폰 시 UI 연결**: Player_NetworkSpawn에서 스폰 시 UI 연결 / OnNetworkSpawn(owner)에서 화면 HUD 탐색·바인딩 및 머리 위 Canvas 숨김 처리
-- **마나 스탯**: 플레이어 Stat에 마나 네트워크 변수 / Stat에 NetworkVariable<float>(현재 마나·최대 마나) 추가, 서버 쓰기·전체 읽기 / 마나가 서버에서만 변경되고 전 클라에 복제됨
-- **마나 데이터**: Player_Data에 최대 마나·마나 재생량 추가 / `fMaxMana`, `fManaRegen` 필드 추가 / Golem 100/2, Magician 200/3로 초기화됨
-- **마나 재생**: 초당 마나 재생량만큼 차오름 / Stat의 서버 전용 Update에서 `fManaRegen * deltaTime`씩 증가, 최대치 클램프 / 시간이 지나면 마나가 최대치까지 회복
-- **스킬 마나 소모**: 골렘 기본공격 제외 모든 스킬이 마나 소모 / SkillData에 `fManaCost` 추가, 스킬 발동 시 서버에서 소모 / 마나 부족 시 발동 불가
-- **마나 부족 차단**: 소모량보다 마나가 적으면 스킬 사용 불가 / 서버 권위 검증, 부족 시 애니·쿨타임·투사체 모두 미발생 / 부족 상태에서 스킬 키 입력해도 아무 일도 일어나지 않음
-- **마나 UI**: 좌측 하단 HP바 밑에 파란색 마나바 / 화면 HUD에 마나 Slider(파란 Fill) 추가, owner Stat 마나와 동기화 / 마나 변화가 좌측 하단 파란 바에 실시간 반영
-- **서버 권위**: 모든 데이터 서버 권위적 / 마나 검증·소모·재생은 서버에서만, 클라 입력값 불신 / 클라가 위조한 요청으로 마나 우회 불가
-
-### 마나 소모량 매핑 (확정)
-| 액션 | SkillData 자산 | SkillType/경로 | 마나 |
-|---|---|---|---|
-| 마법사 기본공격 | ElectricSkillData | SkillType.Electric (pool) | 5 |
-| 마법사 Q | Magician_Q_Skill | SkillType.IceExplosion (pool) | 30 |
-| 마법사 좌클릭 | Magician_Mouse_Skill | 비풀(애니+마나만) | 20 |
-| 골렘 Q | Golem_Q_Skill | 비풀(애니+마나만) | 20 |
-| 골렘 좌클릭 | Golem_Mouse_Skill | SkillType.FireExplosion (pool) | 30 |
-| 골렘 기본공격 | (없음) | 근접, 마나 소모 없음 | 0 |
+- **점수판 표시**: Tab을 누르고 있는 동안만 화면 중앙 반투명 Panel 안에 플레이어별 UI 항목(이름/킬/데스/가한 데미지)을 표시. 무엇을: Tab hold로 Panel on/off / 어떻게: 클라 로컬 입력으로 Panel.SetActive 토글 / 완료 기준: Tab을 누르는 동안만 보이고 떼면 사라짐.
+- **항목 구성**: 플레이어 1명당 항목 1개. UI 프리팹을 생성하고 위치를 판정. 무엇을: 항목 프리팹 + 위치 배치 로직 / 어떻게: 클라가 복제 데이터로 항목 인스턴스를 생성·배치 / 완료 기준: 접속/스폰한 플레이어 수만큼 항목이 생성됨.
+- **ScoreManager(순수 클래스)**: 다른 Manager처럼 순수 클래스로 만들어 GameManager를 통해 접근. 데이터 구조체를 플레이어마다 관리하고 클라이언트 번호(ulong)로 식별. 무엇을: 서버 집계 로직 / 완료 기준: 데미지·킬·데스가 clientId별로 누적됨.
+- **카운팅 시점**: 각 플레이어가 데미지를 줄 때 / 죽일 때 / 죽을 때를 모두 ScoreManager로 카운팅. 완료 기준: 세 이벤트가 정확한 clientId에 반영됨.
+- **죽음 처리**: 죽음/죽임 판정이 없으므로, HP가 0이 되면 `Die()`를 부르고 카운팅만 수행(부활·연출 등은 범위 외). 완료 기준: HP 0 시 Die 호출 + 킬/데스 1회 집계.
+- **정렬**: 각 항목은 킬 수에 따라 정렬. 킬 발생 시 리스트를 정렬하고 정렬된 순서로 항목 위치를 재배치. **절대 Update에서 위치를 구성하지 않음**. 완료 기준: 킬 변동 시점에만 정렬·재배치 발생.
 
 ## 3. 영향 범위
 
-### 수정할 스크립트
-- `Assets/Resources/Data/PlayerData/Player_Data.cs` — 마나 필드 추가
-- `Assets/Script/Stat.cs` — 마나 NetworkVariable·재생·소모·HUD 바인딩
-- `Assets/Script/Player/Player_NetworkSpawn.cs` — owner 머리 Canvas 숨김·화면 HUD 바인딩
-- `Assets/Resources/Data/SkillData/SkillData.cs` — `fManaCost` 추가
-- `Assets/Script/Player/Player_Skill.cs` — 마나 게이트(owner 사전 + 서버 권위 소모), 비풀 스킬 공용 서버 헬퍼
-- `Assets/Script/Player/Golem_Skill.cs` — OnBuff(Q) 마나+애니메이션 발동 구현
-- `Assets/Script/Player/Magician_Skill.cs` — OnAttack_Skill(좌클릭) 마나+애니메이션 발동 구현
-- `Assets/Script/Player/Player_UpperBody.cs` — 기본공격 마나 게이트 훅(기본 0)
-- `Assets/Script/Player/Magician_UpperBody.cs` — 기본공격(Electric) 마나 5 소모
+### 수정할 파일
+- `Assets/Script/Manager/GameManager.cs` — `ScoreManager scoreManager {get; private set;}` 추가, `Start()`에서 생성(CameraManager/SkillPool과 동일 패턴).
+- `Assets/Script/Player/Player_UpperBody.cs` — `TakeHit` 시그니처에 `ulong attackerClientId` 추가. 데미지 적용 직전 피격자 `Stat`에 마지막 공격자 기록 + ScoreManager에 가한 데미지 누적.
+- `Assets/Script/Player/Golem_UpperBody.cs` — `ReportHit_ServerRpc`에서 `targetUpper.TakeHit(pDamage, OwnerClientId)` 로 공격자 전달.
+- `Assets/Script/Skill/Skill.cs` — `OnHitEnemy`에서 `targetUpper.TakeHit(fDamage, ClinetID, isHitAni)` 로 공격자(스킬 소유 clientId) 전달.
+- `Assets/Script/Stat.cs` — 마지막 공격자(clientId) 필드 + 세터 추가. `Die()`에서 ScoreManager에 킬(killer)·데스(victim) 1회 집계.
+- `Assets/Script/NetworkUI/PlayerSpawner.cs` — `ChoicePlayer`(서버)에서 스폰 성공 직후 `ScoreManager.AddPlayer(ulong clientId)` 호출(단일 파라미터) + Scoreboard 복제 갱신.
 
-### 새로 생성할 스크립트
-- `Assets/Script/UI/PlayerHUD.cs` — 화면 좌측 하단 HUD 컨트롤러(이름·HP Slider·Mana Slider). MonoBehaviour, 씬 단일 오브젝트(SkillCooldownUI와 동일 패턴, owner가 FindAnyObjectByType로 탐색)
+### 새로 생성할 파일
+- `Assets/Script/Manager/ScoreManager.cs` — 순수 C# 클래스. `Dictionary<ulong, ScoreData>` 보관. 메서드: `AddPlayer(ulong clientId)`, `AddDamage(ulong attackerId, float amount)`, `RegisterKill(ulong killerId, ulong victimId)`. **`AddPlayer`는 단일 파라미터(clientId)만 받으며, 표시 이름은 ScoreManager 내부에서 `client : {clientId}` 패턴으로 생성**하여 ScoreData.name에 채운다(호출부는 이름을 전달하지 않음). `RemovePlayer`는 본 TASK 범위 밖(퇴장 처리 미요구)이므로 **이번 구현에서는 작성하지 않는다**(필요 시 후속). 변경 시 `event Action<ulong>`(변경된 clientId) 발생 → Scoreboard가 NetworkList 미러링에 사용. **서버에서만 호출**(GameManager는 네트워크 비인지이므로 호출 측에서 IsServer 가드).
+- `Assets/Script/Manager/ScoreData.cs` — 데이터 구조체(`clientId`, `name`, `kills`, `deaths`, `damageDealt`). 순수 C# (서버 집계용).
+- `Assets/Script/UI/ScoreEntry.cs` — NetworkList 전송용 `struct` (`INetworkSerializable`, `IEquatable<ScoreEntry>`). 필드: `clientId(ulong)`, `name(FixedString64Bytes)`, `kills/deaths(int)`, `damageDealt(float)`.
+- `Assets/Script/UI/Scoreboard.cs` — 씬 단일 `NetworkBehaviour`. `NetworkList<ScoreEntry>`(서버 쓰기/전 클라 읽기) 보유. 서버: ScoreManager 이벤트 구독 → NetworkList upsert. 클라: `OnListChanged`에서 항목 생성/갱신 + **킬 기준 정렬 후 위치 재배치**. Tab hold 입력으로 Panel.SetActive 토글(로컬). **프리팹/Panel 참조는 모두 `[SerializeField] private`로 Inspector 직렬화 연결**: 반투명 Panel 루트(`[SerializeField] private GameObject _panel`), 항목이 들어갈 컨테이너 RectTransform(`[SerializeField] private Transform _entryContainer`), 항목 프리팹(`[SerializeField] private ScoreboardEntry _entryPrefab`). (Resources.Load 미사용 — 씬 직렬화로 누락 방지.)
+- `Assets/Script/UI/ScoreboardEntry.cs` — 항목 프리팹용 `MonoBehaviour`. 이름/킬/데스/데미지 `TextMeshProUGUI` 4개에 값 세팅(`SetData`).
 
-### 에디터/에셋 변경 (구현 단계에서 승인 후 진행 — CLAUDE.md 규칙)
-- `Assets/Resources/Data/PlayerData/Golem_Data.asset` — fMaxMana=100, fManaRegen=2
-- `Assets/Resources/Data/PlayerData/Magicain_Data.asset` — fMaxMana=200, fManaRegen=3
-- SkillData 5종 .asset — fManaCost 설정(위 표)
-- `Assets/Prefebs/Player/Golem_Player.prefab` — Golem_Skill에 Golem_Q_Skill 자산 참조 연결, 머리 Canvas 참조 확인
-- `Assets/Prefebs/Player/Magicain_Player.prefab` — Magician_Skill에 Magician_Mouse_Skill 자산 참조 연결
-- `Assets/Scenes/Dungeon_Level_1.unity` — 기존 Canvas 하위에 좌측 하단 HUD(이름 Text, HP Slider, Mana Slider[파란 Fill]) 추가 + PlayerHUD 컴포넌트·참조 배선
+### 새로 생성할 에셋(구현 단계에서 Agent 제작)
+- `Assets/Prefabs/UI/Scoreboard_Panel.prefab` — 반투명 Panel + 수직 정렬 컨테이너(RectTransform). `Scoreboard` 스크립트 부착 대상은 씬 오브젝트, Panel은 그 하위.
+- `Assets/Prefabs/UI/Scoreboard_Entry.prefab` — 이름/킬/데스/데미지 텍스트 4개 + `ScoreboardEntry` 스크립트.
+- 씬 `Assets/Scenes/Dungeon_Level_1.unity` — Scoreboard용 씬 NetworkObject 배치 및 NetworkManager의 NetworkPrefabs/씬 배치 등록(PlayerSpawner와 동일하게 씬 상주 네트워크 오브젝트로).
 
-### 건드리지 않을 것 (명시)
-- `Assets/Script/Skill/SkillPool.cs`, `SkillType.cs` — enum/풀 변경 없음(비풀 스킬은 풀 우회). prefab=None 자산을 풀에 넣지 않는다.
-- `Assets/Resources/Data/Entity_Data.cs`, `Enemy_Data` — 마나는 Player_Data에만 추가(적 제외)
-- 머리 위 Canvas의 HP Slider(타 플레이어용) 기존 바인딩 — 비owner 동작 유지
-- VFX/이펙트, 카메라/시네머신 연결 로직
+### 건드리지 않을 파일/시스템
+- 상태이상(`StatusEffect*`), 카메라(`Camera/*`, `CameraManager`), 이동(`*_Move`), 스킬 데이터/풀의 기존 로직, `PlayerHUD`(개인 HUD)·`SkillCooldownUI`. 데미지 **계산식**(저항 등)은 변경하지 않고 기존 `pHp = -damage` 흐름 유지.
 
 ## 4. 구현 단계
 
-### Step 1. 마나 데이터 필드 추가 (Player_Data)
-- 작업 내용: `Player_Data.cs`에 `[Header("마나")] public float fMaxMana = 100f; public float fManaRegen = 2f;` 추가. 기존 Entity_Data/Player_Data가 public 필드 컨벤션이므로 데이터 컨테이너 일관성 위해 동일 컨벤션 사용(Stat이 `Stat_Data.fMaxHp` 방식으로 접근).
-- 완료 기준: 컴파일 성공, Inspector에 마나 필드 노출.
-- 예상 리스크: 낮음.
+### Step 1. 데이터 구조체 + ScoreManager(순수 클래스)
+- 작업 내용: `ScoreData` 구조체와 `ScoreManager` 순수 클래스 작성. `AddPlayer(ulong clientId)`(단일 파라미터 — 내부에서 `client : {clientId}` 이름 생성 후 ScoreData 등록), `AddDamage(ulong attackerId, float amount)`, `RegisterKill(ulong killerId, ulong victimId)` 구현. (`RemovePlayer`는 TASK 범위 밖이므로 작성하지 않음.) 각 변경마다 `Changed?.Invoke(clientId)` 발생. 자기 자신/존재하지 않는 clientId 등 경계만 가드.
+- 완료 기준: 컴파일 통과. 단위 흐름상 데미지 누적·킬/데스 증가가 Dictionary에 반영.
+- 예상 리스크: GameManager가 네트워크 비인지 → 모든 호출이 서버 경로에서만 일어나도록 호출 측 IsServer 가드 필요.
 
-### Step 2. SkillData 마나 비용 필드 추가
-- 작업 내용: `SkillData.cs`에 기존 패턴대로 `[SerializeField] private float _fManaCost = 0f; public float fManaCost => _fManaCost;` 추가.
-- 완료 기준: 컴파일 성공, Inspector 노출.
-- 예상 리스크: 낮음.
+### Step 2. GameManager에 ScoreManager 연결
+- 작업 내용: `GameManager`에 `scoreManager` 프로퍼티 추가, `Start()`에서 생성(기존 cameraManager/skillPool과 동일).
+- 완료 기준: `GameManager.Instance.scoreManager` 접근 가능, 컴파일 통과.
+- 예상 리스크: 없음(기존 패턴 복제).
 
-### Step 3. Stat에 마나 시스템 구현
-- 작업 내용:
-  - NetworkVariable<float> 현재 마나·최대 마나 추가(읽기 Everyone, 쓰기 Server) — HP 패턴 동일.
-  - `public float pMana => fMana.Value;`, 마나 최대 getter 추가.
-  - 서버 전용 `public bool TryConsumeMana(float cost)`: `!IsServer`면 false, 마나 부족이면 false(소모 없음), 충분하면 차감 후 true.
-  - 서버 전용 `Update()`: `fMana.Value < max`일 때 `fManaRegen * Time.deltaTime` 증가, max 클램프.
-  - `OnNetworkSpawn`(서버 분기): `Stat_Data as Player_Data`로 캐스팅(시스템 경계 검증 — Player_Data가 아니면 마나 초기화 스킵). fMaxMana·fManaRegen 읽어 초기화, 현재 마나=최대로 시작.
-  - HUD 바인딩 지원: owner 화면 HUD에 HP·마나 초기값 반영 + NetworkVariable.OnValueChanged 구독을 위한 진입점 제공(`public void BindOwnerHUD(PlayerHUD hud)`). 비owner는 기존 머리 hpSlider 바인딩 유지.
-- 완료 기준: 서버에서 마나가 초당 재생, TryConsumeMana가 부족 시 false 반환.
-- 예상 리스크: NetworkVariable 초기화 타이밍 — OnNetworkSpawn에서 초기값 세팅 후 OnValueChanged 구독.
+### Step 3. 데미지 경로에 공격자 clientId 전파 + 집계 호출
+- 작업 내용: `Player_UpperBody.TakeHit(float, ulong attackerClientId, bool)` 로 시그니처 확장. 내부에서 (서버) ScoreManager.AddDamage(attacker, damage) 호출 + 피격자 Stat에 lastAttacker 기록 후 `pHp = -damage`. `Golem_UpperBody.ReportHit_ServerRpc`/`Skill.OnHitEnemy` 호출부 갱신.
+- 완료 기준: 두 데미지 경로(기본공격·스킬)에서 공격자 ID가 전달되고 데미지가 누적됨. 컴파일 통과.
+- 예상 리스크: TakeHit 호출부 누락 시 컴파일 에러 → grep으로 호출부 전수 확인(`TakeHit(`).
 
-### Step 4. PlayerHUD(화면 좌측 하단 HUD) 생성
-- 작업 내용: `PlayerHUD.cs`(MonoBehaviour). 직렬화 필드: 이름 TMP Text, HP Slider, Mana Slider. 메서드: `SetName`, `SetHp(cur,max)`, `SetMana(cur,max)`. SkillCooldownUI와 동일하게 씬 단일 오브젝트로 존재, owner가 탐색.
-- 완료 기준: 컴파일 성공, 메서드 호출 시 슬라이더/텍스트 갱신.
-- 예상 리스크: 낮음(순수 로컬 UI).
+### Step 4. Stat.Die에서 킬/데스 집계
+- 작업 내용: `Stat`에 lastAttacker(ulong) 필드 + 세터. `pHp` set이 0 이하로 Die 호출 시, `Die()`에서 ScoreManager.RegisterKill(lastAttacker, OwnerClientId) 1회. (서버 전용 경로) 중복 사망 방지 가드(이미 죽음 처리됨 플래그).
+- 완료 기준: HP 0 시 killer 킬 +1, victim 데스 +1 정확히 1회.
+- 예상 리스크: Die 다회 호출(연속 데미지) → 사망 플래그로 1회만 집계.
 
-### Step 5. Player_NetworkSpawn 스폰 시 UI 연결
-- 작업 내용: owner 분기에서 — (1) 머리 위 Canvas를 로컬 비활성(본인 화면에서 숨김, 타 인스턴스 영향 없음), (2) `FindAnyObjectByType<PlayerHUD>()`로 화면 HUD 탐색, (3) `GetComponent<Stat>().BindOwnerHUD(hud)` 호출, (4) HUD 이름을 LocalClientId로 설정. 기존 카메라/시네머신 연결 로직은 유지. 서버 분기의 머리 이름 ClientRpc(타 플레이어 표시용)는 유지.
-- 완료 기준: owner는 머리 위 UI가 안 보이고 좌측 하단 HUD에 이름·HP·마나 표시, 타 플레이어 머리 위엔 이름·HP 표시.
-- 예상 리스크: 컴포넌트 간 OnNetworkSpawn 순서 — BindOwnerHUD가 초기값 세팅 + 구독을 모두 처리하므로 순서 무관하게 동작.
+### Step 5. Scoreboard NetworkBehaviour(NetworkList 동기화)
+- 작업 내용: `ScoreEntry` struct(INetworkSerializable) + `Scoreboard` 작성. 서버: OnNetworkSpawn에서 ScoreManager.Changed 구독 → 해당 clientId의 ScoreData를 NetworkList에 upsert. PlayerSpawner 스폰 시 `AddPlayer(clientId)`(단일 파라미터) 연동.
+- 완료 기준: 서버 집계가 NetworkList를 통해 전 클라에 복제됨.
+- 예상 리스크: NetworkList struct 직렬화 — IEquatable/INetworkSerializable 정확 구현 필요.
 
-### Step 6. Player_Skill 마나 게이트(서버 권위) + 비풀 스킬 헬퍼
-- 작업 내용:
-  - `CheckCanUseSkill`에 owner 사전 게이트 추가: `Stat.pMana < data.fManaCost`면 null 반환(복제된 마나로 사전 차단).
-  - 서버 권위 소모: 스킬 확정 지점(`Animation_Play_ServerRpc`)에서 `Stat.TryConsumeMana(data.fManaCost)` 호출, 실패 시 즉시 return(weight·anim·쿨타임·NotifyCooldown 모두 미발생). 마나는 서버에서 1회만 소모.
-  - 투사체 게이트: 풀 스킬의 투사체 생성이 서버 마나 확정을 우회하지 못하도록 보장. 마법사 Q는 투사체 생성을 서버 마나 확정 이후 경로로 모으고, 골렘 좌클릭의 애니 이벤트 투사체는 스킬 확정(net_SkillWeight>0/활성 상태)일 때만 생성되도록 서버에서 검증. (클라가 보낸 마나·발동 요청 불신)
-  - 비풀 스킬 공용 서버 헬퍼: 직렬화된 SkillData를 받아 마나 확정·쿨타임·애니 재생(Skill 레이어)·ClientRpc 동기화·NotifyCooldown을 수행하는 서버 메서드 추가(투사체 없음). 서버 인스턴스도 직렬화 SkillData를 보유하므로 마나/쿨타임/상태명을 서버에서 직접 읽어 클라 값 불신.
-- 완료 기준: 마나 부족 시 풀 스킬의 애니·투사체·쿨타임 모두 미발생. 충분 시 정상 발동 + 정확히 비용만큼 소모.
-- 예상 리스크: 기존 2개 RPC(UseSkill/Animation_Play) 흐름의 경합 — 서버 확정 지점 일원화로 해소.
-
-### Step 7. 골렘 Q / 마법사 좌클릭 비풀 스킬 구현
-- 작업 내용:
-  - `Golem_Skill`: `[SerializeField] private SkillData _qSkillData;`(Golem_Q_Skill 연결). OnBuff(Q)를 owner 사전 게이트 후 서버 RPC 호출로 변경 → 서버에서 _qSkillData로 Step 6 비풀 헬퍼 실행(마나 20·`Standing Taunt Battlecry` 재생). 투사체 없음.
-  - `Magician_Skill`: `[SerializeField] private SkillData _mouseSkillData;`(Magician_Mouse_Skill 연결). OnAttack_Skill(좌클릭)을 동일 패턴으로 구현(마나 20·`Standing 2H Magic Area Attack 01` 재생).
-- 완료 기준: 두 액션이 마나 충분 시 애니 재생 + 마나 소모 + 쿨타임, 부족 시 아무 일도 없음.
-- 예상 리스크: 애니메이터 컨트롤러 Skill 레이어에 해당 상태명이 없으면 애니는 미재생(마나/쿨타임은 동작). 6절에서 상태 존재 여부 검증 필요.
-
-### Step 8. 마법사 기본공격 마나 소모
-- 작업 내용: `Player_UpperBody`에 `protected virtual float GetBasicAttackManaCost() => 0f;` 추가, `OnAttack`에서 비용>0이고 owner 마나 부족이면 return(골렘은 0이라 무영향). `Magician_UpperBody`에서 GetBasicAttackManaCost를 Electric SkillData의 fManaCost로 override. 서버 권위 소모는 `NormalAttack_ServerRpc`에서 `GetSkillData(currentSkill).fManaCost`로 TryConsumeMana, 실패 시 투사체 미생성.
-- 완료 기준: 마법사 기본공격이 마나 5 소모, 부족 시 투사체 미발생. 골렘 기본공격은 마나 무관.
-- 예상 리스크: 기본공격 스윙 애니가 OnAttack에서 즉시 재생되므로, owner 사전 게이트로 부족 시 스윙도 차단.
-
-### Step 9. 에셋·프리팹·씬 배선 (승인 후)
-- 작업 내용: 2절 "에디터/에셋 변경" 항목 일괄 적용 — 데이터 자산 마나 값, SkillData 비용, 프리팹 SkillData 참조, 씬 좌측 하단 HUD(파란 마나바) 구성·PlayerHUD 배선.
-- 완료 기준: 플레이모드에서 전체 시나리오(6절) 통과.
-- 예상 리스크: 씬/프리팹 수동 배선 누락 — 6절 검증으로 확인.
+### Step 6. 클라 UI(항목 생성·정렬·위치 재배치, Tab 토글) + 프리팹/씬
+- 작업 내용: `ScoreboardEntry`(항목 UI) 작성. `Scoreboard.OnListChanged`에서 clientId별 항목 인스턴스 생성/갱신, **킬 내림차순 정렬 후 위치 재배치**(Update 금지). Tab hold로 Panel.SetActive. Panel/Entry 프리팹 제작 및 씬 배치 후, **`Scoreboard`의 `[SerializeField]` 필드(`_panel`/`_entryContainer`/`_entryPrefab`)를 Inspector에서 직렬화 연결**.
+- 완료 기준: 2인 접속·데미지/킬 발생 시 Tab UI가 갱신되고 킬 순으로 정렬·재배치됨.
+- 예상 리스크: 항목 위치 재배치 방식(LayoutGroup 사용 시 sibling index 정렬로 충분 / 수동 배치 시 anchoredPosition 계산). LayoutGroup + sibling index 정렬을 우선.
 
 ## 5. 가정 및 제약
-- Stat은 플레이어 전용 경로에서만 마나를 사용한다. Stat_Data가 Player_Data가 아니면(적 등) 마나 초기화를 스킵한다(경계 검증).
-- 마나 비용은 전적으로 SkillData.fManaCost에 저장한다(TASK 명세). 비풀 스킬은 컴포넌트에 직렬화된 SkillData 참조로 비용을 서버에서 읽는다.
-- SkillType enum과 SkillPool은 변경하지 않는다(미배정 prefab으로 풀 초기화가 깨지는 것 방지). 골렘 Q·마법사 좌클릭은 투사체 없이 애니+마나만 처리한다.
-- 머리 위 UI 숨김은 owner 로컬 가시성 처리이며, 네트워크로 동기화되는 상태가 아니다(타 클라 인스턴스 영향 없음).
-- 화면 HUD는 씬 단일 오브젝트로 기존 Canvas(SkillCooldownHUD 위치)에 추가하며, owner가 FindAnyObjectByType로 탐색한다.
-- 데이터 ScriptableObject(Player_Data/Entity_Data)는 기존 public 필드 컨벤션을 따른다. CLAUDE.md의 public 변수 금지 규칙은 동작 스크립트 대상으로 해석한다.
-- 마나는 스폰 시 최대치로 시작한다(명세에 초기값 명시 없음 — 최대 시작이 합리적 기본값).
+- 네트워크 프레임워크는 Unity Netcode for GameObjects(`Unity.Netcode`). 클라 식별자는 `OwnerClientId`(ulong).
+- ScoreManager·NetworkList 쓰기는 **서버 권위**. 클라이언트는 복제 데이터 읽기와 로컬 UI 표시만 수행(클라 입력 불신 원칙).
+- `Reimport All` 금지. 프리팹/씬 변경은 승인된 구현 단계에서 수행.
+- 코드 규칙: 외부 입력 필드는 `[SerializeField] private`, 스크립트 내부 public 변수 금지, 시스템 경계 외 불필요 null 체크 금지(프로젝트 CLAUDE.md 준수).
+- 데미지 집계는 명목 damage 값을 누적(저항·초과분 보정 없음, 최소 구현).
+- ScoreData 식별/표시 이름은 기존 패턴 `client : {clientId}` 사용.
 
 ## 6. 검증 방법
-- **빌드**: 전 스크립트 컴파일 성공.
-- **Step별**: 각 Step 완료 후 컴파일 + 관련 동작 단위 확인.
-- **애니 상태 확인**: 골렘 `Standing Taunt Battlecry`, 마법사 `Standing 2H Magic Area Attack 01` 상태가 각 Animator Skill 레이어에 존재하는지 검증(없으면 애니만 미재생, 마나/쿨타임은 정상 — 리스크로 보고).
-- **최종 플레이모드 시나리오(호스트+클라 2인)**:
-  1. 본인 화면: 머리 위 HP UI 안 보임. 좌측 하단에 본인 이름·HP바·파란 마나바 표시.
-  2. 상대 화면: 상대 머리 위에 이름·HP바 표시.
-  3. 마나가 초당 재생량(골렘 2/마법사 3)만큼 차오름, 최대치(골렘 100/마법사 200)에서 멈춤.
-  4. 각 스킬 사용 시 해당 마나가 정확히 소모(표 기준), 좌측 하단 마나바 감소.
-  5. 마나 부족 시 해당 스킬 발동 불가(애니·투사체·쿨타임 모두 미발생).
-  6. 골렘 기본공격은 마나 소모 없음.
-  7. 피격으로 HP 감소 시 본인 좌측 하단 HP바와 상대 머리 위 HP바가 모두 갱신.
+- Step 1~4: Unity 컴파일 에러 0 (서버 로직 단위 흐름 확인).
+- Step 5: Host + Client 2인 접속 후 서버에서 데미지/킬 발생 시 NetworkList가 양쪽에 동일하게 복제되는지 로그로 확인.
+- Step 6 / 최종 시나리오:
+  1. Host + Client 2인 접속, 각각 골렘/마법사 스폰 → Scoreboard에 2개 항목 생성.
+  2. 기본공격·스킬로 상대에게 데미지 → Tab 유지 시 '가한 데미지' 증가 확인.
+  3. 상대 HP 0 → killer 킬 +1, victim 데스 +1, 항목이 킬 순으로 재정렬·재배치.
+  4. Tab을 떼면 Panel 사라짐, Update 중 위치 재구성이 없는지(정렬은 킬 변동 시에만) 확인.
