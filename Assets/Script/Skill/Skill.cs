@@ -46,7 +46,7 @@ public abstract class Skill : NetworkBehaviour
             Player_UpperBody targetUpper = output.GetComponent<Player_UpperBody>();
             if (targetUpper != null)
             {
-                targetUpper.TakeHit(fDamage , isHitAni);
+                targetUpper.TakeHit(fDamage, ClinetID, isHitAni);
                 // fKnockback > 0 가드: 0인 스킬이 진행 중인 넉백을 강제로 0으로 덮어쓰는 버그 방지
                 if (Data.fKnockback > 0f)
                 {

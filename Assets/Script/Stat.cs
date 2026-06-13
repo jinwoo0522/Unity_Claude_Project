@@ -40,6 +40,10 @@ public class Stat : NetworkBehaviour
 
     // 서버 전용 — 마나 재생량(클라 복제 불필요)
     private float _fManaRegen;
+    // 마지막 공격자 — Die() 시 킬 집계에 사용(서버 전용)
+    private ulong _lastAttacker;
+    // 연속 데미지로 Die()가 중복 호출되는 것을 방지
+    private bool _isDead;
 
     public override void OnNetworkSpawn()
     {
@@ -105,8 +109,14 @@ public class Stat : NetworkBehaviour
         fMana.Value = Mathf.Min(fMana.Value + _fManaRegen * Time.deltaTime, fMaxMana.Value);
     }
 
+    // 공격자 기록 — TakeHit(서버)에서 데미지 적용 직전 호출
+    public void SetLastAttacker(ulong clientId) => _lastAttacker = clientId;
+
+    // 서버 전용 — HP 0 시 1회만 실행, 킬/데스를 ScoreManager에 집계
     void Die()
     {
-
+        if (_isDead) return;
+        _isDead = true;
+        GameManager.Instance.scoreManager.RegisterKill(_lastAttacker, OwnerClientId);
     }
 }

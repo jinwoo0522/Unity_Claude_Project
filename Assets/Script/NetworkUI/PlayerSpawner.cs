@@ -74,6 +74,9 @@ public class PlayerSpawner : NetworkBehaviour
 
         //해당 객체의 주인을 받아온 클라 id로 바꾸는 것
         Player.GetComponent<NetworkObject>().SpawnAsPlayerObject(clientID);
+
+        // 스폰 성공 직후 ScoreManager에 플레이어 등록 — Scoreboard NetworkList 갱신 트리거
+        GameManager.Instance.scoreManager.AddPlayer(clientID);
     }
 
     [ServerRpc(RequireOwnership = false)]
