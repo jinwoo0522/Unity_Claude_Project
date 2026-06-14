@@ -79,6 +79,7 @@ public abstract class Player_UpperBody : NetworkBehaviour
     void OnAttack()
     {
         if(IsOwner == false) return;
+        if(_stat._isDead == true) return;
 
         if (IsHit) return;
         if (skill != null && skill.IsSkilling) return;            // 스킬 중 기본공격 차단

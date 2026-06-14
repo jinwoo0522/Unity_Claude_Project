@@ -38,6 +38,8 @@ public class Player_Move : NetworkBehaviour
     private   Player_Skill                      skill;
     private   Player_Status                     _status;
 
+    private   Stat                              _stat;
+
     public override void OnNetworkSpawn()
     {
         // 이 객체들은 서버에서도 갱신 되어야 하기 때문에 실행해야함
@@ -48,6 +50,7 @@ public class Player_Move : NetworkBehaviour
         playerUpper = GetComponent<Player_UpperBody>();
         skill       = GetComponent<Player_Skill>();
         _status     = GetComponent<Player_Status>();
+        _stat       = GetComponent<Stat>();
 
         if(IsOwner == false)
             return;
@@ -84,6 +87,7 @@ public class Player_Move : NetworkBehaviour
 
     protected virtual void RotateWithCamera()
     {
+        if(_stat._isDead == true) return;
         transform.rotation = Quaternion.Euler(0f, fCamYaw, 0f);
     }
 
@@ -91,18 +95,23 @@ public class Player_Move : NetworkBehaviour
     void OnMove(InputValue value)
     {
         if(IsOwner == false) return;
-
+        if(_stat._isDead == true) return;
+ 
         MoveDir = value.Get<Vector2>();
         SubmitMoveInput_ServerRpc(MoveDir);
     }
     void OnJump(){
 
         if(IsOwner == false) return;
+        if(_stat._isDead == true) return;
+
         PlayerJump();
     } 
     void OnSprint(InputValue value)
     {
         if(IsOwner == false) return;
+        if(_stat._isDead == true) return;
+        
         isSprint = value.Get<float>() > 0.5f;
         SubmitSprint_ServerRpc(isSprint);
     }

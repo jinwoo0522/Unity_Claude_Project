@@ -1,6 +1,7 @@
 using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.UI;
+using Unity.Netcode.Components;
 
 public class Stat : NetworkBehaviour
 {
@@ -21,6 +22,7 @@ public class Stat : NetworkBehaviour
     // 클라이언트에서 마나 게이트·UI 표시에 사용 (NetworkVariable 복제값)
     public float pMana    => fMana.Value;
     public float pMaxMana => fMaxMana.Value;
+    public bool _isDead { get; private set; }
 
     NetworkVariable<float> fHp = new NetworkVariable<float>(0f,
         NetworkVariableReadPermission.Everyone,
@@ -43,7 +45,9 @@ public class Stat : NetworkBehaviour
     // 마지막 공격자 — Die() 시 킬 집계에 사용(서버 전용)
     private ulong _lastAttacker;
     // 연속 데미지로 Die()가 중복 호출되는 것을 방지
-    private bool _isDead;
+
+
+    private NetworkAnimator _net_anim;
 
     public override void OnNetworkSpawn()
     {
@@ -75,6 +79,8 @@ public class Stat : NetworkBehaviour
 
         fHp.OnValueChanged    += (_, next) => hpSlider.value    = next;
         fMaxHp.OnValueChanged += (_, next) => hpSlider.maxValue = next;
+
+        _net_anim    = GetComponent<NetworkAnimator>();
     }
 
     // owner 화면 HUD 바인딩 — Player_NetworkSpawn에서 스폰 시 1회 호출
@@ -117,6 +123,14 @@ public class Stat : NetworkBehaviour
     {
         if (_isDead) return;
         _isDead = true;
+        SetDead_ClientRpc(true);
+        _net_anim.SetTrigger("Dead");
         GameManager.Instance.scoreManager.RegisterKill(_lastAttacker, OwnerClientId);
+    }
+
+    [ClientRpc]
+    void SetDead_ClientRpc(bool isDead)
+    {
+        _isDead = isDead;
     }
 }

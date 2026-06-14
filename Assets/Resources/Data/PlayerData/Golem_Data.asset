@@ -15,7 +15,7 @@ MonoBehaviour:
   strName: "\uACE8\uB818"
   strDesc: "\uACE8\uB818 \uC785\uB2C8\uB2E4"
   fAttackDamage: 3
-  fHp: 100
+  fHp: 1
   fMaxHp: 100
   fArmor: 15
   fResistance: 15

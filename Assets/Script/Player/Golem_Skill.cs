@@ -68,6 +68,7 @@ public class Golem_Skill : Player_Skill
     protected override void OnBuff()
     {
         if (!IsOwner) return;
+        if(_stat._isDead == true) return;
 
         SetCooldownLength(SkillType.FireExplosion, 0);
     }
@@ -75,6 +76,8 @@ public class Golem_Skill : Player_Skill
 
     protected override void OnAttack_Skill()
     {
+        if(_stat._isDead == true) return;
+        
         if(CheckCanUseSkill(SkillType.FireExplosion, 1) == null)
             return;
 
