@@ -7,6 +7,8 @@ public class Magician_UpperBody : Player_UpperBody
     [Header("스킬")]
     [SerializeField] private SkillType currentSkill;
     [SerializeField] private Transform rightHandBone;
+
+    private   Stat      _stat;
     public override void FireSkill()
     {
         if(IsOwner == true)

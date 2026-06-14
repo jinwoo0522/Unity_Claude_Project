@@ -8,6 +8,7 @@ public class Magician_Skill : Player_Skill
     protected override void OnBuff()
     {
         if (!IsOwner) return;
+        if(_stat._isDead == true) return;
 
         if (CheckCanUseSkill(SkillType.IceExplosion, 0) == null)
             return;
@@ -22,7 +23,8 @@ public class Magician_Skill : Player_Skill
     protected override void OnAttack_Skill()
     {
         if (!IsOwner) return;
-
+        if(_stat._isDead == true) return;
+        
         if (CheckCanUseSkill(SkillType.Earthquake, 1) == null)
             return;
 

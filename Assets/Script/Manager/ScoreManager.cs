@@ -8,6 +8,9 @@ public class ScoreManager
     // 항목 변경 시 해당 clientId 발행 — Scoreboard가 구독해 NetworkList upsert
     public event Action<ulong> Changed;
 
+    // 플레이어가 플레이어를 처치할 때만 발행 (자해 제외) — KillFeed가 구독
+    public event Action<ulong, ulong> Killed;
+
     private readonly Dictionary<ulong, ScoreData> _scores = new();
 
     // 스폰 시 1회 호출 — 이름은 내부에서 생성하므로 호출부는 이름 불필요
@@ -36,6 +39,7 @@ public class ScoreManager
         {
             killer.kills++;
             Changed?.Invoke(killerId);
+            Killed?.Invoke(killerId, victimId);
         }
         if (_scores.TryGetValue(victimId, out ScoreData victim))
         {
