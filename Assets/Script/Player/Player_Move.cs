@@ -1,6 +1,5 @@
 using System.Collections;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using Unity.Netcode;
 using Unity.Netcode.Components;
 public class Player_Move : NetworkBehaviour
@@ -10,9 +9,7 @@ public class Player_Move : NetworkBehaviour
     protected Player_Data playerData;
 
     // 플레이어 인풋을 통해 들어오는 값은 클라가 행하기 때문에 서버는 모름  
-    protected bool isSprint = false;
-    protected Vector2 MoveDir;
-
+    
     // 아래 값은 서버에서는 ServerRpc를 통해 값을 바꾸지만 클라는 값이 안바뀌어있음
     protected float verticalVelocity = 0f;
     protected Vector2 vAnimLerp;
@@ -63,7 +60,7 @@ public class Player_Move : NetworkBehaviour
     {
         if(IsServer == true)
         {
-            AnimManage();
+            //AnimManage();
         }
 
         if(IsOwner == true)
@@ -79,7 +76,6 @@ public class Player_Move : NetworkBehaviour
             GravityManage();
 
             if (_status.IsFrozen) return; // 빙결 시 멈춤
-            PlayerMove();
             RotateWithCamera();
             
         }
@@ -91,46 +87,20 @@ public class Player_Move : NetworkBehaviour
         transform.rotation = Quaternion.Euler(0f, fCamYaw, 0f);
     }
 
-// Inpu처리는 클라에서 행하는 것이기 때문에 서버가 모름
-    void OnMove(InputValue value)
-    {
-        if(IsOwner == false) return;
-        if(_stat._isDead == true) return;
- 
-        MoveDir = value.Get<Vector2>();
-        SubmitMoveInput_ServerRpc(MoveDir);
-    }
-    void OnJump(){
 
-        if(IsOwner == false) return;
-        if(_stat._isDead == true) return;
-
-        PlayerJump();
-    } 
-    void OnSprint(InputValue value)
-    {
-        if(IsOwner == false) return;
-        if(_stat._isDead == true) return;
-        
-        isSprint = value.Get<float>() > 0.5f;
-        SubmitSprint_ServerRpc(isSprint);
-    }
 
     //서버가 클라에서 수행한 인풋값을 모르기때문에 인자로 넘겨줘야함
-    protected virtual void PlayerMove()
+    public void PlayerMove(Vector2 MoveDir , bool isSprint)
     {
 
         // 스킬 중 또는 빙결 중에는 수평 입력 이동 차단 — 중력·넉백은 유지
         Vector3 vMoveDir = Vector3.zero;
-        if (skill == null || !skill.IsSkilling)
-        {
-            vMoveDir = transform.right * MoveDir.x + transform.forward * MoveDir.y;
+        
+        vMoveDir = transform.right * MoveDir.x + transform.forward * MoveDir.y;
 
-            float fSpeed = isSprint ? playerData.fRunSpeed : playerData.fWalkSpeed;
+        float fSpeed = isSprint ? playerData.fRunSpeed : playerData.fWalkSpeed;
             // 슬로우 배율 적용 — 서버에서만 읽히므로 로컬 float으로 충분
-            vMoveDir *= fSpeed * _status.SpeedMultiplier;
-        }
-
+        vMoveDir *= fSpeed * _status.SpeedMultiplier;
         // 넉백 적용 (수평)
         vMoveDir.x += vKnockback.x; 
         vMoveDir.z += vKnockback.z;
@@ -167,16 +137,7 @@ public class Player_Move : NetworkBehaviour
     }
 
     protected virtual void AnimManage()
-    {
-        // 이동 중이면 해당 방향/속도로, 멈추면 0으로 보간
-        float fTargetScale = isSprint ? 1f : 0.5f;
-        Vector2 vTarget = MoveDir.magnitude > 0.1f ? MoveDir.normalized * fTargetScale
-        : Vector2.zero;
-        vAnimLerp = Vector2.Lerp(vAnimLerp, vTarget, Time.deltaTime * playerData.fAnimSpeed);
-
-        anim.SetFloat("MoveX", vAnimLerp.x);
-        anim.SetFloat("MoveZ", vAnimLerp.y);
-        anim.SetBool("IsMove", vTarget == Vector2.zero ? false : true);
+    {    
         // 공중 상태 포함 — 띄움 직후 IsGrounded 플리커 차단, 점프와 동일 애니 판정 보장
         anim.SetBool("IsGrounded", cct.isGrounded && !net_isJumpPending.Value && !_status.IsAirborne);
     }
@@ -214,17 +175,6 @@ public class Player_Move : NetworkBehaviour
         net_isJumpPending.Value = false;                    // 착지 시점에만 해제
     }
 
-    [ServerRpc]
-    void SubmitSprint_ServerRpc(bool _isSprint)
-    {
-        isSprint = _isSprint;
-    }
-
-    [ServerRpc]
-    void SubmitMoveInput_ServerRpc(Vector2 _Input)
-    {
-        MoveDir = _Input;
-    }
 
     [ServerRpc]
     void SubmitCamYaw_ServerRpc(float _Input)

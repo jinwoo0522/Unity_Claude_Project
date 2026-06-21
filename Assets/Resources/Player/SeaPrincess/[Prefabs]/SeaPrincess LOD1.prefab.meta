@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 42d18e1a8a7720f48bdc7516eddd73e7
+timeCreated: 1429014051
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 14518
+  packageName: Sea Princess
+  packageVersion: 1.3.3
+  assetPath: Assets/Resources/Player/SeaPrincess/[Prefabs]/SeaPrincess LOD1.prefab
+  uploadId: 490479

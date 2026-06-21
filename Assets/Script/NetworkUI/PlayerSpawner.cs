@@ -9,12 +9,11 @@ public class PlayerSpawner : NetworkBehaviour
     enum PLAYER_INDEX
     {
         GOLEM,
-        MAGICIAN
-        
+        MAGICIAN,
+        ELF
     }
     [SerializeField]
     GameObject[] PlayerPrefebs;
-    
     [SerializeField]
     Transform[] SpawnPoints;
     [SerializeField]
@@ -22,12 +21,13 @@ public class PlayerSpawner : NetworkBehaviour
     [SerializeField]
     Button Golem_Btn;
     [SerializeField]
+    Button Elf_Btn;
+    [SerializeField]
     GameObject hudUI;
     [SerializeField]
     GameObject SkillCoolTimeUI;
     [SerializeField]
     CinemachineCamera PlayerCamera;
-
 
     public override void OnNetworkSpawn()
     {
@@ -46,6 +46,14 @@ public class PlayerSpawner : NetworkBehaviour
         Golem_Btn.onClick.AddListener(() =>
         {
              RequestSpawnPlayerServerRpc(PLAYER_INDEX.GOLEM);
+             parent.SetActive(false);
+             hudUI.SetActive(true);
+             SkillCoolTimeUI.SetActive(true);
+        });
+
+        Elf_Btn.onClick.AddListener(() =>
+        {
+             RequestSpawnPlayerServerRpc(PLAYER_INDEX.ELF);
              parent.SetActive(false);
              hudUI.SetActive(true);
              SkillCoolTimeUI.SetActive(true);

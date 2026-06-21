@@ -22,6 +22,7 @@ public class Stat : NetworkBehaviour
     // 클라이언트에서 마나 게이트·UI 표시에 사용 (NetworkVariable 복제값)
     public float pMana    => fMana.Value;
     public float pMaxMana => fMaxMana.Value;
+    public float pJumpPower {get; private set;}
     public bool _isDead { get; private set; }
 
     NetworkVariable<float> fHp = new NetworkVariable<float>(0f,
@@ -63,6 +64,7 @@ public class Stat : NetworkBehaviour
             pResistance = Stat_Data.fResistance;
             pMaxHp      = Stat_Data.fMaxHp;
             pHp         = Stat_Data.fHp;
+            
 
             // Player_Data일 때만 마나 초기화 — 적(Entity_Data)은 마나 없음 (시스템 경계 검증)
             if (Stat_Data is Player_Data playerData)
@@ -70,6 +72,7 @@ public class Stat : NetworkBehaviour
                 fMaxMana.Value = playerData.fMaxMana;
                 fMana.Value    = playerData.fMaxMana; // 스폰 시 최대 마나로 시작
                 _fManaRegen    = playerData.fManaRegen;
+                pJumpPower  = playerData.fJumpAmount;
             }
         }
 

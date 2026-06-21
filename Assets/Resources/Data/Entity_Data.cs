@@ -19,7 +19,4 @@ public class Entity_Data : ScriptableObject
     [Header("이동")]
     public float fWalkSpeed = 3f;
     public float fRunSpeed = 6f;
-
-    [Header("애니메이션")]
-    public float fAnimSpeed = 3f;
 }
