@@ -20,12 +20,13 @@ public class PlayerJumpState : EntityState
     public override void Enter()
     {
         _aniController._state.Value = (ushort)ENTITY.StateType.JUMP;
+        _aniController._animator.applyRootMotion = true;
         _playerMove.Jumping();
     }
 
     public override void Exit()
     {
-        
+        _aniController._animator.applyRootMotion = false;
     }
 
     protected override void UpdateState(float fTimedelta, ushort curState)

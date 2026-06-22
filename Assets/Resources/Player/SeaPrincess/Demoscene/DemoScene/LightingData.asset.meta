@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: b4c0603e568daa24a9e74102a6420285
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 112000000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 14518
+  packageName: Sea Princess
+  packageVersion: 1.3.3
+  assetPath: Assets/Resources/Player/SeaPrincess/Demoscene/DemoScene/LightingData.asset
+  uploadId: 490479

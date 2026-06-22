@@ -3,14 +3,21 @@ using UnityEngine;
 
 public class ElfJumpState : EntityState
 {
-    PlayerMovement _playerMove;
+    PlayerMovement   _playerMove;
     IEntityMoveInput _moveInput;
-    EntityAnimator _aniController;
-    public ElfJumpState(Player player)
+    EntityAnimator   _aniController;
+
+    float fJumpDelay;
+    float fCurTime;
+    bool isOnce;
+
+
+    public ElfJumpState(Player player , float fDelay = 0.25f)
     {
         _playerMove = player._move;
         _moveInput = player._input;
         _aniController = player._aniController;
+        fJumpDelay = fDelay;
     }
     public override void Create()
     {
@@ -20,7 +27,9 @@ public class ElfJumpState : EntityState
     public override void Enter()
     {
         _aniController._state.Value = (ushort)ENTITY.StateType.JUMP;
-        _playerMove.Jumping();   // 진입 시 1회만 점프
+        
+        fCurTime = Time.time;
+        isOnce = false;
     }
 
     public override void Exit()
@@ -30,7 +39,19 @@ public class ElfJumpState : EntityState
 
     protected override void UpdateState(float fTimedelta, ushort curState)
     {
-        _playerMove.PlayerMove(_moveInput.MoveInput , _moveInput.isSprint);
+
+        if(fCurTime + fJumpDelay < Time.time && isOnce == false) // 점프 딜레이 주기
+        {
+            _playerMove.Jumping();
+            isOnce = true;          
+        }
+        else
+        {
+            _playerMove.PlayerMove(_moveInput.MoveInput , _moveInput.isSprint);
+        }
+
         _playerMove.Gravity();
+
+
     }
 }

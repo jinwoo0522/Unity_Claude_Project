@@ -10,5 +10,5 @@ AssetOrigin:
   productId: 14518
   packageName: Sea Princess
   packageVersion: 1.3.3
-  assetPath: Assets/_DLNK/SeaPrincess/[Prefabs]/SeaPrincess.prefab
+  assetPath: Assets/Resources/Player/SeaPrincess/[Prefabs]/SeaPrincess.prefab
   uploadId: 490479

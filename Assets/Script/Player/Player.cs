@@ -15,6 +15,8 @@ public abstract class Player : NetworkBehaviour
     public NetworkAnimator _netAnimator {get; protected set;}
     public EntityAnimator _aniController {get; protected set;}
 
+    public PlayerCameraRotate _CamRotater {get; protected set;}
+
     public override void OnNetworkSpawn()
     {
        _input = GetComponent<Player_Input>(); 
@@ -22,6 +24,7 @@ public abstract class Player : NetworkBehaviour
        _animator = GetComponent<Animator>();
        _netAnimator = GetComponent<NetworkAnimator>();
        _stateMachine = new StateMachine();
+       _CamRotater = GetComponent<PlayerCameraRotate>();
 
        _aniController = new EntityAnimator(_animator , _netAnimator , animData,
         new NetworkVariable<ushort>(0, NetworkVariableReadPermission.Everyone , NetworkVariableWritePermission.Server));
