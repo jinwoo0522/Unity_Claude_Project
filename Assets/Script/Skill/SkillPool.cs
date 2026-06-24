@@ -93,8 +93,6 @@ public class SkillPool
             return;
         }
 
-        if (!owner.GetComponent<Stat>().TryConsumeMana(skilldata.fManaCost)) return;
-
         // NGO가 스폰 → 핸들러 Instantiate(풀에서 Get)를 가로채서 호출함
         var netObj = NetworkManager.Singleton.SpawnManager.InstantiateAndSpawn(
             SkillDatas[(int)type].prefab.GetComponent<NetworkObject>(),

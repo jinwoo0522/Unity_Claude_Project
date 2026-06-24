@@ -85,8 +85,6 @@ public abstract class Player_UpperBody : NetworkBehaviour
         if (skill != null && skill.IsSkilling) return;            // 스킬 중 기본공격 차단
         if (_status.IsFrozen) return;                             // 빙결 중 기본공격 차단
         if (anim.GetLayerWeight(UpperBodyLayer) > 0f) return;
-        // 마나 부족 시 스윙 애니 포함 전체 차단 — 서버는 NormalAttack_ServerRpc에서 TryConsumeMana로 최종 확정
-        if (_stat != null && _stat.pMana < GetBasicAttackManaCost()) return;
         StartUpper("UpperAttack", UpperState.Attacking);
     }
 
@@ -96,9 +94,9 @@ public abstract class Player_UpperBody : NetworkBehaviour
         if (!IsServer) return;
 
         Stat stat = GetComponent<Stat>();
-        stat.SetLastAttacker(attackerClientId);
+
         GameManager.Instance.scoreManager.AddDamage(attackerClientId, damage);
-        stat.pHp = -damage;                          // 체력 감소(서버 권위)
+                        // 체력 감소(서버 권위)
 
         Debug.Log(isHitAni + "빙결 히트 애니 플래그");
         

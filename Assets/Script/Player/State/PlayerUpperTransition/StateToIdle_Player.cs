@@ -21,7 +21,7 @@ public class StateToIdle_Player : ITransition
 
         fAccTime += fTimeDelta;
 
-        if(fTransitionDelay > fAccTime)
+        if(fTransitionDelay >= fAccTime)
             return false;   
 
         return true;
@@ -30,7 +30,5 @@ public class StateToIdle_Player : ITransition
     public void OnTransition()
     {
         fAccTime = 0f;
-        _upperAniController._state.Value = (ushort)ENTITY.UpperStateType.IDLE;
-        Debug.Log("None Transition");
     }
 }

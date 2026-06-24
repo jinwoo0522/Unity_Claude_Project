@@ -78,8 +78,6 @@ public abstract class Player_Skill : NetworkBehaviour
         if (_status != null && _status.IsAirborne) return null;
         if (_status != null && _status.IsFrozen) return null;
         // owner 복제 마나로 사전 차단 — 서버에서 TryConsumeMana로 최종 확정
-        Debug.Log($"마나 직전");
-        if (_stat != null && _stat.pMana < data.fManaCost) return null;
 
         return data;
     }
@@ -102,7 +100,6 @@ public abstract class Player_Skill : NetworkBehaviour
         }
 
         // 서버 권위적 마나 체크 — 부족 시 애니·쿨타임·투사체 모두 미발생
-        if (!_stat.TryConsumeMana(data.fManaCost , false)) return;
 
         double now = NetworkManager.ServerTime.Time;
         net_SkillWeight.Value = 1f;

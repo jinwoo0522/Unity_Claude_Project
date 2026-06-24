@@ -23,7 +23,7 @@ public class Golem_UpperBody : Player_UpperBody
 
         Player_UpperBody targetUpper = tgt.GetComponent<Player_UpperBody>();
         if (targetUpper == null) return;
-        targetUpper.TakeHit(GetComponent<Stat>().pDamage, OwnerClientId);
+        targetUpper.TakeHit(GetComponent<Stat>().Get_Stat(Stat.STAT_TAG.DAMAGE), OwnerClientId);
 
         Vector3 dir = tgt.transform.position - transform.position;
         dir.y = 0f;

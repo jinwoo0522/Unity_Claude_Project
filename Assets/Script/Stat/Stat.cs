@@ -56,8 +56,8 @@ public class Stat : NetworkBehaviour , IDamagable
         if(_isHit == true) return;
 
         _isHit = true;
-        Add_Stat(STAT_TAG.HP, fDamage);
-        
+        Add_Stat(STAT_TAG.HP, -fDamage);
+
         if(StatList[(int)STAT_TAG.HP] < 0)
             _isDead = true;
     }

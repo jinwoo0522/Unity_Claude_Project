@@ -3,11 +3,16 @@ using UnityEngine;
 public class ElfUpperAttackMiddleState : EntityState
 {
     EntityAnimator _upperAniController;
-     IEntityInputState _input;
-    public ElfUpperAttackMiddleState(Player player)
+    
+    IEntityInputState _input;
+
+    IHitter _hitter;
+
+    public ElfUpperAttackMiddleState(Elf_Player player)
     {
         _upperAniController = player._upperAniController;
         _input = player._input;
+        _hitter = player._hitter;
     }
     public override void Create()
     {

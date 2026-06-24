@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8623810974303213383}
   - component: {fileID: 3816078736706526178}
   - component: {fileID: 1771712895547527239}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Plane002
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -101,7 +101,7 @@ GameObject:
   - component: {fileID: 856853626232755599}
   - component: {fileID: 2631526854322300546}
   - component: {fileID: 7113570582599400628}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Fill
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -175,7 +175,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4620147078737463234}
   - component: {fileID: 1785934303369070337}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: RIGMahiaRLeg1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -232,7 +232,7 @@ GameObject:
   - component: {fileID: 6352734960792342171}
   - component: {fileID: 1017847523940635511}
   - component: {fileID: 3518035868057312556}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: mahia_lance
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -322,7 +322,7 @@ GameObject:
   - component: {fileID: 1183900205697569148}
   - component: {fileID: 1819012041544346141}
   - component: {fileID: 1337853968403002951}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: mahia_crown
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -412,7 +412,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3364133133294604896}
   - component: {fileID: 4655778036842577892}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: SeaPrincess
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -487,7 +487,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4082548461140798530}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: RIGMahiaLittlefinger1 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -519,7 +519,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7878472016097339614}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: RIGMahiaLEar5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -550,7 +550,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 728462863258239570}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: RIGMahiaLArm2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -582,7 +582,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4180012749324307769}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: RIGMahiaREar5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -615,7 +615,7 @@ GameObject:
   - component: {fileID: 420975833294201476}
   - component: {fileID: 278355067801985938}
   - component: {fileID: 2373597302266491635}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: mahia_cap
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1152,7 +1152,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 53221862334895680}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: RIGMahiaRingfinger2 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1186,7 +1186,7 @@ GameObject:
   - component: {fileID: 8159738474705967394}
   - component: {fileID: 702128687171052046}
   - component: {fileID: 3594949711907732064}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Object002
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1275,7 +1275,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3652255389964190981}
   - component: {fileID: 8722159585728664645}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Slider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1368,7 +1368,7 @@ GameObject:
   - component: {fileID: 7204257966541376641}
   - component: {fileID: 3237082420058888476}
   - component: {fileID: 6546562419864477195}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1481,7 +1481,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3320233044094745322}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: RIGMahiaLArmCollarbone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1515,7 +1515,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3271166607569551311}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: RIGMahiaLittlefinger1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1547,7 +1547,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2439757843355715798}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: RIGMahiaNeck1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1579,7 +1579,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8624044039956396874}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: RIGMahiaLLegPlatform
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1610,7 +1610,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7319487947682893480}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: RIGMahiaREar3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1644,7 +1644,7 @@ GameObject:
   - component: {fileID: 7663982667972031783}
   - component: {fileID: 7630348770975680302}
   - component: {fileID: 1390436511045606880}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: ClientName
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1779,7 +1779,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2553587333676838669}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: RIGMahiaThumb1 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1811,7 +1811,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4024803383580403528}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: RIGMahiaMiddlefinger2 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1843,7 +1843,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2181982797585936985}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: RIGMahia
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1874,7 +1874,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8164248770594760647}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: RIGMahiaREar2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1906,7 +1906,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2756739777572090538}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: RIGMahiaLEar1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1940,7 +1940,7 @@ GameObject:
   - component: {fileID: 2793887185791798070}
   - component: {fileID: 6917740473013754218}
   - component: {fileID: 9156758600188549313}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2014,7 +2014,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6205148743197953472}
   - component: {fileID: 1356318869531512202}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: RIGMahiaLLeg2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2081,9 +2081,10 @@ GameObject:
   - component: {fileID: 3609667280706908885}
   - component: {fileID: 1870520348488181551}
   - component: {fileID: 1732251204160524492}
-  m_Layer: 0
+  - component: {fileID: 4768658993644480280}
+  m_Layer: 7
   m_Name: Elf_Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2299,7 +2300,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Stat
   ShowTopMostFoldoutHeaderGroup: 1
   Stat_Data: {fileID: 11400000, guid: 544554fc9e492e14ea81ccb605682e48, type: 2}
-  hpSlider: {fileID: 8722159585728664645}
 --- !u!114 &396033390574339885
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2371,6 +2371,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerCameraRotate
   ShowTopMostFoldoutHeaderGroup: 1
+--- !u!114 &4768658993644480280
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3448056407326184070}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb3c4db433e00b846afa082b84686420, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AttackHitbox
+  _targetMask:
+    serializedVersion: 2
+    m_Bits: 128
+  _drawGizmo: 1
+  _previewCenter: {x: 0, y: 1, z: 0.9}
+  _previewHalfExtents: {x: 0.25, y: 0.25, z: 0.5}
+  _idleColor: {r: 0, g: 1, b: 0, a: 0.25}
+  _hitColor: {r: 1, g: 0, b: 0, a: 0.45}
+  _hitFlashTime: 0.12
 --- !u!1 &3648312818719334364
 GameObject:
   m_ObjectHideFlags: 0
@@ -2380,7 +2401,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 939747468460365220}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: RIGMahiaRLegAnkle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2412,7 +2433,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6299820100980320298}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: RIGMahiaMiddlefinger1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2444,7 +2465,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3618264982917882539}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: RIGMahiaThumb1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2478,7 +2499,7 @@ GameObject:
   - component: {fileID: 166332251157331026}
   - component: {fileID: 1237092328693791961}
   - component: {fileID: 6011956777637849605}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Object001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2567,7 +2588,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7683381691549117821}
   - component: {fileID: 2099599819921442458}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: RIGMahiaLArm1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2622,7 +2643,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 803063581356720600}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: RIGMahiaNeck2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2654,7 +2675,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4251013227990297883}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: RIGMahiaREar1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2686,7 +2707,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2339050615729274026}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: RIGMahiaLArmPalm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2722,7 +2743,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6469376824708888204}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: RIGMahiaIndex1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2754,7 +2775,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 404895195953761131}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: RIGMahiaThumb2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2785,7 +2806,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8668574730945247117}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: RIGMahiaIndex3 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2816,7 +2837,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3183909280930176003}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: RIGMahiaHead
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2853,7 +2874,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1064833319100284340}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: RIGMahiaMiddlefinger1 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2885,7 +2906,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4365929393804878571}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: RIGMahiaRingfinger2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2917,7 +2938,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7038221871419599130}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: RIGMahiaIndex1 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2951,7 +2972,7 @@ GameObject:
   - component: {fileID: 7448024841172517093}
   - component: {fileID: 189056338623481075}
   - component: {fileID: 69588293941709436}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Box02
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3040,7 +3061,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5618798578539696024}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: RIGMahiaRArmPalm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3079,7 +3100,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4748180268162732001}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Fill Area
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3115,7 +3136,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7518925394303398997}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: RIGMahiaFootFinger 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3147,7 +3168,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5946503037140346184}
   - component: {fileID: 7536497251860312608}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Mahia_Cloth
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3243,7 +3264,7 @@ GameObject:
   - component: {fileID: 4116971989046144676}
   - component: {fileID: 5492147790273997615}
   - component: {fileID: 2833878394415799842}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: mahia_eye_r
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3331,7 +3352,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4902015910973444852}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: RIGMahiaLittlefinger3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3362,7 +3383,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8902888298163380834}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: RIGMahiaMiddlefinger3 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3393,7 +3414,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2681270129849703629}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: RIGMahiaRingfinger3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3425,7 +3446,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3873690999202632518}
   - component: {fileID: 2647981437997666101}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: RIGMahiaRLeg2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3480,7 +3501,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3065275405010417775}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: RIGMahiaLittlefinger3 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3512,7 +3533,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5893649606711379142}
   - component: {fileID: 8482501345529929587}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Mahia_Bra
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3606,7 +3627,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8743295116122485365}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: RIGMahiaThumb2 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3639,7 +3660,7 @@ GameObject:
   - component: {fileID: 1170654218016348040}
   - component: {fileID: 3450601984115258248}
   - component: {fileID: 1429306081426669227}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Box01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3728,7 +3749,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4159257465576243168}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: RIGMahiaRingfinger1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3760,7 +3781,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3802285455323297024}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: RIGMahiaPelvis
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3795,7 +3816,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2148116934815602362}
   - component: {fileID: 7305141758908714847}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Mahia_body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3950,7 +3971,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3803821443327885532}
   - component: {fileID: 6175590418277193520}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: RIGMahiaSpineChest
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4005,7 +4026,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3472027684116917466}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: RIGMahiaLLegAnkle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4037,7 +4058,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4246775262596854166}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: RIGMahiaMiddlefinger2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4071,7 +4092,7 @@ GameObject:
   - component: {fileID: 26121761398535068}
   - component: {fileID: 2227772029798526851}
   - component: {fileID: 8856066515144167553}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Object004
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4160,7 +4181,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5132196953627558366}
   - component: {fileID: 6537036263878600309}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: RIGMahiaSpineBelly
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4215,7 +4236,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5210534415256266768}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Handle Slide Area
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4251,7 +4272,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6467010527595146751}
   - component: {fileID: 4122870333024567482}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: RIGMahiaRArm1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4306,7 +4327,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3514006463811918912}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: RIGMahiaIndex2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4339,7 +4360,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8033780097755897083}
   - component: {fileID: 2583819081521298515}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: RIGMahiaSpineAbs
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4394,7 +4415,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7222221607494415344}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: RIGMahiaLittlefinger2 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4426,7 +4447,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9220211936922635391}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: RIGMahiaFootFinger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4458,7 +4479,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6475321573873732032}
   - component: {fileID: 5839780940133930668}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Mahia_LOD_Scan001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4611,7 +4632,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2094122635753409910}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: RIGMahiaREar4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4644,7 +4665,7 @@ GameObject:
   m_Component:
   - component: {fileID: 516862454717555642}
   - component: {fileID: 4077305419916675003}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: RIGMahiaLLeg1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4699,7 +4720,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2116722432318796673}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: RIGMahiaLEar4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4731,7 +4752,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1910348929062773309}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: RIGMahiaMiddlefinger3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4762,7 +4783,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5489314683558479699}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: RIGMahiaLEar2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4794,7 +4815,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 861162348729762367}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: RIGMahiaRingfinger3 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4825,7 +4846,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7724507272435372917}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: RIGMahiaIndex2 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4857,7 +4878,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7997374809086946823}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: RIGMahiaIndex3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4888,7 +4909,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7444175851939889732}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: RIGMahiaLArmIKTarget
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4919,7 +4940,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8635064844703485737}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: RIGMahiaRArm2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4951,7 +4972,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1541502047315239505}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: RIGMahiaLEar3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4983,7 +5004,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1664019504713464286}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: RIGMahiaRingfinger1 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5015,7 +5036,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4710154452202190336}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: RIGMahiaRLegPlatform
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5046,7 +5067,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2445859073720488796}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: RIGMahiaRArmCollarbone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5081,7 +5102,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7167434664808846035}
   - component: {fileID: 6190196600254146443}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: RIGMahiaHub002
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5140,7 +5161,7 @@ GameObject:
   - component: {fileID: 5991880561286649970}
   - component: {fileID: 7845266155062205013}
   - component: {fileID: 7841689172479778721}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: mahia_eye_l
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5228,7 +5249,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9164840270483007109}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: RIGMahiaLittlefinger2
   m_TagString: Untagged
   m_Icon: {fileID: 0}

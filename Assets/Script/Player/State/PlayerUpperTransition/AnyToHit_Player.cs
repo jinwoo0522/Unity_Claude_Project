@@ -2,23 +2,27 @@ using UnityEngine;
 
 public class AnyToHit_Player : ITransition
 {
-    public ushort NextState => (ushort)ENTITY.StateType.JUMP;
+    public ushort NextState => (ushort)ENTITY.UpperStateType.HIT;
 
-
+    IDamagable _damagable;
 
     EntityAnimator _upperAniController;
 
-    public AnyToHit_Player(EntityAnimator upperAniController)
+    public AnyToHit_Player(EntityAnimator upperAniController , IDamagable damagalbe)
     {
         _upperAniController = upperAniController;
+        _damagable = damagalbe;
     }
     public bool CheckRule(float fTimeDelta)
     {
-        return false;
+        if(_damagable._isHit == false)
+            return false;
+
+        return true;
     }
 
     public void OnTransition()
     {
-        _upperAniController._state.Value = (ushort)ELF.UpperStateType.HIT;
+        _damagable._isHit = false;
     }
 }

@@ -11,6 +11,10 @@ public abstract class Player : NetworkBehaviour
     [SerializeField]
     AnimData upperAnimData;
 
+    // NetworkVariable은 NetworkBehaviour의 필드로 선언해야 스폰 시 Netcode가 등록한다
+    NetworkVariable<ushort> _State = new(0);
+    NetworkVariable<ushort> _upperState = new(0);
+
     public Player_Input _input {get; protected set;}
     public PlayerMovement _move {get; protected set;}
     public StateMachine _stateMachine {get; protected set;}
@@ -20,6 +24,7 @@ public abstract class Player : NetworkBehaviour
     public PlayerCameraRotate _CamRotater {get; protected set;}
     public StateMachine _upperStateMachine {get; protected set;}
     public EntityAnimator _upperAniController {get; protected set;}
+    public Stat           _stat {get; protected set;}
 
     public override void OnNetworkSpawn()
     {
@@ -27,6 +32,8 @@ public abstract class Player : NetworkBehaviour
        _input = GetComponent<Player_Input>();
        //이동 컴포넌트 
        _move = GetComponent<PlayerMovement>();
+       //스탯 컴포넌트
+       _stat = GetComponent<Stat>();
 
        //애니메이터 컴포넌트 가져옴
        _animator = GetComponent<Animator>();
@@ -40,10 +47,8 @@ public abstract class Player : NetworkBehaviour
        _CamRotater = GetComponent<PlayerCameraRotate>();
 
         // 애니메이션 컨트롤러 생성
-       _aniController = new EntityAnimator(_animator , _netAnimator , animData,
-        new NetworkVariable<ushort>(0, NetworkVariableReadPermission.Everyone , NetworkVariableWritePermission.Server));
-        _upperAniController = new EntityAnimator(_animator , _netAnimator , upperAnimData,
-        new NetworkVariable<ushort>(0, NetworkVariableReadPermission.Everyone , NetworkVariableWritePermission.Server));
+       _aniController = new EntityAnimator(_animator , _netAnimator , animData, _State);
+        _upperAniController = new EntityAnimator(_animator , _netAnimator , upperAnimData, _upperState);
     }
 
     // Update is called once per frame

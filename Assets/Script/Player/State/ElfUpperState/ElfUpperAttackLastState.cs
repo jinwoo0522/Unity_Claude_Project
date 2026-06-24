@@ -3,10 +3,11 @@ using UnityEngine;
 public class ElfUpperAttackLastState : EntityState
 {
     EntityAnimator _upperAniController;
-    
-    public ElfUpperAttackLastState(Player player)
+    IHitter _hitter;
+    public ElfUpperAttackLastState(Elf_Player player)
     {
         _upperAniController = player._upperAniController;
+        _hitter = player._hitter;
     }
     public override void Create()
     {

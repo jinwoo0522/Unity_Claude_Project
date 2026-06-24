@@ -35,9 +35,11 @@ public class EntityAnimator
 
         animState = State;
         animState.OnValueChanged += (cur , next) => {
-            if(ActiveLayer(next) == false)
-                return;
-             _animator.CrossFade(anims[next], fDuration, iLayerNumber);
+
+            if(ActiveLayer(next) == false)  return;
+
+            _animator.CrossFade(anims[next], fDuration, iLayerNumber);
+             
         };
 
         LinkAnim(animData);
@@ -67,7 +69,7 @@ public class EntityAnimator
         int iTargetWeight = isActvieLayer ? 1 : 0;
          _animator.SetLayerWeight(iLayerNumber, fLayerWeight = Mathf.MoveTowards(fLayerWeight , iTargetWeight , fTimeDelta * fWeightLerpSpeed) );
 
-        if(fLayerWeight >= 1)
+        if(IsCurrentStateFinished() == true)
         {
             isActvieLayer = false; 
         }

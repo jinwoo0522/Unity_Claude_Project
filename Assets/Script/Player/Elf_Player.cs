@@ -3,11 +3,12 @@ using UnityEngine;
 public class Elf_Player : Player
 {
 
-
+    public IHitter _hitter {get; private set;}
     public override void OnNetworkSpawn()
     {
         base.OnNetworkSpawn();
 
+        _hitter = GetComponent<IHitter>();
 
         CreateState();
         CreateUpperState();
@@ -30,9 +31,7 @@ public class Elf_Player : Player
        _stateMachine.CreateState((ushort)ENTITY.StateType.RUN, new PlayerRunState(this));
        _stateMachine.CreateState((ushort)ENTITY.StateType.JUMP, new ElfJumpState(this));
        _stateMachine.CreateState((ushort)ENTITY.StateType.LAND, new PlayerLandState(this));
-       _stateMachine.CreateAnyTransition(new AnyToJump_Player(_input ,_aniController, _move ));
-
-
+       _stateMachine.CreateAnyTransition(new AnyToJump_Player(_input ,_aniController, _move));
     }
 
     void CreateUpperState()
@@ -43,7 +42,7 @@ public class Elf_Player : Player
        _upperStateMachine.CreateState((ushort)ELF.UpperStateType.ATTACK_MIDDLE, new ElfUpperAttackMiddleState(this));
        _upperStateMachine.CreateState((ushort)ELF.UpperStateType.ATTACK_LAST, new ElfUpperAttackLastState(this));
 
-       _upperStateMachine.CreateAnyTransition(new AnyToHit_Player(_upperAniController));
+       _upperStateMachine.CreateAnyTransition(new AnyToHit_Player(_upperAniController , _stat));
     }
 
 }
