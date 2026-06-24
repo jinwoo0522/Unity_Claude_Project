@@ -25,6 +25,9 @@ public class Player_Input : NetworkBehaviour , IEntityMoveInput , IEntityInputSt
 
         _inputAction.actions["Player/Jump"].performed += OnJumpPerformed;
         _inputAction.actions["Player/Jump"].canceled += OnJumpCanceled;
+
+        _inputAction.actions["Player/Attack"].performed += OnAttackPerformed;
+        _inputAction.actions["Player/Attack"].canceled += OnAttackCanceled;
     }
     // Inpu처리는 클라에서 행하는 것이기 때문에 서버가 모름
     void OnMovePerformed(InputAction.CallbackContext ctx)
@@ -56,6 +59,21 @@ public class Player_Input : NetworkBehaviour , IEntityMoveInput , IEntityInputSt
         if(IsOwner != true) return;
 
         SubFlag(ENTITY.InputFlagType.JUMP);
+        SyncInputData_ServerRpc(_input);
+    }  
+
+    void OnAttackPerformed(InputAction.CallbackContext ctx)
+    {
+        if(IsOwner != true) return;
+
+        AddFlag(ENTITY.InputFlagType.MOUSE_RIGHT);
+        SyncInputData_ServerRpc(_input);
+    }
+    void OnAttackCanceled(InputAction.CallbackContext ctx)
+    {
+        if(IsOwner != true) return;
+
+        SubFlag(ENTITY.InputFlagType.MOUSE_RIGHT);
         SyncInputData_ServerRpc(_input);
     }  
 

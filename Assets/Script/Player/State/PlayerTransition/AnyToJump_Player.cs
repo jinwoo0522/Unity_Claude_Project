@@ -23,7 +23,7 @@ public class AnyToJump_Player : ITransition
             ((_aniController._state.Value & (ushort)ENTITY.StateType.WALK) == 0) && 
             ((_aniController._state.Value & (ushort)ENTITY.StateType.RUN) == 0 ) &&
             ((_aniController._state.Value & (ushort)ENTITY.StateType.IDLE) == 0)
-         ) return false;
+          ) return false;
 
         if(((_inputState.inputState & (ushort)ENTITY.InputFlagType.JUMP) != 0) // 땅에 붙어 있고 점프 인풋이 눌린다면
          && (_jump.isGrounded == true))

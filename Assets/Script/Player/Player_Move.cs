@@ -69,23 +69,6 @@ public class Player_Move : NetworkBehaviour
         }
     }
 
-    void FixedUpdate()
-    {
-        if(IsServer == true)
-        {
-            GravityManage();
-
-            if (_status.IsFrozen) return; // 빙결 시 멈춤
-            RotateWithCamera();
-            
-        }
-    }
-
-    protected virtual void RotateWithCamera()
-    {
-        if(_stat._isDead == true) return;
-        transform.rotation = Quaternion.Euler(0f, fCamYaw, 0f);
-    }
 
 
 

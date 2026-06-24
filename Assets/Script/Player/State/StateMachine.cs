@@ -14,9 +14,7 @@ public class StateMachine
         if(ChangeAnyState(fTimeDelta) == true) return;
         if(ChangeState(States[CurState] , fTimeDelta) == true) return;
 
-
         States[CurState].Update(fTimeDelta, CurState);
-        Debug.Log("현재 상태 : "+ ((ENTITY.StateType)CurState).ToString());
     }
 
     public void CreateState(ushort tag , IState state)
@@ -48,7 +46,6 @@ public class StateMachine
         ushort nextState = States[CurState].Check_Transition(fTimeDelta);
         if(nextState != 0)
         {
-            Debug.Log($"상태 변경 " + ((ENTITY.StateType)nextState).ToString());
             TransitionTo(nextState);
             return true;
         }
@@ -59,7 +56,6 @@ public class StateMachine
         ushort nextState = Check_AnyTransition(fTimeDelta);
         if(nextState != 0)
         {
-            Debug.Log($"상태 변경 " + ((ENTITY.StateType)nextState).ToString());
             TransitionTo(nextState);
             return true;
         }

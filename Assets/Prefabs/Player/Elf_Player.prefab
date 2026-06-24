@@ -2117,7 +2117,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
-  GlobalObjectIdHash: 3901262420
+  GlobalObjectIdHash: 1491011233
   InScenePlacedSourceGlobalObjectIdHash: 0
   DeferredDespawnTick: 0
   Ownership: 1
@@ -2329,6 +2329,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Elf_Player
   ShowTopMostFoldoutHeaderGroup: 1
   animData: {fileID: 11400000, guid: 38f898a7cf89d9144a88fecbf8e65b8b, type: 2}
+  upperAnimData: {fileID: 11400000, guid: ff80f99442bd54947bf5c87f320d59eb, type: 2}
 --- !u!114 &3609667280706908885
 MonoBehaviour:
   m_ObjectHideFlags: 0
