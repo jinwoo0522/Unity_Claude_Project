@@ -12,7 +12,7 @@ public class StateMachine
     public void State_Update(float fTimeDelta)
     {
         if(ChangeAnyState(fTimeDelta) == true) return;
-        if(ChangeState(States[CurState] , fTimeDelta) == true) return;
+        if(ChangeState(fTimeDelta) == true) return;
 
         States[CurState].Update(fTimeDelta, CurState);
     }
@@ -38,12 +38,14 @@ public class StateMachine
 
         if(CurState != 0) States[CurState].Exit();
         CurState = next;
+        States[next].Reset();
         States[next].Enter();
+
     }
 
-    private bool ChangeState(IState state , float fTimeDelta)
+    private bool ChangeState(float fTimeDelta)
     {
-        ushort nextState = States[CurState].Check_Transition(fTimeDelta);
+        ushort nextState = States[CurState].Check_Transition(fTimeDelta, CurState);
         if(nextState != 0)
         {
             TransitionTo(nextState);
@@ -54,6 +56,7 @@ public class StateMachine
     private bool ChangeAnyState(float fTimeDelta)
     {
         ushort nextState = Check_AnyTransition(fTimeDelta);
+        
         if(nextState != 0)
         {
             TransitionTo(nextState);
@@ -66,7 +69,8 @@ public class StateMachine
     {
         foreach(var trans in AnyTransition)
         {
-            if(trans.CheckRule(fTimedelta) == false) continue;
+            if(trans.CheckRule(fTimedelta) == false) continue; 
+            if(trans.NextState == CurState) continue; // 바꿀 상태가 같은 상태이면 안 바꿈
 
             trans.OnTransition();
 

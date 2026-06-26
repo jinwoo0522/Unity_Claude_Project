@@ -18,11 +18,11 @@ public abstract class Player : NetworkBehaviour
     public Player_Input _input {get; protected set;}
     public PlayerMovement _move {get; protected set;}
     public StateMachine _stateMachine {get; protected set;}
-    public Animator _animator {get; protected set;}
-    public NetworkAnimator _netAnimator {get; protected set;}
-    public EntityAnimator _aniController {get; protected set;}
-    public PlayerCameraRotate _CamRotater {get; protected set;}
+
     public StateMachine _upperStateMachine {get; protected set;}
+    public EntityAnimator _aniController {get; protected set;}
+    public PlayerCameraRotate _camRotater {get; protected set;}
+    public EntityEffector _effector {get; protected set;}
     public EntityAnimator _upperAniController {get; protected set;}
     public Stat           _stat {get; protected set;}
 
@@ -34,21 +34,22 @@ public abstract class Player : NetworkBehaviour
        _move = GetComponent<PlayerMovement>();
        //스탯 컴포넌트
        _stat = GetComponent<Stat>();
+       //이펙터 컴포넌트
+       _effector = GetComponent<EntityEffector>();
 
-       //애니메이터 컴포넌트 가져옴
-       _animator = GetComponent<Animator>();
-       _netAnimator = GetComponent<NetworkAnimator>();
-
-        // 상태 머신 생성
+       //상태 머신 생성
        _stateMachine = new StateMachine();
        _upperStateMachine = new StateMachine();
 
-        // 카메라 로테이터 가져옴
-       _CamRotater = GetComponent<PlayerCameraRotate>();
+       // 카메라 로테이터
+       _camRotater = GetComponent<PlayerCameraRotate>();
 
-        // 애니메이션 컨트롤러 생성
+       // 애니메이션 컨트롤러 생성
+       Animator _animator = GetComponent<Animator>();
+       NetworkAnimator _netAnimator = GetComponent<NetworkAnimator>();
+ 
        _aniController = new EntityAnimator(_animator , _netAnimator , animData, _State);
-        _upperAniController = new EntityAnimator(_animator , _netAnimator , upperAnimData, _upperState);
+       _upperAniController = new EntityAnimator(_animator , _netAnimator , upperAnimData, _upperState);
     }
 
     // Update is called once per frame

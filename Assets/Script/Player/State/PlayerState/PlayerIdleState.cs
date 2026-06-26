@@ -16,6 +16,8 @@ public class PlayerIdleState : EntityState
     public override void Create()
     {
         TransitionList.Add(new IdleToWalk_Player(_inputState)); 
+        TransitionList.Add(new StateToMouseAttack_Elf(_inputState));
+        TransitionList.Add(new StateToQSkill_Elf(_inputState));
     }
 
     public override void Enter()

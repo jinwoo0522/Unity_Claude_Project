@@ -24,6 +24,7 @@ public class PlayerHitState : EntityState
     public override void Exit()
     {
         Debug.Log("히트 끝");
+        _damagable._isHit = false;
     }
 
     protected override void UpdateState(float fTimedelta, ushort curState)

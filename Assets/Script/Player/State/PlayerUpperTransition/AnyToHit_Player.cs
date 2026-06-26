@@ -23,6 +23,6 @@ public class AnyToHit_Player : ITransition
 
     public void OnTransition()
     {
-        _damagable._isHit = false;
+
     }
 }

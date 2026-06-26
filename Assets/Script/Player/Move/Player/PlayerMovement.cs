@@ -1,3 +1,4 @@
+using System.Collections;
 using Unity.Netcode;
 using UnityEngine;
 
@@ -73,5 +74,28 @@ public class PlayerMovement : NetworkBehaviour , IJumpMovement
     {
         if (_cct.isGrounded)
             verticalVelocity = Mathf.Sqrt(playerData.fJumpAmount * -2f * playerData.fGravity);
+    }
+
+    // 앞방향으로 순간 전진 — fDashSpeed 속도로 fDashDistance 거리만큼 이동
+    public void Dash(float fDashSpeed, float fDashDistance)
+    {
+        StartCoroutine(DashRoutine(fDashSpeed, fDashDistance));
+    }
+
+    private IEnumerator DashRoutine(float fDashSpeed, float fDashDistance)
+    {
+        float fMoved = 0f;
+
+        while (fMoved < fDashDistance)
+        {
+            float fStep = fDashSpeed * Time.deltaTime;
+            // 이번 프레임 이동량이 남은 거리를 넘지 않도록 보정
+            fStep = Mathf.Min(fStep, fDashDistance - fMoved);
+
+            _cct.Move(transform.forward * fStep);
+            fMoved += fStep;
+
+            yield return null;
+        }
     }
 }

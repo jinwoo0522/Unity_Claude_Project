@@ -83770,8 +83770,8 @@ MonoBehaviour:
     AngularDampingMode: 0
     RotationDamping: {x: 1, y: 1, z: 1}
     QuaternionDamping: 1
-  OrbitStyle: 0
-  Radius: 2
+  OrbitStyle: 1
+  Radius: 3
   Orbits:
     Top:
       Radius: 1.5
@@ -83780,7 +83780,7 @@ MonoBehaviour:
       Radius: 1
       Height: 2.25
     Bottom:
-      Radius: 2
+      Radius: 3.5
       Height: 0.1
     SplineCurvature: 0.5
   RecenteringTarget: 2
@@ -83851,7 +83851,7 @@ MonoBehaviour:
     Enabled: 1
     DistanceLimit: 0
     MinimumOcclusionTime: 0
-    CameraRadius: 0.2
+    CameraRadius: 0.01
     UseFollowTarget:
       Enabled: 0
       YOffset: 0

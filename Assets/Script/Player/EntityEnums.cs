@@ -38,6 +38,11 @@ namespace ENTITY
 
 namespace ELF
 {
+    public enum StateType : ushort
+    {
+        MOUSE_SKILL = 1 << 8,
+        Q_SKILL = 1 << 9,
+    }
     public enum UpperStateType : ushort
     {
         NONE = 0,
@@ -47,4 +52,17 @@ namespace ELF
         ATTACK_MIDDLE = 1 << 3,
         ATTACK_LAST = 1 << 4,
     }
+
+    public enum ElfEffect
+    {
+        QSKILL,
+        MOUSE_SKILL,
+        WEAPON_PARTICLE,
+    }
+    public enum ElfTrail
+    {
+        WEAPON_TRAIL,
+    }
+
+            
 }

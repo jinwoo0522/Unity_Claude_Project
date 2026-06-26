@@ -28,6 +28,12 @@ public class Player_Input : NetworkBehaviour , IEntityMoveInput , IEntityInputSt
 
         _inputAction.actions["Player/Attack"].performed += OnAttackPerformed;
         _inputAction.actions["Player/Attack"].canceled += OnAttackCanceled;
+
+        _inputAction.actions["Player/Attack_Skill"].performed += OnAttack_SkillPerformed;
+        _inputAction.actions["Player/Attack_Skill"].canceled += OnAttack_SkillCanceled;
+
+        _inputAction.actions["Player/Q"].performed += OnQSkillPerformed;
+        _inputAction.actions["Player/Q"].canceled += OnQSkillCanceled;
     }
     // Inpu처리는 클라에서 행하는 것이기 때문에 서버가 모름
     void OnMovePerformed(InputAction.CallbackContext ctx)
@@ -74,6 +80,36 @@ public class Player_Input : NetworkBehaviour , IEntityMoveInput , IEntityInputSt
         if(IsOwner != true) return;
 
         SubFlag(ENTITY.InputFlagType.MOUSE_RIGHT);
+        SyncInputData_ServerRpc(_input);
+    }  
+
+    void OnAttack_SkillPerformed(InputAction.CallbackContext ctx)
+    {
+        if(IsOwner != true) return;
+
+        AddFlag(ENTITY.InputFlagType.MOUSE_LEFT);
+        SyncInputData_ServerRpc(_input);
+    }
+    void OnAttack_SkillCanceled(InputAction.CallbackContext ctx)
+    {
+        if(IsOwner != true) return;
+
+        SubFlag(ENTITY.InputFlagType.MOUSE_LEFT);
+        SyncInputData_ServerRpc(_input);
+    }  
+
+    void OnQSkillPerformed(InputAction.CallbackContext ctx)
+    {
+        if(IsOwner != true) return;
+
+        AddFlag(ENTITY.InputFlagType.Q);
+        SyncInputData_ServerRpc(_input);
+    }
+    void OnQSkillCanceled(InputAction.CallbackContext ctx)
+    {
+        if(IsOwner != true) return;
+
+        SubFlag(ENTITY.InputFlagType.Q);
         SyncInputData_ServerRpc(_input);
     }  
 

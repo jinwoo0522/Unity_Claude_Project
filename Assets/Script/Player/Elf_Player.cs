@@ -31,6 +31,8 @@ public class Elf_Player : Player
        _stateMachine.CreateState((ushort)ENTITY.StateType.RUN, new PlayerRunState(this));
        _stateMachine.CreateState((ushort)ENTITY.StateType.JUMP, new ElfJumpState(this));
        _stateMachine.CreateState((ushort)ENTITY.StateType.LAND, new PlayerLandState(this));
+       _stateMachine.CreateState((ushort)ELF.StateType.MOUSE_SKILL, new ElfMouseSkillState(this));
+       _stateMachine.CreateState((ushort)ELF.StateType.Q_SKILL, new ElfQSkillState(this));
        _stateMachine.CreateAnyTransition(new AnyToJump_Player(_input ,_aniController, _move));
     }
 

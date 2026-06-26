@@ -15,15 +15,11 @@ MonoBehaviour:
   strName: "\uC5D8\uD504"
   strDesc: "\uC5D8\uD504 \uC785\uB2C8\uB2E4."
   fAttackDamage: 3
-  fHp: 100
   fMaxHp: 100
-  fArmor: 15
-  fResistance: 15
-  fMaxResistance: 35
   fWalkSpeed: 3
-  fRunSpeed: 6
+  fRunSpeed: 4.5
+  fMaxMana: 100
+  fManaRegen: 2
   fJumpAmount: 3
   fGravity: -9.8
   fJumpDelay: 0.1
-  fMaxMana: 100
-  fManaRegen: 2
