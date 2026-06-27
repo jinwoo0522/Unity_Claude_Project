@@ -6,7 +6,7 @@ public class ElfUpperAttackLastState : EntityState
     IHitter _hitter;
     PlayerMovement _move;
     IEffector _effector;
-
+    Stat _stat;
     Vector3 vCentor = new Vector3(0f,1f,0.5f);
     Vector3 vHalfExtents = new Vector3(0.5f,0.25f,0.25f);
     float fDashSpeed = 9f;
@@ -19,6 +19,7 @@ public class ElfUpperAttackLastState : EntityState
         _hitter = player._hitter;
         _move = player._move;
         _effector = player._effector;
+        _stat = player._stat;
     }
     public override void Create()
     {
@@ -37,6 +38,7 @@ public class ElfUpperAttackLastState : EntityState
 
     public override void Exit()
     {
+        _effector.StopEffect((int)ELF.ElfEffect.HIT_EFFECT);
     }
 
     protected override void UpdateState(float fTimedelta, ushort curState)
@@ -47,6 +49,12 @@ public class ElfUpperAttackLastState : EntityState
     void EventFunc()
     {
         _move.Dash(fDashSpeed , fDashDistance);
-        _hitter.DoHitCheck(vCentor , vHalfExtents , fHitDuration);
+        _hitter.DoHitCheck(vCentor , vHalfExtents , fHitDuration, HitHandler);
+    }
+
+    void HitHandler(IHitter.HitInfo hitInfo)
+    {
+        hitInfo.Target.Hit(_stat.Get_Stat(Stat.STAT_TAG.DAMAGE));
+        _effector.PlayEffect((int)ELF.ElfEffect.HIT_EFFECT , hitInfo.Point);
     }
 }

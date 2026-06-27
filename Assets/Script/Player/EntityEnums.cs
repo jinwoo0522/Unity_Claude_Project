@@ -58,6 +58,7 @@ namespace ELF
         QSKILL,
         MOUSE_SKILL,
         WEAPON_PARTICLE,
+        HIT_EFFECT,
     }
     public enum ElfTrail
     {

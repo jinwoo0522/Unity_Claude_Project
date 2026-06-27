@@ -1,3 +1,5 @@
+using System;
+using Unity.VisualScripting;
 using UnityEngine;
 
 // 근접 공격 판정 전용 컴포넌트.
@@ -19,27 +21,22 @@ public class AttackHitbox : MonoBehaviour , IHitter
     [SerializeField] private Color   _hitColor  = new Color(1f, 0f, 0f, 0.45f);         // 판정 발생 중
 #endif
 
-    private Stat _ownerStat;
-
     // 활성 히트 윈도우 — _hitTimer가 남아있는 동안 매 프레임 박스 질의
     private float   _hitTimer;
     private Vector3 _curCenter;
     private Vector3 _curHalfExtents;
-
-    void Awake()
-    {
-        _ownerStat = GetComponentInParent<Stat>();
-    }
+    private Action<IHitter.HitInfo> _HitEvent;
 
     // 히트 시작 — duration 초 동안 매 프레임 박스 질의
     // center      : 이 Transform 로컬 기준 박스 중심 오프셋 (공격별 리치)
     // halfExtents : 박스 절반 크기 (공격별 크기)
     // duration    : 판정 지속시간(초)
-    public void DoHitCheck(Vector3 center, Vector3 halfExtents, float duration)
+    public void DoHitCheck(Vector3 center, Vector3 halfExtents, float duration, Action<IHitter.HitInfo> HitEvent)
     {
         _curCenter      = center;
         _curHalfExtents = halfExtents;
         _hitTimer       = duration;
+        _HitEvent       = HitEvent;
     }
 
     void Update()
@@ -56,15 +53,18 @@ public class AttackHitbox : MonoBehaviour , IHitter
         GetBoxWorld(_curCenter, out Vector3 worldCenter, out Quaternion rotation);
         Collider[] cols = Physics.OverlapBox(worldCenter, _curHalfExtents, rotation, _targetMask);
 
-        float damage = _ownerStat.Get_Stat(Stat.STAT_TAG.DAMAGE);
-
         foreach (Collider col in cols)
         {
             if (!col.TryGetComponent(out IDamagable target)) continue;
-            if (ReferenceEquals(target, _ownerStat))         continue;   // 자기 자신 제외
+            if (ReferenceEquals(col.gameObject, gameObject)) continue;   // 자기 자신 제외
+            if (target._isHit == true) continue; // 피격중이라면 피격시키지 않음
 
-            // Stat.Hit() 내부에서 데미지만큼 HP를 차감하므로 양수 그대로 전달
-            target.Hit(damage);
+            IHitter.HitInfo hitInfo = new IHitter.HitInfo();
+
+            hitInfo.Target = target;
+            hitInfo.Collider = col;
+            hitInfo.Point = col.ClosestPoint(worldCenter);
+            _HitEvent.Invoke(hitInfo);
         }
     }
 
@@ -73,6 +73,11 @@ public class AttackHitbox : MonoBehaviour , IHitter
     {
         rotation = transform.rotation;
         center   = transform.position + rotation * localCenter;
+    }
+
+    void OnDestroy()
+    {
+        _HitEvent = null;
     }
 
 #if UNITY_EDITOR

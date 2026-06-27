@@ -6,8 +6,8 @@ public class ElfMouseSkillState : EntityState
     EntityAnimator _aniController;
     IHitter _hitter;
     PlayerMovement _move;
-
     IEffector _effector;
+    Stat _stat;
 
     Vector3 vCentor = new Vector3(0f,0.25f,0.0f);
     Vector3 vHalfExtents = new Vector3(1f,0.25f,1f);
@@ -23,13 +23,14 @@ public class ElfMouseSkillState : EntityState
         _hitter = player._hitter;
         _move = player._move;
         _effector = player._effector;
+        _stat = player._stat;
     }
     public override void Create()
     {
         TransitionList.Add(new StateToIdle_Player(_aniController));
         StateEvents.Add((0.25f , EventFunc));
         StateEvents.Add((0.75f , () => _effector.PlayEffect((int)ELF.ElfEffect.MOUSE_SKILL)));
-        StateEvents.Add((0.85f , () => _hitter.DoHitCheck(vCentor , vHalfExtents , fHitDuration)));
+        StateEvents.Add((0.75f , () => _hitter.DoHitCheck(vCentor , vHalfExtents , fHitDuration, HitHandler)));
     }
 
     public override void Enter()
@@ -52,6 +53,11 @@ public class ElfMouseSkillState : EntityState
     void EventFunc()
     {
         _move.Dash(fDashSpeed , fDashDistance);
+    }
+
+    void HitHandler(IHitter.HitInfo hitInfo)
+    {
+        hitInfo.Target.Hit(_stat.Get_Stat(Stat.STAT_TAG.DAMAGE));
     }
 
 }

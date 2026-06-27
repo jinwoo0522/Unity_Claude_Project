@@ -20,8 +20,11 @@ public class EntityEffector : NetworkBehaviour , IEffector
     private TrailRenderers[] Trails;
 
     [ClientRpc]
-    void PlayEffect_ClientRpc(int iEffectNumber)
+    void PlayEffect_ClientRpc(int iEffectNumber, Vector3 vPos = default)
     {
+        if(vPos != Vector3.zero)
+            Effects[iEffectNumber].gameObject.transform.position = vPos;
+
         Effects[iEffectNumber].gameObject.SetActive(true);
         Effects[iEffectNumber].Clear();
     }
@@ -47,7 +50,7 @@ public class EntityEffector : NetworkBehaviour , IEffector
         }
     }
 
-    public void PlayEffect(int iEffectNumber) => PlayEffect_ClientRpc(iEffectNumber);
+    public void PlayEffect(int iEffectNumber, Vector3 vPos = default) => PlayEffect_ClientRpc(iEffectNumber, vPos);
 
     public void PlayTrail(int iTrailtNumber) => PlayTrail_ClientRpc(iTrailtNumber);
 
