@@ -10,12 +10,14 @@ public class PlayerHUD : MonoBehaviour
     [SerializeField] private Slider          _hpSlider;
     [SerializeField] private Slider          _manaSlider;
 
+
     public void SetName(string name) => _nameText.text = name;
 
     public void SetHp(float cur, float max)
     {
         _hpSlider.maxValue = max;
         _hpSlider.value    = cur;
+
     }
 
     public void SetMana(float cur, float max)

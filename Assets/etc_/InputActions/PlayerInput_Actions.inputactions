@@ -61,7 +61,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Buff",
+                    "name": "Q",
                     "type": "Button",
                     "id": "12d633bc-0cb9-4b7d-bf9a-ddb3d966d19a",
                     "expectedControlType": "",
@@ -188,7 +188,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Buff",
+                    "action": "Q",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

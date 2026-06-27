@@ -6,7 +6,7 @@ public class RegistCamera : MonoBehaviour
     [SerializeField]
     private CameraManager.CameraTag cameraTag;
     private Camera _camera;
-    private void Start()
+    private void Awake()
     {
         
         _camera = gameObject.GetComponent<Camera>();

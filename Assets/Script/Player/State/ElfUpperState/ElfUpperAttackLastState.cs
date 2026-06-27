@@ -1,0 +1,64 @@
+using UnityEngine;
+
+public class ElfUpperAttackLastState : EntityState
+{
+    EntityAnimator _upperAniController;
+    IHitter _hitter;
+    IEntityMovement _move;
+    IEffector _effector;
+    Stat _stat;
+    Vector3 vCentor = new Vector3(0f,1f,0.5f);
+    Vector3 vHalfExtents = new Vector3(0.5f,0.25f,0.25f);
+    const float fDashSpeed = 9f;
+    const float fDashDistance = 2f;
+    const float fHitDuration = 0.3f;   // 판정 지속시간(초)
+    const float fAirbornePower = 13f;
+    const float fAirborneDecay = 3f;
+    public ElfUpperAttackLastState(Elf_Player player)
+    {
+        _upperAniController = player._upperAniController;
+        _hitter = player._hitter;
+        _move = player._move;
+        _effector = player._effector;
+        _stat = player._stat;
+    }
+    public override void Create()
+    {
+        TransitionList.Add(new StateToIdle_Player(_upperAniController));
+        StateEvents.Add((0.25f , EventFunc));
+        StateEvents.Add((0.6f , () => _effector.StopTrail((int)ELF.ElfTrail.WEAPON_TRAIL)));
+        StateEvents.Add((0.6f , () => _effector.StopEffect((int)ELF.ElfEffect.WEAPON_PARTICLE)));
+    }
+
+    public override void Enter()
+    {
+        _upperAniController._state.Value = (ushort)ELF.UpperStateType.ATTACK_LAST;
+        _effector.PlayTrail((int)ELF.ElfTrail.WEAPON_TRAIL);
+        _effector.PlayEffect((int)ELF.ElfEffect.WEAPON_PARTICLE);
+    }
+
+    public override void Exit()
+    {
+        _effector.StopEffect((int)ELF.ElfEffect.HIT_EFFECT);
+    }
+
+    protected override void UpdateState(float fTimedelta, ushort curState)
+    {
+
+    }
+
+    void EventFunc()
+    {
+        _move.Dash(fDashSpeed , fDashDistance);
+        _hitter.DoHitCheck(vCentor , vHalfExtents , fHitDuration, HitHandler);
+    }
+
+    void HitHandler(IHitter.HitInfo hitInfo)
+    {
+        hitInfo.Target.Hit(_stat.Get_Stat(Stat.STAT_TAG.DAMAGE));
+        _effector.PlayEffect((int)ELF.ElfEffect.HIT_EFFECT , hitInfo.Point);
+
+        if(hitInfo.Collider.TryGetComponent(out CrowdController crowdController)== true)
+            crowdController.Apply(CrowdController.CC_TAG.AIRBORNE , new ICrowdControl.CCData(fAirbornePower , fAirborneDecay));
+    }
+}

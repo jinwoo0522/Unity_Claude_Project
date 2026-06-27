@@ -2,62 +2,45 @@ using UnityEngine;
 using Unity.Netcode;
 using Unity.Cinemachine;
 using TMPro;
+
+// 플레이어 스폰 시 카메라/머리 위 Canvas/클라이언트 이름 등 네트워크 초기 셋업 담당.
 public class Player_NetworkSpawn : NetworkBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    [SerializeField]
-    private Canvas canvas;
-    [SerializeField]
-    private GameObject ClientText;
+    [SerializeField] private Canvas     canvas;
+    [SerializeField] private GameObject ClientText;
 
     public override void OnNetworkSpawn()
     {
-
-        if(IsOwner == true)
-        {
-             CinemachineCamera PlayerCamera 
-                = GameManager.Instance.cameraManager?.Get_Cinemachine(CameraManager.CinemachineTag.PLAYER);
-
-            if(PlayerCamera == null)
-            {
-                Debug.Log($"{NetworkManager.Singleton.LocalClientId} : 플레이어 시네머신 연결 실패!");
-                return;
-            }
-
-            Camera MainCamera = GameManager.Instance.cameraManager?.Get_Camera(CameraManager.CameraTag.MAIN);
-
-            if(MainCamera == null)
-            {
-                Debug.Log($"{NetworkManager.Singleton.LocalClientId} : 메인 카메라 연결 실패!");
-                return;
-            }
-
-            canvas.worldCamera = MainCamera;
-            PlayerCamera.Target.TrackingTarget = GetComponent<Transform>();
-
-            // 본인 머리 위 Canvas는 owner 로컬에서만 숨김 — 타 클라이언트 인스턴스엔 영향 없음
-            canvas.gameObject.SetActive(false);
-
-            // 화면 HUD 탐색 후 Stat에 바인딩 — 이후 HP·마나 변경이 좌측 하단 바에 자동 반영
-            PlayerHUD hud = FindAnyObjectByType<PlayerHUD>(FindObjectsInactive.Include);
-            GetComponent<Stat>().BindOwnerHUD(hud);
-
-            TextMeshProUGUI Text = ClientText.GetComponent<TextMeshProUGUI>();
-            Text.text = $"client : { NetworkManager.Singleton.LocalClientId }";
-        }
-
-        if(IsServer == true)
-        {
+        if (IsServer)
             UpdateName_ClientRpc($"client : { GetComponent<NetworkObject>().OwnerClientId }");
-        }
+
+        if (!IsOwner) return;
+
+        UICameraBind();
+
+        // 본인 머리 위 Canvas는 owner 로컬에서만 숨김 — 타 클라이언트 인스턴스엔 영향 없음
+        canvas.gameObject.SetActive(false);
+
+        TextMeshProUGUI text = ClientText.GetComponent<TextMeshProUGUI>();
+        text.text = $"client : { NetworkManager.Singleton.LocalClientId }";
+    }
+
+    void UICameraBind()
+    {
+        CinemachineCamera PlayerCamera
+            = GameManager.Instance.cameraManager.Get_Cinemachine(CameraManager.CinemachineTag.PLAYER);
+
+        Camera MainCamera
+            = GameManager.Instance.cameraManager.Get_Camera(CameraManager.CameraTag.MAIN);
+
+        canvas.worldCamera = MainCamera;
+        PlayerCamera.Target.TrackingTarget = GetComponent<Transform>();
     }
 
     [ClientRpc]
     void UpdateName_ClientRpc(string strName)
     {
-        TextMeshProUGUI Text = ClientText.GetComponent<TextMeshProUGUI>();
-        Text.text = strName;
+        TextMeshProUGUI text = ClientText.GetComponent<TextMeshProUGUI>();
+        text.text = strName;
     }
-
-    // Update is called once per frame
 }
