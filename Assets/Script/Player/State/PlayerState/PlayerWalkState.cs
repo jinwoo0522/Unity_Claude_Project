@@ -4,7 +4,7 @@ public class PlayerWalkState : EntityState
 {
     IEntityMoveInput _moveInput;
     IEntityInputState _inputState;
-    PlayerMovement _playerMove;
+    IEntityMovement _playerMove;
     EntityAnimator _aniController;
     Vector2 vAnimLerp;
     public PlayerWalkState(Player player)
@@ -36,7 +36,7 @@ public class PlayerWalkState : EntityState
     protected override void UpdateState(float fTimedelta , ushort curState)
     {
         // 이동 구현
-        _playerMove.PlayerMove(_moveInput.MoveInput , _moveInput.isSprint);
+        _playerMove.Move(_moveInput.MoveInput , _moveInput.isSprint);
         _playerMove.Gravity();
 
         // 애니메이션    

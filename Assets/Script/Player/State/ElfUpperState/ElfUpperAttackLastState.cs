@@ -4,15 +4,16 @@ public class ElfUpperAttackLastState : EntityState
 {
     EntityAnimator _upperAniController;
     IHitter _hitter;
-    PlayerMovement _move;
+    IEntityMovement _move;
     IEffector _effector;
     Stat _stat;
     Vector3 vCentor = new Vector3(0f,1f,0.5f);
     Vector3 vHalfExtents = new Vector3(0.5f,0.25f,0.25f);
-    float fDashSpeed = 9f;
-    float fDashDistance = 2f;
-
-    float fHitDuration = 0.3f;   // 판정 지속시간(초)
+    const float fDashSpeed = 9f;
+    const float fDashDistance = 2f;
+    const float fHitDuration = 0.3f;   // 판정 지속시간(초)
+    const float fAirbornePower = 13f;
+    const float fAirborneDecay = 3f;
     public ElfUpperAttackLastState(Elf_Player player)
     {
         _upperAniController = player._upperAniController;
@@ -56,5 +57,8 @@ public class ElfUpperAttackLastState : EntityState
     {
         hitInfo.Target.Hit(_stat.Get_Stat(Stat.STAT_TAG.DAMAGE));
         _effector.PlayEffect((int)ELF.ElfEffect.HIT_EFFECT , hitInfo.Point);
+
+        if(hitInfo.Collider.TryGetComponent(out CrowdController crowdController)== true)
+            crowdController.Apply(CrowdController.CC_TAG.AIRBORNE , new ICrowdControl.CCData(fAirbornePower , fAirborneDecay));
     }
 }

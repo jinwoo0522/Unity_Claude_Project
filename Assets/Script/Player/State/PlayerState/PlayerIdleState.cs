@@ -5,7 +5,7 @@ public class PlayerIdleState : EntityState
 
 
     IEntityInputState _inputState;
-    PlayerMovement _playerMove;
+    IEntityMovement _playerMove;
     EntityAnimator _aniController;
     public PlayerIdleState(Player player)
     {

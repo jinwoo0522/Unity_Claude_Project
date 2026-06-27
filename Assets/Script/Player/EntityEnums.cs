@@ -14,6 +14,8 @@ namespace ENTITY
         DIE = 1 << 5,
         RUN = 1 << 6,
         LAND = 1 << 7,
+        AIRBORNE = 1 << 8,
+        FREZEE = 1 << 9,
     }
 
     public enum UpperStateType : ushort
@@ -40,8 +42,8 @@ namespace ELF
 {
     public enum StateType : ushort
     {
-        MOUSE_SKILL = 1 << 8,
-        Q_SKILL = 1 << 9,
+        MOUSE_SKILL = 1 << 10,
+        Q_SKILL = 1 << 11,
     }
     public enum UpperStateType : ushort
     {

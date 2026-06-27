@@ -5,7 +5,7 @@ public class PlayerLandState : EntityState
 
     EntityAnimator _aniController;
 
-    PlayerMovement _playerMove;
+    IEntityMovement _playerMove;
 
     public PlayerLandState(Player player)
     {

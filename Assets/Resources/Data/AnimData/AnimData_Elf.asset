@@ -27,6 +27,10 @@ MonoBehaviour:
   - key: 128
     clipName: Land
   - key: 256
-    clipName: MouseSkill
+    clipName: Airborne
   - key: 512
+    clipName: Freeze
+  - key: 1024
     clipName: QSkill
+  - key: 2048
+    clipName: MouseSkill

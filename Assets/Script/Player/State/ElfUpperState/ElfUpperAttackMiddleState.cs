@@ -5,17 +5,19 @@ public class ElfUpperAttackMiddleState : EntityState
     EntityAnimator _upperAniController;
     IEntityInputState _input;
     IHitter _hitter;
-    PlayerMovement _move;
+    IEntityMovement _move;
     IEffector _effector;
     Stat _stat;
 
     Vector3 vCentor = new Vector3(0f,1f,0.5f);
     Vector3 vHalfExtents = new Vector3(0.5f,0.25f,0.25f);
 
-    float fDashSpeed = 15f;
-    float fDashDistance = 2f;
+    const float fDashSpeed = 15f;
+    const float fDashDistance = 2f;
+    const float fHitDuration = 0.3f;   // 판정 지속시간(초)
+    const float fKnockbackPower = 12f;
+    const float fKnockbackDecay = 12f;
 
-    float fHitDuration = 0.3f;   // 판정 지속시간(초)
 
     public ElfUpperAttackMiddleState(Elf_Player player)
     {
@@ -61,5 +63,10 @@ public class ElfUpperAttackMiddleState : EntityState
     {
         hitInfo.Target.Hit(_stat.Get_Stat(Stat.STAT_TAG.DAMAGE));
         _effector.PlayEffect((int)ELF.ElfEffect.HIT_EFFECT , hitInfo.Point);
+        
+        Vector3 vKnocbackDir = Vector3.Normalize(hitInfo.Point - _stat.gameObject.transform.position);
+        
+        if(hitInfo.Collider.TryGetComponent(out CrowdController crowdController)== true)
+            crowdController.Apply(CrowdController.CC_TAG.KNOCKBACK , new ICrowdControl.CCData(fKnockbackPower, fKnockbackDecay, vKnocbackDir));
     }
 }

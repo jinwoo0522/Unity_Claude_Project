@@ -5,17 +5,16 @@ public class ElfMouseSkillState : EntityState
     
     EntityAnimator _aniController;
     IHitter _hitter;
-    PlayerMovement _move;
+    IEntityMovement _move;
     IEffector _effector;
     Stat _stat;
 
     Vector3 vCentor = new Vector3(0f,0.25f,0.0f);
     Vector3 vHalfExtents = new Vector3(1f,0.25f,1f);
 
-    float fDashSpeed = 10f;
-    float fDashDistance = 3f;
-
-    float fHitDuration = 0.2f;   // 판정 지속시간(초)
+    const float fDashSpeed = 10f;
+    const float fDashDistance = 3f;
+    const float fHitDuration = 0.2f;   // 판정 지속시간(초)
 
     public ElfMouseSkillState(Elf_Player player)
     {

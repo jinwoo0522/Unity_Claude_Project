@@ -4,7 +4,7 @@ public class ElfQSkillState : EntityState
 {
     
     EntityAnimator _aniController;
-    PlayerMovement _move;
+    IEntityMovement _move;
     IEntityInputState _input;
     IEffector _effector;
     public ElfQSkillState(Elf_Player player)

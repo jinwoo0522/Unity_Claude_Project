@@ -29,6 +29,8 @@ public class Stat : NetworkBehaviour , IDamagable
     public override void OnNetworkSpawn()
     {
         // 모든 클라가 변경을 받도록 구독 (NetworkList는 서버 쓰기 → 전 클라 통지)
+        if(IsServer == false) return;
+
         StatList.OnListChanged += HandleListChanged;
 
         for(int i = 0 ; i < (int)STAT_TAG.END ; i++)
@@ -78,8 +80,6 @@ public class Stat : NetworkBehaviour , IDamagable
 
         _isHit = true;
         Add_Stat(STAT_TAG.HP, -fDamage);
-
-        Debug.Log("Hit!");
 
         if(StatList[(int)STAT_TAG.HP] < 0)
             _isDead = true;

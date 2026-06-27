@@ -2,18 +2,15 @@ using System.Collections;
 using Unity.Netcode;
 using UnityEngine;
 
-public class PlayerMovement : NetworkBehaviour , IJumpMovement
+public class PlayerMovement : NetworkBehaviour ,IJumpMovement, IEntityMovement
 {   
     [SerializeField]
     private Player_Data playerData;
     private CharacterController               _cct;
-    private   Stat                            _stat;
+    private Stat                              _stat;
 
 
     private float                   verticalVelocity = 0f;
-    private Vector3                 vKnockback;
-    [SerializeField] private float  fKnockbackDecay = 12f;
-
     public bool isGrounded => _cct.isGrounded;
 
     public override void OnNetworkSpawn()
@@ -29,7 +26,7 @@ public class PlayerMovement : NetworkBehaviour , IJumpMovement
         Cursor.visible   = false;
     }
 
-    public void PlayerMove(Vector2 MoveDir , bool isSprint)
+    public void Move(Vector2 MoveDir , bool isSprint)
     {
         // 스킬 중 또는 빙결 중에는 수평 입력 이동 차단 — 중력·넉백은 유지
         Vector3 vMoveDir = Vector3.zero;
@@ -41,20 +38,6 @@ public class PlayerMovement : NetworkBehaviour , IJumpMovement
 
         _cct.Move(vMoveDir * Time.deltaTime * fSpeed);
     
-    }
-
-    public void KnockBack()
-    {
-        Vector3 vKnockbackDir = Vector3.zero;
-
-        vKnockbackDir.x += vKnockback.x; 
-        vKnockbackDir.z += vKnockback.z;
-
-        _cct.Move(vKnockbackDir * Time.deltaTime);
-        
-        // 지수 감쇠: 초기에 큰 힘을 주고 급격히 줄어드는 방식 — 미끄러지듯 멈추는 현상 방지
-        vKnockback *= Mathf.Exp(-fKnockbackDecay * Time.deltaTime);
-        if (vKnockback.sqrMagnitude < 0.01f) vKnockback = Vector3.zero;
     }
 
     public void Gravity()

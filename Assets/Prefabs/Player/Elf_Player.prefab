@@ -2086,6 +2086,7 @@ GameObject:
   - component: {fileID: 4768658993644480280}
   - component: {fileID: 4286714939965657102}
   - component: {fileID: 1102142476755284709}
+  - component: {fileID: 6531188162290506021}
   m_Layer: 7
   m_Name: Elf_Player
   m_TagString: Player
@@ -2364,7 +2365,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMovement
   ShowTopMostFoldoutHeaderGroup: 1
   playerData: {fileID: 11400000, guid: 544554fc9e492e14ea81ccb605682e48, type: 2}
-  fKnockbackDecay: 12
 --- !u!114 &1732251204160524492
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2426,16 +2426,32 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EntityEffector
   ShowTopMostFoldoutHeaderGroup: 1
   Effects:
-  - {fileID: 4486814332861962280}
-  - {fileID: 4384077678458411991}
-  - {fileID: 9140536505828118391}
-  - {fileID: 1143290577269000972}
+  - effect: {fileID: 4486814332861962280}
+    poolSize: 0
+  - effect: {fileID: 4384077678458411991}
+    poolSize: 0
+  - effect: {fileID: 9140536505828118391}
+    poolSize: 0
+  - effect: {fileID: 1143290577269000972}
+    poolSize: 0
   Trails:
   - trailRenderers:
     - {fileID: 1321807063599939360}
     - {fileID: 5283075921309849506}
     - {fileID: 8409890666454974778}
   - trailRenderers: []
+--- !u!114 &6531188162290506021
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3448056407326184070}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1eb486c6446000141b4a8bae91e7ba65, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CrowdController
 --- !u!1 &3648312818719334364
 GameObject:
   m_ObjectHideFlags: 0

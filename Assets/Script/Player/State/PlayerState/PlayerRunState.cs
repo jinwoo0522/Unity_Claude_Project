@@ -4,7 +4,7 @@ using UnityEngine;
 public class PlayerRunState : EntityState
 {
     IEntityMoveInput _moveInput;
-    PlayerMovement _playerMove;
+    IEntityMovement _playerMove;
     IEntityInputState _inputState;
     EntityAnimator _aniController;
     Vector2 vAnimLerp;
@@ -37,7 +37,7 @@ public class PlayerRunState : EntityState
     protected override void UpdateState(float fTimedelta , ushort curState)
     {
         // 이동 구현
-        _playerMove.PlayerMove(_moveInput.MoveInput , _moveInput.isSprint);
+        _playerMove.Move(_moveInput.MoveInput , _moveInput.isSprint);
         _playerMove.Gravity();
 
         // 애니메이션
