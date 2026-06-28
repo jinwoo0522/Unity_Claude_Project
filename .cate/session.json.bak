@@ -1,37 +1,37 @@
 {
   "version": 1,
-  "workspaceId": "4547b06c-2434-4c0e-b8f6-1d3b44fdecb9",
+  "workspaceId": "3d002c16-af30-4806-9310-6feca31b1437",
   "focusedNodeId": null,
   "nodes": {
-    "19b31270-8651-4305-a786-036f003299aa": {
-      "panelId": "19b31270-8651-4305-a786-036f003299aa",
+    "2423f8bd-4cc7-4811-b5b4-b00c628863f9": {
+      "panelId": "2423f8bd-4cc7-4811-b5b4-b00c628863f9",
       "zOrder": 0,
       "creationIndex": 0,
-      "ptyId": "terminal-1781338243340-1ok3q8c"
+      "ptyId": "terminal-1782623335781-sbr8c53"
     },
-    "ec71d894-4dd4-47b2-a22c-8708c616f471": {
-      "panelId": "ec71d894-4dd4-47b2-a22c-8708c616f471",
+    "ad040099-8efd-4caa-9b5f-513c6f10ed45": {
+      "panelId": "ad040099-8efd-4caa-9b5f-513c6f10ed45",
       "zOrder": 1,
       "creationIndex": 1,
-      "ptyId": "terminal-1781338243381-xemcn3q"
+      "ptyId": "terminal-1782623335847-mzc869p"
     },
-    "db0970ac-5059-4006-bdd1-a78abe393f8b": {
-      "panelId": "db0970ac-5059-4006-bdd1-a78abe393f8b",
+    "e816398b-0ab2-415e-ae30-77bd200a97c7": {
+      "panelId": "e816398b-0ab2-415e-ae30-77bd200a97c7",
       "zOrder": 2,
       "creationIndex": 2,
-      "ptyId": "terminal-1781338243426-ri6wney"
+      "ptyId": "terminal-1782623335888-hkza4it"
     },
-    "2cef8965-3be9-4231-8d5e-1068d5623141": {
-      "panelId": "2cef8965-3be9-4231-8d5e-1068d5623141",
+    "06bf6de4-8b44-43fe-a8aa-a679339d7121": {
+      "panelId": "06bf6de4-8b44-43fe-a8aa-a679339d7121",
       "zOrder": 3,
       "creationIndex": 3,
-      "ptyId": "terminal-1781338243461-kb586lg"
+      "ptyId": "terminal-1782623335925-a59l78r"
     },
-    "4e3ad773-e7ee-4e12-9e6f-2e92e05aadf9": {
-      "panelId": "4e3ad773-e7ee-4e12-9e6f-2e92e05aadf9",
+    "ae1cf2d6-0ff6-47fb-aaa8-5edb95694300": {
+      "panelId": "ae1cf2d6-0ff6-47fb-aaa8-5edb95694300",
       "zOrder": 4,
       "creationIndex": 4,
-      "ptyId": "terminal-1781338243497-37eixoa"
+      "ptyId": "terminal-1782623335962-h3feg66"
     }
   }
 }

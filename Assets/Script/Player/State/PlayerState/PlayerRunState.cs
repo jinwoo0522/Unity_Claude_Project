@@ -18,11 +18,8 @@ public class PlayerRunState : EntityState
 
     public override void Create()
     {
-        //트랜지션을 생성.
-        TransitionList.Add(new RunToWalk_Player(_inputState)); 
+        TransitionList.Add(new RunToWalk_Player(_inputState));
         TransitionList.Add(new RunToIdle_Player(_inputState));
-        TransitionList.Add(new StateToMouseAttack_Elf(_inputState));
-        TransitionList.Add(new StateToQSkill_Elf(_inputState)); 
     }
     public override void Enter()
     {

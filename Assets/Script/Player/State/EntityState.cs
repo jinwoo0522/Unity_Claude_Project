@@ -12,6 +12,8 @@ public abstract class EntityState : IState
     float fAccTime;
 
     public abstract void Create();
+    // 캐릭터 클래스에서 캐릭터별 전환을 외부 주입할 때 사용
+    public void AddTransition(ITransition trans) => TransitionList.Add(trans);
     public abstract void Enter();
     public abstract void Exit();
     public void Update(float fTimedelta, ushort curState)
