@@ -23,7 +23,6 @@ public class PooledHandler : INetworkPrefabInstanceHandler
     
     private GameObject CreateNetworkObject() // 생성
     {
-        Debug.Log("스킬 프리펩 생성!");
         return GameObject.Instantiate(SkillPrefeb);
     }
     private void DestoryObject(GameObject obj) => GameObject.Destroy(obj);

@@ -14,6 +14,7 @@ public class Elf_Player : Player
         CreateState();
         CreateUpperState();
 
+        if(IsServer == false) return;
        // 시작 시 IDLE 시작
        _stateMachine.TransitionTo((ushort)ENTITY.StateType.IDLE);
        _upperStateMachine.TransitionTo((ushort)ENTITY.StateType.IDLE);

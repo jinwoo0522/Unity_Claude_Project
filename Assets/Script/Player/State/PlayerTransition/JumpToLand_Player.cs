@@ -16,7 +16,7 @@ public class JumpToLand_Player : ITransition
     public bool CheckRule(float fTimeDelta)
     {
         fAccTime += fTimeDelta; 
-         if(_jump.isGrounded == true && fAccTime > fJumpDelay) // 땅에 붙어 있
+         if(_jump.isGrounded == true && fAccTime > fJumpDelay) // 땅에 붙어 있다면
             return true;
         
         return false;
