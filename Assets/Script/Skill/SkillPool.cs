@@ -75,7 +75,7 @@ public class SkillPool
             SkillPools.Add((SkillType)i , handle);
 
             NetworkManager.Singleton.PrefabHandler.
-            AddHandler(SkillDatas[i].prefab, handle);
+            AddHandler(SkillDatas[i].prefab.gameObject, handle);
         }
 
         NetworkManager.Singleton.OnClientStarted += ClientStart;

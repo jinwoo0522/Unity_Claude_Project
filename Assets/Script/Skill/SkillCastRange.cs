@@ -63,7 +63,6 @@ public class SkillCastRange : Skill
         _phase = Phase.Range;
         _timer = 0f;
         SetEffect_ClientRpc(false, true);
-        DealDamageOnce();
     }
 
     // 범위 종료 → 소멸. 서버에서 바로 Despawn → 풀 반환
@@ -74,12 +73,6 @@ public class SkillCastRange : Skill
     }
 
     // 서버 1회 범위 데미지 판정
-    void DealDamageOnce()
-    {
-        Collider[] hits = Physics.OverlapSphere(transform.position, fRadius);
-        foreach (var hit in hits)
-            OnHitEnemy(hit, fDamage, isHitAnim);
-    }
 
     // 이펙트 켜고 끄기만 전 클라(호스트 포함) 동기화 — 수명 판정 아님
     [ClientRpc]
