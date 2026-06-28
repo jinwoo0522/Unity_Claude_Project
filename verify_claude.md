@@ -1,33 +1,40 @@
 ## 계획 검증 결과
 
 ### 요구사항 대조 (TASK.md → PLAN.md)
-- [✅] **Golem_Player 기본 움직임 리팩토링** : Elf 식 상태머신/기능 분리 구조로 설계, Step 3에서 `Golem_Player.cs` 작성 포함
-- [✅] **애니메이터 상태 전부 가공** : Step 5에서 GolemAnimator base+upper 레이어 재편 계획 포함
-- [✅] **AnimData 작성** : Step 4에서 `AnimData_Golem` / `AnimData_UpperGolem` 에셋 생성 계획 포함
-- [✅] **상체 움직임(Idle/Hit) 구현** : `PlayerUpperIdleState` + `PlayerHitState` + `AnyToHit_Player` 재사용 계획 포함
-- [✅] **착지 상태 공석 허용** : Step 5에서 Land 상태 생성 + 클립 공석 명시
-- [✅] **레거시 코드 최소 변경** : 공통 상태 수정은 사용자 승인된 외부 등록 리팩토링으로 처리, 나머지 시스템 무변경 유지
+
+- ✅ **하체 움직임 리팩토링** : 공통 PlayerIdle/Walk/Run/Jump/Land + EntityAirborne 상태 재사용, ENTITY enum 기준으로 등록
+- ✅ **상체 Idle/Hit 구현** : PlayerUpperIdleState + PlayerHitState + AnyToHit_Player(AnyTransition) 등록
+- ✅ **스킬 미리팩토링** : TASK 명시 — 스킬 전환 및 스킬 상태 등록 금지 계획에 반영됨
+- ✅ **AnimData 2종 작성** : AnimData_Magician(layer 0) / AnimData_UpperMagician(layer 1) 생성 계획 포함
+- ✅ **프리팹 연결** : Magicain_Player.prefab에 컴포넌트 부착 및 animData/upperAnimData 할당 계획 포함
+- ✅ **레거시 코드 비침범** : 신규 파일 추가 + 프리팹/데이터 수정만으로 범위 제한
 
 ---
 
 ### 이슈 목록
-1. **[낮음] `PlayerUpperIdleState.Enter()`의 ELF enum 잔존**
-   - 현재 코드: `_state.Value = (ushort)ELF.UpperStateType.IDLE;` (값=1)
-   - Golem에서 쓸 `ENTITY.UpperStateType.IDLE` 역시 값=1로 동일 → 런타임 버그 없음
-   - PLAN Step 2에서 `Create()` 수정 시 `Enter()`의 enum도 `ENTITY.UpperStateType.IDLE`로 함께 정리하면 이상적이나, 기능적 오류는 아님
 
-2. **[낮음] PLAN Step 6 Missing Script guid 미검증**
-   - PLAN에서 ff056c88, f6568e20 등 6개 guid 명시 → 실제 `Golem_Player.prefab` YAML 내 guid와 일치 여부를 구현 단계에서 반드시 재확인 필요
-   - 불일치 시 잘못된 컴포넌트 제거 위험
+- **1. [낮음]** `AnimData.cs`가 두 경로에 존재
+  - `Resources/Data/AnimData.cs` (guid: `d0119fad...`)
+  - `Resources/Data/AnimData/AnimData.cs` (guid: `06443740...`)
+  - PLAN.md는 `06443740ab07aa94a95000a86d8fcdbb`를 사용하며, 이는 기존 AnimData_Golem.asset의 `m_Script` guid와 일치함 → 정합성 있음. 구현 시 혼동 방지를 위해 주의 필요.
+
+- **2. [낮음]** TASK.md의 프리팹 경로 오기재
+  - TASK.md 2번째 줄: `Golem_Player.prefab : 매지션 프리펩` — 실제 Magician 프리팹은 `Magicain_Player.prefab`
+  - PLAN.md는 실제 파일 탐색으로 올바르게 `Magicain_Player.prefab`을 참조 → PLAN.md 무관, TASK.md 자체 오류
+
+- **3. [낮음]** `StateToIdle_Player` 상체 복귀 전환 미명시
+  - HIT → IDLE 복귀 전환 클래스가 존재하나(`StateToIdle_Player.cs`), Golem_Player.cs도 `CreateUpperState()`에서 명시적으로 등록하지 않음 → `PlayerHitState` 내부 처리로 판단됨. 이상 없음.
 
 ---
 
 ### 확인 필요 항목
-1. **PLAN Step 6 Missing Script guid 재확인** → 구현 단계 시작 전 `Golem_Player.prefab` YAML에서 실제 guid 목록을 검증한 후 제거 진행 필요
+
+없음
 
 ---
 
 ### 최종 판정
+
 **통과**
 
-이슈가 모두 낮은 심각도이며, 기능적 오류가 없음. 모든 참조 경로·에셋·애니메이션 클립이 실제 존재하고, TASK 요구사항이 PLAN에 누락 없이 반영되어 있으며, 구현 방향에 명백한 모순이 없음.
+모든 참조 파일/클래스/guid가 실제 존재하며, ENTITY enum 값과 AnimData 매핑이 일치하고, Golem_Player 패턴을 올바르게 따르고 있습니다.

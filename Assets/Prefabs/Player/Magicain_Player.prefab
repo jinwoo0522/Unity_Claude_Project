@@ -477,6 +477,7 @@ GameObject:
   - component: {fileID: 602054283828838798}
   - component: {fileID: 5485118948980521001}
   - component: {fileID: 3986771494508981848}
+  - component: {fileID: 1000000000000001}
   m_Layer: 7
   m_Name: Magicain_Player
   m_TagString: Player
@@ -525,7 +526,7 @@ CharacterController:
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!114 &2212910567567113587
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -538,7 +539,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
-  GlobalObjectIdHash: 3019987179
+  GlobalObjectIdHash: 2912079774
   InScenePlacedSourceGlobalObjectIdHash: 0
   DeferredDespawnTick: 0
   Ownership: 1
@@ -735,7 +736,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMovement
   ShowTopMostFoldoutHeaderGroup: 1
-  playerData: {fileID: 0}
+  playerData: {fileID: 11400000, guid: 79965e81d4b08054f960f4cb2c0f142e, type: 2}
 --- !u!114 &602054283828838798
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -777,6 +778,21 @@ MonoBehaviour:
   ShowTopMostFoldoutHeaderGroup: 1
   Effects: []
   Trails: []
+--- !u!114 &1000000000000001
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7576251448233022070}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d54de7325ef0c5e429d8b6e76e6cbbb5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Magician_Player
+  ShowTopMostFoldoutHeaderGroup: 1
+  animData: {fileID: 11400000, guid: eed6d03ebe8dfcc4986d75cdd8852ba2, type: 2}
+  upperAnimData: {fileID: 11400000, guid: 10bf26b06ced83d41969cf312b1da6f0, type: 2}
 --- !u!1 &8304582804339889416
 GameObject:
   m_ObjectHideFlags: 0
