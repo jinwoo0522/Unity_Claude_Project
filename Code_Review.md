@@ -1,24 +1,132 @@
-`unity-code-reviewer` 스킬의 지침에 따라 최근 변경된 코드 및 기획 문서에 대한 코드 리뷰와 유니티 컴파일 검증을 성공적으로 마쳤습니다. 
+# Code Review — Agents_1 브랜치 (Golem_Player 리팩토링)
 
-다음은 최종 코드 리뷰 보고서입니다.
+리뷰 날짜: 2026-06-28  
+검토 범위: PLAN.md Step 1~6 전체 (스크립트 · AnimData · GolemAnimator · Golem_Player.prefab)
 
-## 1. Plan & Task Alignment (계획 및 요구사항 일치 여부)
+---
 
-- **점수판 표시 (완료)**: `Scoreboard.cs`를 통해 `Tab` 키 입력 시 반투명 Panel이 활성화/비활성화되는 기능이 올바르게 구현되었습니다. (로컬 입력 기반 토글 처리)
-- **항목 구성 (완료)**: `ScoreboardEntry.cs`와 `ScoreEntry` 네트워크 구조체를 통해 클라이언트 이름, 킬, 데스, 데미지 UI 항목이 구성되었으며, `Scoreboard`의 `CreateOrUpdateEntry`에서 접속된 인원만큼 프리팹 인스턴스화가 잘 처리되었습니다.
-- **ScoreManager 클래스 (완료)**: `ScoreManager.cs`가 순수 C# 클래스로 완벽하게 설계되었으며, `GameManager`를 통해 전역적으로 안전하게 관리됩니다.
-- **데미지, 킬, 데스 카운팅 (완료)**: `Player_UpperBody.TakeHit`에서 데미지와 마지막 공격자 ID를 추적하며, 체력이 0 이하가 되어 `Stat.Die()`가 호출될 때 중복 사망을 방지하는 플래그(`_isDead`)와 함께 `ScoreManager.RegisterKill`을 통해 킬과 데스가 각각 1회씩 정확히 집계됩니다.
-- **정렬 및 배치 (완료)**: 요구사항에 명시된 대로 `Update()` 함수를 절대 사용하지 않고, 킬 스코어가 변동되는 시점(`OnListChanged`)에만 `SortAndRearrange()`를 호출하여 Sibling Index를 기반으로 UI를 재배치하도록 최적화되었습니다.
+## 에셋 참조 검증 (unity-scanner)
 
-## 2. Static Code Review (정적 코드 리뷰)
+| 에셋 | 실제 guid (.meta) | 프리팹/컨트롤러 참조 | 결과 |
+|---|---|---|---|
+| AnimData_Golem.asset | `983e2d9711ca40d3ac6096f7b763348c` | Golem_Player 컴포넌트 animData | ✅ 일치 |
+| AnimData_UpperGolem.asset | `9a1d3916458242a9802cddc021ac3dc2` | Golem_Player 컴포넌트 upperAnimData | ✅ 일치 |
+| Golem_UpperBody_Mask.mask | `1cd46f546ca900948bd250207b01e92e` | GolemAnimator UpperBody m_Mask | ✅ 일치 |
+| AnimData.cs (스크립트) | `06443740ab07aa94a95000a86d8fcdbb` | AnimData_Golem · AnimData_UpperGolem m_Script | ✅ 일치 |
 
-- **서버 권위적 집계 (Server-Authoritative)**: 데미지 누적 및 킬/데스 점수 집계 로직(`AddPlayer`, `AddDamage`, `RegisterKill`)이 철저하게 서버 측 권위하에 실행되도록 가드 되어 있습니다. 클라이언트는 집계에 관여하지 못하고 오직 복제된 `NetworkList`를 렌더링하도록 안전하게 설계되었습니다.
-- **이벤트 기반 렌더링 최적화**: 무거운 UI 정렬 로직과 인스턴스 갱신을 `Update` 틱에서 완전히 제거했습니다. 데이터가 추가되거나 변경될 때만 발생하는 이벤트 콜백을 활용하여 유니티 환경에서의 성능 누수를 원천 차단했습니다.
-- **구조체 최적화**: `ScoreEntry`가 `INetworkSerializable`과 `IEquatable<T>` 인터페이스를 모두 완벽히 구현하여 `NetworkList`의 직렬화와 값 비교가 안전하게 이루어집니다.
+---
 
-## 3. Build Validation (빌드/컴파일 검증)
+## PLAN 대비 구현 달성 요약
 
-- **검증 환경 및 툴**: `unity-cli editor refresh --compile`
-- **에러 검사 툴**: `unity-cli console --type error`
-- **검증 결과**: **통과 (Success)**
-- 신규 작성된 스크립트(`ScoreManager`, `ScoreData`, `Scoreboard`, `ScoreboardEntry`, `ScoreEntry`) 및 수정된 뼈대 스크립트(`GameManager`, `PlayerSpawner`, `Player_UpperBody`, `Stat`) 전반에서 C# 문법 오류나 컴파일 에러가 발견되지 않았습니다. 외부 플러그인(FabImporter)과 관련된 기존 에셋 경고를 제외하면 스크립트 컴파일이 완벽하게 완료되었습니다.
+| Step | 내용 | 결과 |
+|---|---|---|
+| Step 1 | IState.AddTransition · EntityState.AddTransition · StateMachine.AddTransition 추가 | ✅ 완료 |
+| Step 2 | 공통 상태에서 Elf 전용 전환 분리 · Elf_Player 외부 재등록 | ✅ 완료 (이슈 #1 참조) |
+| Step 3 | Golem_Player.cs 작성 (공통 상태 재사용, 스킬 전환 미등록) | ✅ 완료 |
+| Step 4 | AnimData_Golem · AnimData_UpperGolem 에셋 생성 | ✅ 완료 |
+| Step 5 | GolemAnimator Base+Upper 2레이어 재편, 상태명/clipName 정합 | ✅ 완료 |
+| Step 6 | Golem_Player.prefab Missing Script 제거, 컴포넌트 복구, AnimData 참조 연결 | ✅ 완료 |
+
+---
+
+## 발견 이슈
+
+### [MEDIUM] #1 · Elf_Player.cs:19 — 상체 상태머신 초기 전환에 잘못된 enum 타입
+
+```csharp
+// 현재 (잘못된 타입)
+_upperStateMachine.TransitionTo((ushort)ENTITY.StateType.IDLE);
+
+// 올바른 타입
+_upperStateMachine.TransitionTo((ushort)ELF.UpperStateType.IDLE);
+```
+
+**원인:** `_upperStateMachine.CreateState`는 `(ushort)ELF.UpperStateType.IDLE`(=1)로 상태를 등록했으나, `TransitionTo`는 `ENTITY.StateType.IDLE`(=1)로 호출.  
+**현재 영향:** 두 enum 값이 모두 `1`로 동일하여 런타임 동작은 정상.  
+**잠재 위험:** `ELF.UpperStateType`이나 `ENTITY.StateType`의 IDLE 값이 변경될 경우 상체 상태머신 초기화 실패 (KeyNotFoundException).
+
+---
+
+### [LOW] #2 · Golem_Player.cs:17-20 — 불필요한 Update() 오버라이드
+
+```csharp
+// 현재: base.Update()만 호출하는 빈 오버라이드
+protected override void Update()
+{
+    base.Update();
+}
+```
+
+`Player.Update()`를 그대로 상속하면 동일하므로 이 메서드는 삭제 가능.  
+기능 영향 없음.
+
+---
+
+### [LOW] #3 · PlayerHitState.cs:32-33 — 매 프레임 Debug.Log 잔류
+
+```csharp
+protected override void UpdateState(float fTimedelta, ushort curState)
+{
+    Debug.Log("히트 중"); // 매 프레임 호출
+}
+
+public override void Exit()
+{
+    Debug.Log("히트 끝");
+    _damagable._isHit = false;
+}
+```
+
+피격 상태가 유지되는 동안 매 프레임 `"히트 중"` 로그가 출력됨 — 성능 저하 및 로그 오염. 테스트 완료 후 제거 필요.
+
+---
+
+### [INFO] #4 · Assets/Script/Player/Magician_UpperBody.cs — PLAN 범위 외 미추적 파일 발견
+
+git 상태 기준 `??` (미추적) 파일. PLAN.md 및 TASK.md에 언급 없음.
+
+1. **컴파일 위험**: `Player_UpperBody` 부모 클래스가 프로젝트 어디에도 존재하지 않음 → 현재 컴파일 오류 발생 가능성.
+2. **코드 규칙 위반**: `rightHandBone != null ?` null 체크 포함 — CLAUDE.md "null 체크 코드 작성 금지" 규칙 위반.
+
+이 파일의 의도 및 처리 방향 확인 필요.
+
+---
+
+## 상세 검토 메모
+
+### GolemAnimator Walk BlendTree
+- 2D Freeform Directional, 5개 모션: 중앙(0,0)=Idle 클립, (0,1)=Walk Forward, (0,-1)=Walk Back, (-1,0)=Walk Left, (1,0)=Walk Right.
+- PLAN 명세("Walk Forward/Back/Left/Right")에 중앙 Idle이 추가된 구성으로, 이동 입력 0 지점에서 Idle 포즈를 자연스럽게 블렌드하는 표준 패턴. 의도적 설계로 판단.
+
+### GolemAnimator UpperBody DefaultWeight=0
+- EntityAnimatior가 `LerpLayerWeight()`에서 매 프레임 `SetLayerWeight`를 동적 관리.
+- `_upperState`가 0(NONE)이면 weight→0, 1(IDLE) 이상이면 weight→1로 보간.
+- 컨트롤러 설정 `m_DefaultWeight: 0`은 코드와 일치하며 의도에 부합.
+
+### AnimData key-clipName ↔ 애니메이터 상태명 일치 확인
+
+| AnimData_Golem (layer 0) | key | clipName | 애니메이터 상태 |
+|---|---|---|---|
+| IDLE | 1 | Idle | `Idle` ✅ |
+| WALK | 2 | Walk | `Walk` ✅ |
+| JUMP | 4 | Jump | `Jump` ✅ |
+| RUN | 64 | Run | `Run` ✅ |
+| LAND | 128 | Land | `Land` ✅ |
+| AIRBORNE | 256 | Airborne | `Airborne` ✅ |
+
+| AnimData_UpperGolem (layer 1) | key | clipName | 애니메이터 상태 |
+|---|---|---|---|
+| NONE | 0 | None | `None` ✅ |
+| IDLE | 1 | Idle | `Idle` ✅ |
+| HIT | 2 | Hit | `Hit` ✅ |
+
+### Golem_Player.prefab Missing Script 확인
+프리팹 전체에서 `m_Script: {fileID: 0}` 패턴 없음 → Missing Script 0개 ✅
+
+---
+
+## 총평
+
+핵심 기능(상태머신 분리·외부 전환 주입·AnimData·애니메이터·프리팹 복구)은 PLAN 명세에 맞게 정상 구현됨.  
+실제 런타임 버그는 없으나, #1(enum 타입 불일치)은 향후 enum 리팩토링 시 버그로 전환될 수 있어 수정 권장.  
+#3(Debug.Log 잔류)은 QA 전 제거 필요. #4(Magician_UpperBody.cs)는 컴파일 오류 가능성 있으므로 확인 필요.

@@ -24,6 +24,9 @@ public class StateMachine
 
           States[tag].Create(); // 트랜지션 생성 
     }
+    // 상태 생성 후 캐릭터별 전환을 외부에서 주입 (CreateState 이후 호출해야 함)
+    public void AddTransition(ushort tag, ITransition trans) => States[tag].AddTransition(trans);
+
     public void CreateAnyTransition(ITransition trans)
     {
         if(trans == null) 

@@ -1,5 +1,15 @@
-Warning: True color (24-bit) support not detected. Using a terminal with true color enabled will result in a better visual experience.
-Ripgrep is not available. Falling back to GrepTool.
-입력하신 경로 `C:/Program Files/Git/unity-code-reviewer`를 확인해 보았으나, 해당 경로나 파일이 존재하지 않습니다. 
+`Code_Review.md` 작성 완료입니다. 주요 발견 사항 요약:
 
-`unity-code-reviewer` 스킬을 실행하시려면 관련 명령을 알려주시거나, 확인하고자 하는 정확한 파일 경로나 목적을 말씀해 주시면 도와드리겠습니다.
+**에셋 참조 검증 (모두 정상)**
+- AnimData_Golem, AnimData_UpperGolem guid가 프리팹 참조 및 .meta 파일과 완전 일치
+- GolemAnimator UpperBody AvatarMask guid 일치
+- Missing Script 0개
+
+**이슈 목록**
+
+| 심각도 | 파일 | 내용 |
+|---|---|---|
+| MEDIUM | `Elf_Player.cs:19` | 상체 상태머신 초기 전환에 `ENTITY.StateType.IDLE` 대신 `ELF.UpperStateType.IDLE` 써야 함. 현재 값이 동일(=1)이라 동작하나 잠재 버그 |
+| LOW | `Golem_Player.cs:17` | 빈 `Update()` 오버라이드 — `base.Update()` 호출만 있어 삭제 가능 |
+| LOW | `PlayerHitState.cs:32` | 매 프레임 `Debug.Log("히트 중")` 잔류 — 성능 저하 |
+| INFO | `Magician_UpperBody.cs` | PLAN 범위 외 미추적 파일. 부모 클래스 `Player_UpperBody` 미존재 → 컴파일 오류 가능성, null 체크 규칙 위반 |

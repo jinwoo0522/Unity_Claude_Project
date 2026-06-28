@@ -5,35 +5,20 @@
   "canvas": {
     "nodes": [
       {
-        "panelId": "19b31270-8651-4305-a786-036f003299aa",
-        "panelType": "terminal",
-        "title": "⠐ Implement dev features with token optimization",
-        "origin": {
-          "x": 14.192897434749284,
-          "y": 411.89651834051347
-        },
-        "size": {
-          "width": 640,
-          "height": 400
-        },
-        "regionId": "37c62201-c549-40bf-9958-f4f4253f7037"
-      },
-      {
-        "panelId": "ec71d894-4dd4-47b2-a22c-8708c616f471",
+        "panelId": "2423f8bd-4cc7-4811-b5b4-b00c628863f9",
         "panelType": "terminal",
         "title": "C:\\WINDOWS\\system32\\cmd.exe",
         "origin": {
-          "x": -215.7989259081046,
-          "y": -166.75287186037758
+          "x": 760,
+          "y": 420
         },
         "size": {
           "width": 640,
           "height": 400
-        },
-        "regionId": "06791bf1-6f04-49d0-9b03-57ddcfddde59"
+        }
       },
       {
-        "panelId": "db0970ac-5059-4006-bdd1-a78abe393f8b",
+        "panelId": "ad040099-8efd-4caa-9b5f-513c6f10ed45",
         "panelType": "terminal",
         "title": "C:\\WINDOWS\\system32\\cmd.exe",
         "origin": {
@@ -41,43 +26,58 @@
           "y": 980
         },
         "size": {
-          "width": 844.0210606514049,
-          "height": 595.8602182253487
+          "width": 640,
+          "height": 400
         }
       },
       {
-        "panelId": "2cef8965-3be9-4231-8d5e-1068d5623141",
+        "panelId": "e816398b-0ab2-415e-ae30-77bd200a97c7",
         "panelType": "terminal",
-        "title": "◇  Ready (Golem_VS_Magician_Agents_1)",
+        "title": "C:\\WINDOWS\\system32\\cmd.exe",
         "origin": {
           "x": 1620,
           "y": 880
         },
         "size": {
-          "width": 886.8654833881999,
-          "height": 648.9056939947139
+          "width": 640,
+          "height": 400
         }
       },
       {
-        "panelId": "4e3ad773-e7ee-4e12-9e6f-2e92e05aadf9",
+        "panelId": "06bf6de4-8b44-43fe-a8aa-a679339d7121",
         "panelType": "terminal",
-        "title": "Windows PowerShell",
+        "title": "C:\\WINDOWS\\system32\\cmd.exe",
         "origin": {
-          "x": 1640,
-          "y": 140
+          "x": 2.494803865394033,
+          "y": 412.82607895589916
         },
         "size": {
           "width": 640,
           "height": 400
-        }
+        },
+        "regionId": "c8985736-f5da-48e1-94ec-513fa01f09d8"
+      },
+      {
+        "panelId": "ae1cf2d6-0ff6-47fb-aaa8-5edb95694300",
+        "panelType": "terminal",
+        "title": "C:\\WINDOWS\\system32\\cmd.exe - agy",
+        "origin": {
+          "x": 1647.2823048441937,
+          "y": 146.8427883202993
+        },
+        "size": {
+          "width": 640,
+          "height": 400
+        },
+        "regionId": "6645ecb0-a077-47b9-b1a1-e5f19edd86f5"
       }
     ],
     "regions": [
       {
-        "id": "37c62201-c549-40bf-9958-f4f4253f7037",
+        "id": "c8985736-f5da-48e1-94ec-513fa01f09d8",
         "origin": {
-          "x": -5.361908287979929,
-          "y": 392.74596045914797
+          "x": -31.131512980043397,
+          "y": 381.75828475252206
         },
         "size": {
           "width": 695.8900250272011,
@@ -88,10 +88,10 @@
         "zOrder": -1000
       },
       {
-        "id": "06791bf1-6f04-49d0-9b03-57ddcfddde59",
+        "id": "a3333d52-a3be-477e-84d0-9babeca1265c",
         "origin": {
-          "x": -243.40344815752871,
-          "y": -186.958780066886
+          "x": 739.4795953080915,
+          "y": 394.12679774747903
         },
         "size": {
           "width": 705.2923424517824,
@@ -102,10 +102,10 @@
         "zOrder": -1000
       },
       {
-        "id": "543efba1-181a-4e78-b4e5-28017622f761",
+        "id": "0943a64b-957f-4abd-8c9d-d12e5fd6883f",
         "origin": {
-          "x": 217.140822772124,
-          "y": 945.1342639342981
+          "x": 233.8074894387907,
+          "y": 928.4675972676315
         },
         "size": {
           "width": 998.3275179461184,
@@ -116,7 +116,7 @@
         "zOrder": -1000
       },
       {
-        "id": "7964cb23-a531-43c8-a8b7-684c62b23f6f",
+        "id": "dcee2835-c24f-4305-a0cf-e3c54d16ca1c",
         "origin": {
           "x": 1544.7904859180394,
           "y": 821.9817798041838
@@ -130,7 +130,7 @@
         "zOrder": -1000
       },
       {
-        "id": "9fbcb346-2d27-4b89-9a65-2577872df485",
+        "id": "6645ecb0-a077-47b9-b1a1-e5f19edd86f5",
         "origin": {
           "x": 1585.867371303143,
           "y": 94.85828533372293
@@ -144,10 +144,10 @@
         "zOrder": -1000
       }
     ],
-    "zoomLevel": 1.2882676449741188,
+    "zoomLevel": 1.0226999209692362,
     "viewportOffset": {
-      "x": 541.1403693968637,
-      "y": -211.16605721624114
+      "x": -942.8235932716873,
+      "y": 79.39523471663472
     }
   },
   "dockState": {
@@ -176,59 +176,37 @@
         "size": 0,
         "layout": {
           "type": "tabs",
-          "id": "eb9b0f8d-94bb-4227-ab05-c136c1c6c010",
+          "id": "e7509267-44db-4740-a3cd-ade3492d139e",
           "panelIds": [
-            "85d7cf46-a86c-4b40-bae8-d5653ab5a44c",
-            "9a5c4528-5174-40ba-bc4d-9833e640a096",
-            "4e08dc23-213b-4ff7-9dda-618c57e30263",
-            "b7861750-6983-4a14-9c48-86da943612e4"
+            "4fe5ebb5-7564-4ba2-a945-48fcc6261000",
+            "7882c036-f88c-4197-9e44-56d4c9ac87e8"
           ],
           "activeIndex": 0
         }
       }
     },
     "locations": {
-      "85d7cf46-a86c-4b40-bae8-d5653ab5a44c": {
+      "4fe5ebb5-7564-4ba2-a945-48fcc6261000": {
         "type": "dock",
         "zone": "center",
-        "stackId": "eb9b0f8d-94bb-4227-ab05-c136c1c6c010"
+        "stackId": "e7509267-44db-4740-a3cd-ade3492d139e"
       },
-      "9a5c4528-5174-40ba-bc4d-9833e640a096": {
+      "7882c036-f88c-4197-9e44-56d4c9ac87e8": {
         "type": "dock",
         "zone": "center",
-        "stackId": "eb9b0f8d-94bb-4227-ab05-c136c1c6c010"
-      },
-      "4e08dc23-213b-4ff7-9dda-618c57e30263": {
-        "type": "dock",
-        "zone": "center",
-        "stackId": "eb9b0f8d-94bb-4227-ab05-c136c1c6c010"
-      },
-      "b7861750-6983-4a14-9c48-86da943612e4": {
-        "type": "dock",
-        "zone": "center",
-        "stackId": "eb9b0f8d-94bb-4227-ab05-c136c1c6c010"
+        "stackId": "e7509267-44db-4740-a3cd-ade3492d139e"
       }
     }
   },
   "dockPanels": {
-    "85d7cf46-a86c-4b40-bae8-d5653ab5a44c": {
+    "4fe5ebb5-7564-4ba2-a945-48fcc6261000": {
       "type": "canvas",
       "title": "Canvas"
     },
-    "9a5c4528-5174-40ba-bc4d-9833e640a096": {
+    "7882c036-f88c-4197-9e44-56d4c9ac87e8": {
       "type": "editor",
-      "title": "TASK.md",
+      "title": "C:\\Unity\\Golem_VS_Magician_Agents_1\\TASK.md",
       "filePath": "TASK.md"
-    },
-    "4e08dc23-213b-4ff7-9dda-618c57e30263": {
-      "type": "editor",
-      "title": "C:\\Unity\\Golem_VS_Magician_Agents_1\\Code_Review.md",
-      "filePath": "Code_Review.md"
-    },
-    "b7861750-6983-4a14-9c48-86da943612e4": {
-      "type": "editor",
-      "title": "C:\\Unity\\Golem_VS_Magician_Agents_1\\CLAUDE.md",
-      "filePath": "CLAUDE.md"
     }
   }
 }

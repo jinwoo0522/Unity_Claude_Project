@@ -37,6 +37,14 @@ public class Elf_Player : Player
 
        _stateMachine.CreateAnyTransition(new AnyToJump_Player(_input ,_aniController, _jump));
        _stateMachine.CreateAnyTransition(new AnyToAirborne_Entity(_crowdController));
+
+       // 공통 상태에서 분리된 Elf 전용 스킬 전환을 외부 주입 (Golem은 등록하지 않음)
+       _stateMachine.AddTransition((ushort)ENTITY.StateType.IDLE, new StateToMouseAttack_Elf(_input));
+       _stateMachine.AddTransition((ushort)ENTITY.StateType.IDLE, new StateToQSkill_Elf(_input));
+       _stateMachine.AddTransition((ushort)ENTITY.StateType.WALK, new StateToMouseAttack_Elf(_input));
+       _stateMachine.AddTransition((ushort)ENTITY.StateType.WALK, new StateToQSkill_Elf(_input));
+       _stateMachine.AddTransition((ushort)ENTITY.StateType.RUN, new StateToMouseAttack_Elf(_input));
+       _stateMachine.AddTransition((ushort)ENTITY.StateType.RUN, new StateToQSkill_Elf(_input));
     }
 
     void CreateUpperState()
@@ -48,6 +56,9 @@ public class Elf_Player : Player
        _upperStateMachine.CreateState((ushort)ELF.UpperStateType.ATTACK_LAST, new ElfUpperAttackLastState(this));
 
        _upperStateMachine.CreateAnyTransition(new AnyToHit_Player(_upperAniController , _stat));
+
+       // 공통 상체 Idle 상태에서 분리된 Elf 전용 공격 전환을 외부 주입
+       _upperStateMachine.AddTransition((ushort)ELF.UpperStateType.IDLE, new IdleToAttackStart_Elf(_input));
     }
 
 }

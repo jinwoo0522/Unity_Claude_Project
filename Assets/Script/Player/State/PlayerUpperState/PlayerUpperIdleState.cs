@@ -12,12 +12,12 @@ public class PlayerUpperIdleState : EntityState
 
     public override void Create()
     {
-        TransitionList.Add(new IdleToAttackStart_Elf(_inputState));
+        // Elf 전용 전환(IdleToAttackStart_Elf)은 Elf_Player에서 외부 주입
     }
 
     public override void Enter()
     {
-        _upperAniController._state.Value = (ushort)ELF.UpperStateType.IDLE;
+        _upperAniController._state.Value = (ushort)ENTITY.UpperStateType.IDLE;
     }
 
     public override void Exit()

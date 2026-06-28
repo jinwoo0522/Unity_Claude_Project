@@ -348,19 +348,19 @@ GameObject:
   m_Component:
   - component: {fileID: 124523891963633087}
   - component: {fileID: 6504052176004744969}
-  - component: {fileID: 8715248495703265370}
-  - component: {fileID: 675806104163836388}
+  - component: {fileID: 1000000000000001}
+  - component: {fileID: 1000000000000002}
+  - component: {fileID: 1000000000000003}
+  - component: {fileID: 1000000000000004}
+  - component: {fileID: 1000000000000005}
+  - component: {fileID: 1000000000000006}
   - component: {fileID: 6478216061000630281}
   - component: {fileID: 4058540119208801427}
   - component: {fileID: 2369709211368740325}
   - component: {fileID: 5765010421665568576}
   - component: {fileID: 4120633991251001047}
   - component: {fileID: 5528147988313170608}
-  - component: {fileID: 5007854344547407432}
   - component: {fileID: 1734756855715145631}
-  - component: {fileID: 1898331943030139423}
-  - component: {fileID: 7543415186289248004}
-  - component: {fileID: 8777450751401349420}
   m_Layer: 7
   m_Name: Golem_Player
   m_TagString: Player
@@ -411,7 +411,7 @@ MonoBehaviour:
   AutoObjectParentSync: 1
   SyncOwnerTransformWhenParented: 1
   AllowOwnerToParent: 0
---- !u!114 &8715248495703265370
+--- !u!114 &1000000000000001
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -420,13 +420,40 @@ MonoBehaviour:
   m_GameObject: {fileID: 4754220212716445872}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ff056c88995c72d4ea0fa34dfb8a4139, type: 3}
+  m_Script: {fileID: 11500000, guid: 1d85b069dd2d8404288ddd312f68318d, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Golem_Move
+  m_EditorClassIdentifier: Assembly-CSharp::Golem_Player
+  ShowTopMostFoldoutHeaderGroup: 1
+  animData: {fileID: 11400000, guid: 983e2d9711ca40d3ac6096f7b763348c, type: 2}
+  upperAnimData: {fileID: 11400000, guid: 9a1d3916458242a9802cddc021ac3dc2, type: 2}
+--- !u!114 &1000000000000002
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4754220212716445872}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9857cbb74f6b0c44db85482147804de9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Player_Input
+  ShowTopMostFoldoutHeaderGroup: 1
+--- !u!114 &1000000000000003
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4754220212716445872}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b56820949c8aaec4cbd67db8ca2d5c5e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerMovement
   ShowTopMostFoldoutHeaderGroup: 1
   playerData: {fileID: 11400000, guid: 7859729af18cf0643b19b95b32aca4cc, type: 2}
-  fKnockbackDecay: 6
---- !u!114 &675806104163836388
+--- !u!114 &1000000000000004
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -435,14 +462,37 @@ MonoBehaviour:
   m_GameObject: {fileID: 4754220212716445872}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f6568e20e8ed6204e85c3e5f267f5cd5, type: 3}
+  m_Script: {fileID: 11500000, guid: 537adb45b4139504ab80574e0277d40b, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Golem_UpperBody
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerCameraRotate
   ShowTopMostFoldoutHeaderGroup: 1
-  fAttackExitStart: 0.7
-  fHitExitStart: 0.7
-  hitbox: {fileID: 9008650080228964606}
-  fKnockbackStrength: 4
+--- !u!114 &1000000000000005
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4754220212716445872}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1eb486c6446000141b4a8bae91e7ba65, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CrowdController
+--- !u!114 &1000000000000006
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4754220212716445872}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a702cb04519dfc438e7a0546638dc81, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EntityEffector
+  ShowTopMostFoldoutHeaderGroup: 1
+  Effects: []
+  Trails: []
 --- !u!114 &6478216061000630281
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -457,7 +507,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Stat
   ShowTopMostFoldoutHeaderGroup: 1
   Stat_Data: {fileID: 11400000, guid: 7859729af18cf0643b19b95b32aca4cc, type: 2}
-  hpSlider: {fileID: 1690037974995541514}
 --- !u!114 &4058540119208801427
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -601,50 +650,7 @@ MonoBehaviour:
       NameHash: -968048806
       Synchronize: 1
       ParameterType: 1
-    - name: IsGrounded
-      NameHash: 507951781
-      Synchronize: 1
-      ParameterType: 4
-    - name: Jump
-      NameHash: 125937960
-      Synchronize: 1
-      ParameterType: 9
-    - name: Hit
-      NameHash: 1654612129
-      Synchronize: 1
-      ParameterType: 9
-    - name: IsMove
-      NameHash: 1236215618
-      Synchronize: 1
-      ParameterType: 4
-    - name: SkillState
-      NameHash: 929763974
-      Synchronize: 1
-      ParameterType: 3
-    - name: Dead
-      NameHash: 1293411866
-      Synchronize: 1
-      ParameterType: 9
   AnimatorParametersExpanded: 0
---- !u!114 &5007854344547407432
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4754220212716445872}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e46260708f04b71987479195470876b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Golem_Skill
-  ShowTopMostFoldoutHeaderGroup: 1
-  fAnimLerpSpeed: 3
-  Q_Effects: []
-  M_Effects:
-  - {fileID: 4223287964565808981}
-  AxePoint: {fileID: 6027534453458682277}
-  BottomPoint: {fileID: 2740712411653127757}
 --- !u!95 &1734756855715145631
 Animator:
   serializedVersion: 7
@@ -667,48 +673,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &1898331943030139423
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4754220212716445872}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0792060dff022e64f96df6c1f81d77e8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::AnimEventRelay
---- !u!114 &7543415186289248004
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4754220212716445872}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1e3533170f7e6ce44ac8347d29f2c5bd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Golem_TrailEmitting
-  ShowTopMostFoldoutHeaderGroup: 1
-  trailRenderers:
-  - {fileID: 3525005583933164229}
-  - {fileID: 1566994309705463754}
-  - {fileID: 304910233856320595}
---- !u!114 &8777450751401349420
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4754220212716445872}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 979878442021c5d44b3dc49973ecddf7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Player_Status
-  ShowTopMostFoldoutHeaderGroup: 1
 --- !u!1 &4993173485944839245
 GameObject:
   m_ObjectHideFlags: 0
@@ -1053,11 +1017,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 786889566517218708, guid: 6433a6bc9fc8d5d4585ba35e39927206, type: 3}
   m_PrefabInstance: {fileID: 3492460024248724166}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &4223287964565808981 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 786889566517218707, guid: 6433a6bc9fc8d5d4585ba35e39927206, type: 3}
-  m_PrefabInstance: {fileID: 3492460024248724166}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7353261187752499702
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1147,21 +1106,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 101a8868c1adc5b40bdaf7526f47b7b5, type: 3}
---- !u!96 &304910233856320595 stripped
-TrailRenderer:
-  m_CorrespondingSourceObject: {fileID: 7077206880694877605, guid: 101a8868c1adc5b40bdaf7526f47b7b5, type: 3}
-  m_PrefabInstance: {fileID: 7353261187752499702}
-  m_PrefabAsset: {fileID: 0}
---- !u!96 &1566994309705463754 stripped
-TrailRenderer:
-  m_CorrespondingSourceObject: {fileID: 8337039302494711356, guid: 101a8868c1adc5b40bdaf7526f47b7b5, type: 3}
-  m_PrefabInstance: {fileID: 7353261187752499702}
-  m_PrefabAsset: {fileID: 0}
---- !u!96 &3525005583933164229 stripped
-TrailRenderer:
-  m_CorrespondingSourceObject: {fileID: 6262077099524051763, guid: 101a8868c1adc5b40bdaf7526f47b7b5, type: 3}
-  m_PrefabInstance: {fileID: 7353261187752499702}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &6027534453458682277 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3866923782500440147, guid: 101a8868c1adc5b40bdaf7526f47b7b5, type: 3}
@@ -1293,6 +1237,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 4608369919061240865, guid: 0b61d617ad0871e44acc43a49be710cf, type: 3}
+    - {fileID: 810201989785665497, guid: 0b61d617ad0871e44acc43a49be710cf, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 3727167335170927834, guid: 0b61d617ad0871e44acc43a49be710cf, type: 3}
@@ -1318,14 +1263,3 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3304520451607779373, guid: 0b61d617ad0871e44acc43a49be710cf, type: 3}
   m_PrefabInstance: {fileID: 8519488806387861287}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &9008650080228964606 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 810201989785665497, guid: 0b61d617ad0871e44acc43a49be710cf, type: 3}
-  m_PrefabInstance: {fileID: 8519488806387861287}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 65fb65dbb19bd4042b54f1371790c175, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Golem_AttackHitbox
