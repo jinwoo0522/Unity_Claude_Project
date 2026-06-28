@@ -1,132 +1,184 @@
-# Code Review — Agents_1 브랜치 (Golem_Player 리팩토링)
+# 코드 리뷰 보고서 — Agents_1 브랜치 (Magician_Player 구현)
 
-리뷰 날짜: 2026-06-28  
-검토 범위: PLAN.md Step 1~6 전체 (스크립트 · AnimData · GolemAnimator · Golem_Player.prefab)
-
----
-
-## 에셋 참조 검증 (unity-scanner)
-
-| 에셋 | 실제 guid (.meta) | 프리팹/컨트롤러 참조 | 결과 |
-|---|---|---|---|
-| AnimData_Golem.asset | `983e2d9711ca40d3ac6096f7b763348c` | Golem_Player 컴포넌트 animData | ✅ 일치 |
-| AnimData_UpperGolem.asset | `9a1d3916458242a9802cddc021ac3dc2` | Golem_Player 컴포넌트 upperAnimData | ✅ 일치 |
-| Golem_UpperBody_Mask.mask | `1cd46f546ca900948bd250207b01e92e` | GolemAnimator UpperBody m_Mask | ✅ 일치 |
-| AnimData.cs (스크립트) | `06443740ab07aa94a95000a86d8fcdbb` | AnimData_Golem · AnimData_UpperGolem m_Script | ✅ 일치 |
+- 리뷰 일자: 2026-06-28
+- 브랜치: `Agents_1`
+- 리뷰어: Claude Sonnet 4.6
+- 리뷰 대상:
+  - `Assets/Script/Player/Magician_Player.cs` (신규)
+  - `Assets/Resources/Data/AnimData/AnimData_Magician.asset` (신규)
+  - `Assets/Resources/Data/AnimData/AnimData_UpperMagician.asset` (신규)
+  - `Assets/Prefabs/Player/Magicain_Player.prefab` (수정)
+- 참고 기준: `Golem_Player.cs`, `Elf_Player.cs`, 프로젝트 `CLAUDE.md`, `PLAN.md`
 
 ---
 
-## PLAN 대비 구현 달성 요약
+## 심각도 기준
 
-| Step | 내용 | 결과 |
-|---|---|---|
-| Step 1 | IState.AddTransition · EntityState.AddTransition · StateMachine.AddTransition 추가 | ✅ 완료 |
-| Step 2 | 공통 상태에서 Elf 전용 전환 분리 · Elf_Player 외부 재등록 | ✅ 완료 (이슈 #1 참조) |
-| Step 3 | Golem_Player.cs 작성 (공통 상태 재사용, 스킬 전환 미등록) | ✅ 완료 |
-| Step 4 | AnimData_Golem · AnimData_UpperGolem 에셋 생성 | ✅ 완료 |
-| Step 5 | GolemAnimator Base+Upper 2레이어 재편, 상태명/clipName 정합 | ✅ 완료 |
-| Step 6 | Golem_Player.prefab Missing Script 제거, 컴포넌트 복구, AnimData 참조 연결 | ✅ 완료 |
+| 기호 | 심각도 | 설명 |
+|------|--------|------|
+| 🔴 | **심각** | 런타임 오류, 보안 취약점 — 즉시 수정 필요 |
+| 🟠 | **경고** | 기능 버그, 명백한 패턴 위반 — 수정 권장 |
+| 🟡 | **주의** | 스타일/규칙 경미 위반 — 개선 권장 |
+| 🟢 | **통과** | 이상 없음 |
 
 ---
 
-## 발견 이슈
+## 1. PLAN.md 범위 준수 검증
 
-### [MEDIUM] #1 · Elf_Player.cs:19 — 상체 상태머신 초기 전환에 잘못된 enum 타입
+| 검사 항목 | PLAN.md 요구사항 | 실제 구현 | 결과 |
+|-----------|-----------------|-----------|------|
+| 하체 상태: IDLE/WALK/RUN/JUMP/LAND/AIRBORNE | 모두 등록 | 6개 모두 등록 | 🟢 |
+| 상체 상태: IDLE/HIT만 | 2개만 등록 | `PlayerUpperIdleState`, `PlayerHitState` 2개만 | 🟢 |
+| 상체 공격(Start/Middle/Last) 제외 | 등록 금지 | 없음 | 🟢 |
+| 스킬 전환(MouseSkill/QSkill) 제외 | 등록 금지 | 없음 | 🟢 |
+| MAGICIAN enum 사용 금지 | 사용 금지 | 없음, ENTITY enum만 재사용 | 🟢 |
+| `_hitter` 필드 제외 | 불필요로 제외 | 없음 | 🟢 |
+| 기존 공통/Golem/Elf 코드 비침범 | 신규 파일만 추가 | 기존 파일 수정 없음 | 🟢 |
+
+**결론: PLAN.md 범위 완전 준수.**
+
+---
+
+## 2. CLAUDE.md 규칙 준수 검증
+
+### 2-1. 서버 권위적(Server-Authoritative) 설계
+
+🟢 **통과**
+
+`OnNetworkSpawn()` 내에서 상태머신 초기화(`TransitionTo`) 전에 `if (IsServer == false) return;` 가드가 정확히 배치되어 있다. 클라이언트는 상태 전환을 수행하지 않으며 서버에서만 판정한다. Golem_Player와 동일한 패턴.
+
+### 2-2. `[SerializeField]` + private 은닉화 / public 변수 금지
+
+🟢 **통과**
+
+`Magician_Player.cs`에는 신규 직렬화 필드가 없다. 기반 클래스 `Player`의 `animData`/`upperAnimData`는 이미 `[SerializeField]`로 선언되어 있다. Magician 신규 코드에서 `public` 필드 또는 public 프로퍼티가 추가되지 않았다.
+
+> 참고: `Golem_Player.cs` 기존 코드의 `public IHitter _hitter {get; private set;}`은 CLAUDE.md의 public 변수 금지 원칙에 위배되나, 이번 리뷰 대상 밖이며 Magician에서는 해당 필드 자체가 없다.
+
+### 2-3. null 체크 금지
+
+🟢 **통과**
+
+코드 전체에 null 체크가 없다.
+
+### 2-4. 최소한의 코드 구현
+
+🟡 **주의 — 빈 Update() 오버라이드** (`Magician_Player.cs:20-22`)
 
 ```csharp
-// 현재 (잘못된 타입)
-_upperStateMachine.TransitionTo((ushort)ENTITY.StateType.IDLE);
-
-// 올바른 타입
-_upperStateMachine.TransitionTo((ushort)ELF.UpperStateType.IDLE);
-```
-
-**원인:** `_upperStateMachine.CreateState`는 `(ushort)ELF.UpperStateType.IDLE`(=1)로 상태를 등록했으나, `TransitionTo`는 `ENTITY.StateType.IDLE`(=1)로 호출.  
-**현재 영향:** 두 enum 값이 모두 `1`로 동일하여 런타임 동작은 정상.  
-**잠재 위험:** `ELF.UpperStateType`이나 `ENTITY.StateType`의 IDLE 값이 변경될 경우 상체 상태머신 초기화 실패 (KeyNotFoundException).
-
----
-
-### [LOW] #2 · Golem_Player.cs:17-20 — 불필요한 Update() 오버라이드
-
-```csharp
-// 현재: base.Update()만 호출하는 빈 오버라이드
 protected override void Update()
 {
     base.Update();
 }
 ```
 
-`Player.Update()`를 그대로 상속하면 동일하므로 이 메서드는 삭제 가능.  
-기능 영향 없음.
+`base.Update()` 호출 외에 본문이 없다. 이 오버라이드를 제거해도 기반 클래스 `Update()`가 그대로 호출되므로 동작은 동일하다. CLAUDE.md의 "최소한의 코드" 원칙에 경미하게 위반된다. Golem_Player.cs에도 동일한 패턴이 있어 일관성은 있지만, 불필요한 메서드임은 변하지 않는다.
+
+> **권장**: 두 파일 모두에서 빈 `Update()` 오버라이드 삭제. 단, Golem은 이번 범위 외이므로 Magician에서만 조치해도 무방.
 
 ---
 
-### [LOW] #3 · PlayerHitState.cs:32-33 — 매 프레임 Debug.Log 잔류
+## 3. 코드 주석 규칙 검증
+
+### 3-1. 파일 상단 주석 (`Magician_Player.cs:3-4`)
+
+🟡 **주의 — WHAT 주석**
 
 ```csharp
-protected override void UpdateState(float fTimedelta, ushort curState)
-{
-    Debug.Log("히트 중"); // 매 프레임 호출
-}
-
-public override void Exit()
-{
-    Debug.Log("히트 끝");
-    _damagable._isHit = false;
-}
+// 마법사 플레이어 — 공통 ENTITY 하체 상태와 상체 IDLE/HIT만 등록한다.
+// 상체 공격/스킬은 이번 구현 범위에서 제외되어 있다.
 ```
 
-피격 상태가 유지되는 동안 매 프레임 `"히트 중"` 로그가 출력됨 — 성능 저하 및 로그 오염. 테스트 완료 후 제거 필요.
+CLAUDE.md: "코드가 하는 일(WHAT)을 설명하는 주석 금지. WHY가 비명확할 때만 작성." 위 두 줄은 코드를 읽으면 자명한 WHAT 설명이다. "이번 구현 범위에서 제외"는 현 태스크 맥락이며 PR 설명에 적합하다.
+
+> **권장**: 두 줄 삭제.
+
+### 3-2. `CreateUpperState()` 내 주석 (`Magician_Player.cs:43`)
+
+🟢 **통과**
+
+```csharp
+// 피격 반응 — 서버에서 데미지 판정 후 IDamagable(Stat)을 통해 HIT 전환 트리거
+```
+
+이 주석은 AnyToHit_Player가 Stat을 통해 작동한다는 비명확한 WHY를 설명한다. CLAUDE.md 기준에 부합한다.
 
 ---
 
-### [INFO] #4 · Assets/Script/Player/Magician_UpperBody.cs — PLAN 범위 외 미추적 파일 발견
+## 4. AnimData 에셋 검증
 
-git 상태 기준 `??` (미추적) 파일. PLAN.md 및 TASK.md에 언급 없음.
+### AnimData_Magician.asset (하체, Layer 0)
 
-1. **컴파일 위험**: `Player_UpperBody` 부모 클래스가 프로젝트 어디에도 존재하지 않음 → 현재 컴파일 오류 발생 가능성.
-2. **코드 규칙 위반**: `rightHandBone != null ?` null 체크 포함 — CLAUDE.md "null 체크 코드 작성 금지" 규칙 위반.
+| 항목 | 기댓값 | 실제값 | 결과 |
+|------|--------|--------|------|
+| m_Script guid | `06443740ab07aa94a95000a86d8fcdbb` | 일치 | 🟢 |
+| iLayerNumber | 0 (하체) | 0 | 🟢 |
+| fDuration | 0.15 | 0.15 | 🟢 |
+| fWeightLerpSpeed | 1 | 1 | 🟢 |
+| key 1 → Idle | Idle | Idle | 🟢 |
+| key 2 → Walk | Walk | Walk | 🟢 |
+| key 4 → Jump | Jump | Jump | 🟢 |
+| key 64 → Run | Run | Run | 🟢 |
+| key 128 → Land | Land | Land | 🟢 |
+| key 256 → Airborne | Airborne | Airborne | 🟢 |
+| key 512 → Freeze | Freeze | Freeze | 🟢 |
+| MouseSkill/QSkill 제외 | 없어야 함 | 없음 | 🟢 |
 
-이 파일의 의도 및 처리 방향 확인 필요.
+### AnimData_UpperMagician.asset (상체, Layer 1)
 
----
-
-## 상세 검토 메모
-
-### GolemAnimator Walk BlendTree
-- 2D Freeform Directional, 5개 모션: 중앙(0,0)=Idle 클립, (0,1)=Walk Forward, (0,-1)=Walk Back, (-1,0)=Walk Left, (1,0)=Walk Right.
-- PLAN 명세("Walk Forward/Back/Left/Right")에 중앙 Idle이 추가된 구성으로, 이동 입력 0 지점에서 Idle 포즈를 자연스럽게 블렌드하는 표준 패턴. 의도적 설계로 판단.
-
-### GolemAnimator UpperBody DefaultWeight=0
-- EntityAnimatior가 `LerpLayerWeight()`에서 매 프레임 `SetLayerWeight`를 동적 관리.
-- `_upperState`가 0(NONE)이면 weight→0, 1(IDLE) 이상이면 weight→1로 보간.
-- 컨트롤러 설정 `m_DefaultWeight: 0`은 코드와 일치하며 의도에 부합.
-
-### AnimData key-clipName ↔ 애니메이터 상태명 일치 확인
-
-| AnimData_Golem (layer 0) | key | clipName | 애니메이터 상태 |
-|---|---|---|---|
-| IDLE | 1 | Idle | `Idle` ✅ |
-| WALK | 2 | Walk | `Walk` ✅ |
-| JUMP | 4 | Jump | `Jump` ✅ |
-| RUN | 64 | Run | `Run` ✅ |
-| LAND | 128 | Land | `Land` ✅ |
-| AIRBORNE | 256 | Airborne | `Airborne` ✅ |
-
-| AnimData_UpperGolem (layer 1) | key | clipName | 애니메이터 상태 |
-|---|---|---|---|
-| NONE | 0 | None | `None` ✅ |
-| IDLE | 1 | Idle | `Idle` ✅ |
-| HIT | 2 | Hit | `Hit` ✅ |
-
-### Golem_Player.prefab Missing Script 확인
-프리팹 전체에서 `m_Script: {fileID: 0}` 패턴 없음 → Missing Script 0개 ✅
+| 항목 | 기댓값 | 실제값 | 결과 |
+|------|--------|--------|------|
+| m_Script guid | `06443740ab07aa94a95000a86d8fcdbb` | 일치 | 🟢 |
+| iLayerNumber | 1 (상체) | 1 | 🟢 |
+| fDuration | 0.15 | 0.15 | 🟢 |
+| fWeightLerpSpeed | 2 | 2 | 🟢 |
+| key 0 → None | None | None | 🟢 |
+| key 1 → Idle | Idle | Idle | 🟢 |
+| key 2 → Hit | Hit | Hit | 🟢 |
+| AttackStart/Middle/Last 제외 | 없어야 함 | 없음 | 🟢 |
 
 ---
 
-## 총평
+## 5. 프리팹 guid 참조 검증
 
-핵심 기능(상태머신 분리·외부 전환 주입·AnimData·애니메이터·프리팹 복구)은 PLAN 명세에 맞게 정상 구현됨.  
-실제 런타임 버그는 없으나, #1(enum 타입 불일치)은 향후 enum 리팩토링 시 버그로 전환될 수 있어 수정 권장.  
-#3(Debug.Log 잔류)은 QA 전 제거 필요. #4(Magician_UpperBody.cs)는 컴파일 오류 가능성 있으므로 확인 필요.
+`Magicain_Player.prefab` 내 Magician_Player 컴포넌트 블록:
+
+| 필드 | 프리팹 내 guid | 에셋 .meta guid | 결과 |
+|------|--------------|----------------|------|
+| m_Script (Magician_Player.cs) | `d54de7325ef0c5e429d8b6e76e6cbbb5` | `.meta` 일치 | 🟢 |
+| animData (AnimData_Magician) | `eed6d03ebe8dfcc4986d75cdd8852ba2` | `AnimData_Magician.asset.meta` 일치 | 🟢 |
+| upperAnimData (AnimData_UpperMagician) | `10bf26b06ced83d41969cf312b1da6f0` | `AnimData_UpperMagician.asset.meta` 일치 | 🟢 |
+
+세 참조 모두 정확히 연결되어 있다.
+
+---
+
+## 6. 부가 발견 사항 (이번 리뷰 대상 외)
+
+### Elf_Player.cs 기존 버그 (참고)
+
+`Elf_Player.cs:20` 상체 상태머신 초기화에서:
+
+```csharp
+_upperStateMachine.TransitionTo((ushort)ENTITY.StateType.IDLE);  // 버그 의심
+```
+
+상체 상태머신에 `UpperStateType.IDLE`이 아닌 `StateType.IDLE`을 사용 중이다. 두 enum 값이 우연히 같으면 런타임에서 통과하지만, 의도가 불분명하다. Magician_Player에서는 `UpperStateType.IDLE`을 올바르게 사용하고 있다. Elf 담당자가 별도 확인 필요.
+
+---
+
+## 7. 종합 평가
+
+| 분류 | 건수 |
+|------|------|
+| 🔴 심각 | 0 |
+| 🟠 경고 | 0 |
+| 🟡 주의 | 2 |
+| 🟢 통과 | 전체 |
+
+### 주의 사항 요약
+
+1. **빈 Update() 오버라이드** (`Magician_Player.cs:20-22`): 삭제 권장.
+2. **파일 상단 WHAT 주석** (`Magician_Player.cs:3-4`): 삭제 권장.
+
+PLAN.md 구현 범위는 완전히 준수되었고, CLAUDE.md의 핵심 규칙(서버 권위적, 은닉화, null 체크 금지, 보안)도 모두 지켜졌다. AnimData 에셋과 프리팹 참조 guid도 모두 정확하다. 발견된 2건은 모두 경미한 스타일 수준이며 기능에 영향을 주지 않는다.
