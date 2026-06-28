@@ -22,3 +22,7 @@ MonoBehaviour:
     clipName: Idle
   - key: 2
     clipName: Hit
+  - key: 4
+    clipName: AttackStart
+  - key: 8
+    clipName: AttackLast

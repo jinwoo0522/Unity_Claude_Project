@@ -7,28 +7,29 @@ public class PlayerJumpState : EntityState
     IJumpMovement     _jump;
     IEntityMoveInput _moveInput;
     EntityAnimator   _aniController;
-    public PlayerJumpState(Player player)
+
+    float fJumpDelay = 1f;
+    public PlayerJumpState(Player player , float fDelay = 1f)
     {
         _playerMove = player._move;
         _jump = player._jump;
         _moveInput = player._input;
         _aniController = player._aniController;
+        fJumpDelay = fDelay;
     }
     public override void Create()
     {
-        TransitionList.Add(new JumpToLand_Player(_jump)); 
+        TransitionList.Add(new JumpToLand_Player(_jump, fJumpDelay)); 
     }
 
     public override void Enter()
     {
         _aniController._state.Value = (ushort)ENTITY.StateType.JUMP;
-        _aniController._animator.applyRootMotion = true;
         _jump.Jumping();
     }
 
     public override void Exit()
     {
-        _aniController._animator.applyRootMotion = false;
     }
 
     protected override void UpdateState(float fTimedelta, ushort curState)

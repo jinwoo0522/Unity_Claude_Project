@@ -69,3 +69,34 @@ namespace ELF
 
             
 }
+
+namespace GOLEM
+{
+
+    public enum StateType : ushort
+    {
+        MOUSE_SKILL = 1 << 10,
+        Q_SKILL = 1 << 11,
+    }
+    public enum UpperStateType : ushort
+    {
+        NONE = 0,
+        IDLE = 1 << 0,
+        HIT = 1 << 1,
+        ATTACK_START = 1 << 2,
+        ATTACK_LAST = 1 << 3,
+    }
+
+    public enum GolemEffect
+    {
+        HIT_EFFECT,
+        MOUSE_SKILL,
+        DASH_TRAIL,
+        Q_SKILL, 
+    }
+
+    public enum GolemTrail
+    {
+        WEAPON_TRAIL,
+    }
+}

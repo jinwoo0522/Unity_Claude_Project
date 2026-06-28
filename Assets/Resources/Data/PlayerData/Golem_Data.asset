@@ -14,17 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Player_Data
   strName: "\uACE8\uB818"
   strDesc: "\uACE8\uB818 \uC785\uB2C8\uB2E4"
-  fAttackDamage: 3
-  fHp: 1
+  fAttackDamage: 15
   fMaxHp: 100
-  fArmor: 15
-  fResistance: 15
-  fMaxResistance: 35
   fWalkSpeed: 2
   fRunSpeed: 4
-  fAnimSpeed: 3
+  fMaxMana: 100
+  fManaRegen: 0.5
   fJumpAmount: 5
   fGravity: -9.8
   fJumpDelay: 0.1
-  fMaxMana: 100
-  fManaRegen: 0.5
