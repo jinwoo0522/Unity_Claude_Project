@@ -19,8 +19,6 @@ public class SkillRange : Skill
         fRadius = data.fRadius;
 
         if (!IsServer) return;
-        _timer = 0f;
-        HitOnce();
     }
 
     protected override void OnEnable()
@@ -41,11 +39,4 @@ public class SkillRange : Skill
         GetComponent<NetworkObject>().Despawn();
     }
 
-    void HitOnce()
-    {
-        Collider[] hits = new Collider[NetworkManager.Singleton.ConnectedClientsList.Count];
-        Physics.OverlapSphereNonAlloc(transform.position, fRadius , hits, LayerMask.GetMask("Player"));
-        foreach (var hit in hits)
-            OnHitEnemy(hit, fDamage, isHitAnim);
-    }
 }

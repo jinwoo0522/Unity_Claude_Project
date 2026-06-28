@@ -10,7 +10,7 @@ public class SkillData : ScriptableObject
     public float fDamage       = 10f; // 추후 Enemy 시스템 연결
     public float fRadius       = 1f;
     public int   nPoolSize     = 5;
-    public GameObject prefab;
+    public Skill prefab;
 
     // Q/마우스 스킬 발동용: 쿨타임(초)·Animator Skill Layer 스테이트명
     [SerializeField] private float  _fCooldown;
