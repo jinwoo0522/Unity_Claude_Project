@@ -4,14 +4,14 @@ using UnityEngine.Pool;
 public class PooledHandler : INetworkPrefabInstanceHandler
 {
 
-    ObjectPool<GameObject> SkillPool;
-    private GameObject SkillPrefeb;
+    ObjectPool<Skill> SkillPool;
+    private Skill SkillPrefeb;
 
-    public PooledHandler(GameObject _SkillPrefeb , int min_Size , int max_Size)
+    public PooledHandler(Skill _SkillPrefeb , int min_Size , int max_Size)
     {
         Debug.Log("핸들러 생성자 들어옴!");
         SkillPrefeb = _SkillPrefeb;
-        SkillPool = new ObjectPool<GameObject>(
+        SkillPool = new ObjectPool<Skill>(
             CreateNetworkObject,
             Active,
             Release,
@@ -21,21 +21,21 @@ public class PooledHandler : INetworkPrefabInstanceHandler
             max_Size);
     }
     
-    private GameObject CreateNetworkObject() // 생성
+    private Skill CreateNetworkObject() // 생성
     {
         return GameObject.Instantiate(SkillPrefeb);
     }
-    private void DestoryObject(GameObject obj) => GameObject.Destroy(obj);
-    private void Active(GameObject obj) => obj.SetActive(true); 
-    private void Release(GameObject obj) => obj.SetActive(false); 
+    private void DestoryObject(Skill obj) => obj.Destroy();
+    private void Active(Skill obj) => obj.Active();
+    private void Release(Skill obj) => obj.Release();
     
     public void Destroy(NetworkObject networkObject)
     {
-        SkillPool.Release(networkObject.gameObject);
+        SkillPool.Release(networkObject.gameObject.GetComponent<Skill>());
     }
     public NetworkObject Instantiate(ulong ownerClientId, Vector3 position, Quaternion rotation)
     {
-        GameObject obj = SkillPool.Get();
+        Skill obj = SkillPool.Get();
         obj.transform.SetPositionAndRotation(position, rotation);
 
         NetworkObject nbj = obj.GetComponent<NetworkObject>();
@@ -46,7 +46,7 @@ public class PooledHandler : INetworkPrefabInstanceHandler
 
     public void Prewarm(int count)
     {
-        var temp = new GameObject[count];
+        var temp = new Skill[count];
         for (int i = 0; i < count; i++)
             temp[i] = SkillPool.Get();        // 생성 + 활성화
         for (int i = 0; i < count; i++)
