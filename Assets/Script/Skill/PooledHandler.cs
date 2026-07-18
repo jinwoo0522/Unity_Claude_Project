@@ -4,14 +4,14 @@ using UnityEngine.Pool;
 public class PooledHandler : INetworkPrefabInstanceHandler
 {
 
-    ObjectPool<Skill> SkillPool;
-    private Skill SkillPrefeb;
+    ObjectPool<ISkill> SkillPool;
+    private ISkill SkillPrefeb;
 
-    public PooledHandler(Skill _SkillPrefeb , int min_Size , int max_Size)
+    public PooledHandler(ISkill _SkillPrefeb , int min_Size , int max_Size)
     {
         Debug.Log("핸들러 생성자 들어옴!");
         SkillPrefeb = _SkillPrefeb;
-        SkillPool = new ObjectPool<Skill>(
+        SkillPool = new ObjectPool<ISkill>(
             CreateNetworkObject,
             Active,
             Release,
@@ -20,25 +20,31 @@ public class PooledHandler : INetworkPrefabInstanceHandler
             min_Size,
             max_Size);
     }
-    
-    private Skill CreateNetworkObject() // 생성
+
+    private ISkill CreateNetworkObject() // 생성
     {
-        return GameObject.Instantiate(SkillPrefeb);
+        ISkill skill = (ISkill)GameObject.Instantiate((Component)SkillPrefeb);
+        skill.Handler = this;             // 스킬이 자기 핸들러를 들고 스스로 반납할 수 있도록
+        return skill;
     }
-    private void DestoryObject(Skill obj) => obj.Destroy();
-    private void Active(Skill obj) => obj.Active();
-    private void Release(Skill obj) => obj.Release();
-    
+    private void DestoryObject(ISkill obj) => obj.Destroy();
+    private void Active(ISkill obj) => obj.Active();
+    private void Release(ISkill obj) => obj.Release();
+
+    // 스킬 본인이 스스로를 풀에 반납할 때 호출
+    public void Return(ISkill skill) => SkillPool.Release(skill);
+
     public void Destroy(NetworkObject networkObject)
     {
-        SkillPool.Release(networkObject.gameObject.GetComponent<Skill>());
+        SkillPool.Release(networkObject.gameObject.GetComponent<ISkill>());
     }
     public NetworkObject Instantiate(ulong ownerClientId, Vector3 position, Quaternion rotation)
     {
-        Skill obj = SkillPool.Get();
-        obj.transform.SetPositionAndRotation(position, rotation);
+        ISkill obj = SkillPool.Get();
+        Component comp = (Component)obj;
+        comp.transform.SetPositionAndRotation(position, rotation);
 
-        NetworkObject nbj = obj.GetComponent<NetworkObject>();
+        NetworkObject nbj = comp.GetComponent<NetworkObject>();
         if(nbj == null)
             GameManager.Instance.DebugMessage<PooledHandler>("네트워크 오브젝트 없음");
         return nbj;
@@ -46,7 +52,7 @@ public class PooledHandler : INetworkPrefabInstanceHandler
 
     public void Prewarm(int count)
     {
-        var temp = new Skill[count];
+        var temp = new ISkill[count];
         for (int i = 0; i < count; i++)
             temp[i] = SkillPool.Get();        // 생성 + 활성화
         for (int i = 0; i < count; i++)

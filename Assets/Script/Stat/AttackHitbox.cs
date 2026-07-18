@@ -20,23 +20,18 @@ public class AttackHitbox : MonoBehaviour , IHitter
     [SerializeField] private Color   _idleColor = new Color(0f, 1f, 0f, 0.25f);         // 평상시
     [SerializeField] private Color   _hitColor  = new Color(1f, 0f, 0f, 0.45f);         // 판정 발생 중
 #endif
+    public event Action<IHitter.HitInfo> _HitInfo;
 
-    // 활성 히트 윈도우 — _hitTimer가 남아있는 동안 매 프레임 박스 질의
     private float   _hitTimer;
     private Vector3 _curCenter;
     private Vector3 _curHalfExtents;
-    private Action<IHitter.HitInfo> _HitEvent;
 
-    // 히트 시작 — duration 초 동안 매 프레임 박스 질의
-    // center      : 이 Transform 로컬 기준 박스 중심 오프셋 (공격별 리치)
-    // halfExtents : 박스 절반 크기 (공격별 크기)
-    // duration    : 판정 지속시간(초)
-    public void DoHitCheck(Vector3 center, Vector3 halfExtents, float duration, Action<IHitter.HitInfo> HitEvent)
+    public void DoHitCheck(Vector3 center, Vector3 halfExtents, float duration, Action<IHitter.HitInfo> HitInfo)
     {
         _curCenter      = center;
         _curHalfExtents = halfExtents;
         _hitTimer       = duration;
-        _HitEvent       = HitEvent;
+        _HitInfo       = HitInfo;
     }
 
     void Update()
@@ -64,7 +59,7 @@ public class AttackHitbox : MonoBehaviour , IHitter
             hitInfo.Target = target;
             hitInfo.Collider = col;
             hitInfo.Point = col.ClosestPoint(worldCenter);
-            _HitEvent.Invoke(hitInfo);
+            _HitInfo.Invoke(hitInfo);
         }
     }
 
@@ -77,7 +72,7 @@ public class AttackHitbox : MonoBehaviour , IHitter
 
     void OnDestroy()
     {
-        _HitEvent = null;
+        _HitInfo = null;
     }
 
 #if UNITY_EDITOR

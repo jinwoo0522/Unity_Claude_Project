@@ -539,7 +539,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
-  GlobalObjectIdHash: 2912079774
+  GlobalObjectIdHash: 3019987179
   InScenePlacedSourceGlobalObjectIdHash: 0
   DeferredDespawnTick: 0
   Ownership: 1
@@ -777,7 +777,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EntityEffector
   ShowTopMostFoldoutHeaderGroup: 1
   Effects: []
-  Trails: []
+  Trails:
+  - trailRenderers:
+    - {fileID: 8053560375152256791}
+    - {fileID: 8873944344218398898}
+    - {fileID: 2781329307925909463}
+  - trailRenderers:
+    - {fileID: 5482089103098358939}
+    - {fileID: 6408940985355762494}
+    - {fileID: 382507757227836507}
 --- !u!114 &1000000000000001
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1001,6 +1009,21 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4706428755030410495, guid: 395d5ec7f996d364f94e11cfb40736d3, type: 3}
   m_PrefabInstance: {fileID: 4979572253280089668}
   m_PrefabAsset: {fileID: 0}
+--- !u!96 &382507757227836507 stripped
+TrailRenderer:
+  m_CorrespondingSourceObject: {fileID: 4635345668452594207, guid: 395d5ec7f996d364f94e11cfb40736d3, type: 3}
+  m_PrefabInstance: {fileID: 4979572253280089668}
+  m_PrefabAsset: {fileID: 0}
+--- !u!96 &5482089103098358939 stripped
+TrailRenderer:
+  m_CorrespondingSourceObject: {fileID: 652657366244858591, guid: 395d5ec7f996d364f94e11cfb40736d3, type: 3}
+  m_PrefabInstance: {fileID: 4979572253280089668}
+  m_PrefabAsset: {fileID: 0}
+--- !u!96 &6408940985355762494 stripped
+TrailRenderer:
+  m_CorrespondingSourceObject: {fileID: 2156062355961990522, guid: 395d5ec7f996d364f94e11cfb40736d3, type: 3}
+  m_PrefabInstance: {fileID: 4979572253280089668}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7407658426635763144
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1094,9 +1117,24 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 395d5ec7f996d364f94e11cfb40736d3, type: 3}
+--- !u!96 &2781329307925909463 stripped
+TrailRenderer:
+  m_CorrespondingSourceObject: {fileID: 4635345668452594207, guid: 395d5ec7f996d364f94e11cfb40736d3, type: 3}
+  m_PrefabInstance: {fileID: 7407658426635763144}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &2854668718561573175 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4706428755030410495, guid: 395d5ec7f996d364f94e11cfb40736d3, type: 3}
+  m_PrefabInstance: {fileID: 7407658426635763144}
+  m_PrefabAsset: {fileID: 0}
+--- !u!96 &8053560375152256791 stripped
+TrailRenderer:
+  m_CorrespondingSourceObject: {fileID: 652657366244858591, guid: 395d5ec7f996d364f94e11cfb40736d3, type: 3}
+  m_PrefabInstance: {fileID: 7407658426635763144}
+  m_PrefabAsset: {fileID: 0}
+--- !u!96 &8873944344218398898 stripped
+TrailRenderer:
+  m_CorrespondingSourceObject: {fileID: 2156062355961990522, guid: 395d5ec7f996d364f94e11cfb40736d3, type: 3}
   m_PrefabInstance: {fileID: 7407658426635763144}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &8869774581937780488
