@@ -539,7 +539,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
-  GlobalObjectIdHash: 3019987179
+  GlobalObjectIdHash: 2912079774
   InScenePlacedSourceGlobalObjectIdHash: 0
   DeferredDespawnTick: 0
   Ownership: 1
@@ -801,6 +801,8 @@ MonoBehaviour:
   ShowTopMostFoldoutHeaderGroup: 1
   animData: {fileID: 11400000, guid: eed6d03ebe8dfcc4986d75cdd8852ba2, type: 2}
   upperAnimData: {fileID: 11400000, guid: 10bf26b06ced83d41969cf312b1da6f0, type: 2}
+  _rightHand: {fileID: 1660563736776286475}
+  _LeftHand: {fileID: 1077995772296169512}
 --- !u!1 &8304582804339889416
 GameObject:
   m_ObjectHideFlags: 0

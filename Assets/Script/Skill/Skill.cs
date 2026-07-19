@@ -3,10 +3,11 @@ using Unity.Netcode;
 using UnityEngine;
 
 // 모든 스킬의 추상 기반 — 공통 데이터, 초기화, 데미지 처리 담당
-public class Skill : NetworkBehaviour , ISkill
+public class Skill : NetworkBehaviour , IPoolable
 {
-    public SkillType Type { get; private set; }
-    public PooledHandler Handler { get; set; }
+    public NetworkObjectType Type { get; private set; }
+    public IPoolReturner Handler { get; set; }
+    public GameObject Owner {get; private set;}
     public SkillHitCast Hitcast => _hitter;
     [SerializeField] private SkillEffector _effector;
     [SerializeField] private SkillHitCast _hitter;
@@ -18,30 +19,31 @@ public class Skill : NetworkBehaviour , ISkill
     protected virtual void Awake()
     {
         _skillModules.Add(_effector);
-        
+
         for (int i = 0; i < _skillModules.Count; ++i)
         {
             _skillModules[i].Bind(this);
-            _hitter.HitEvent += _skillModules[i].Collision;
+
+            _hitter.HitEnterEvent += _skillModules[i].CollisionEnter;
+            _hitter.HitStayEvent += _skillModules[i].CollisionStay;
         }
     }
 
     // 풀에서 생성될 때 자신의 핸들러를 주입받음
 
-    // 공통 초기화 — SetActive는 SkillPool.Get()에서 호출해 OnEnable 타이밍을 제어
-    public virtual void Init(SkillType type, SkillData data, Vector3 position, Vector3 direction, ulong clinetID)
+    // 공통 초기화 — SetActive는 ObjectPoolManager의 풀 Get()에서 호출해 OnEnable 타이밍을 제어
+    public virtual void Init(NetworkObjectType type, Vector3 position, Vector3 direction, ulong clinetID , GameObject owner)
     {
         Type               = type;
         ClinetID           = clinetID;
         transform.position = position;
         transform.forward  = direction.normalized;
+        Owner = owner;
     }
 
     public virtual void Active()
     {
         gameObject.SetActive(true);
-
-        _hitter.HitOn();
 
         for (int i = 0; i < _skillModules.Count; ++i)
             _skillModules[i].Enter();

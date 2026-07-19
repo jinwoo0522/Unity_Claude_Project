@@ -4,99 +4,94 @@ using UnityEngine;
 
 public class SkillEffector : NetworkBehaviour, ISkillModule
 {
-    // 이펙트 발동 시점
-    private enum EffectTiming { ENTER, COLLISION, TIMING }
+    // 이펙트 시작 시점
+    private enum EffectStartTiming { ENTER, COLLISION, EXIT }
+    // 이펙트 종료 시점
+    private enum EffectEndTiming { SELF, COLLISION, EXIT }
 
     // 이펙트 하나의 구성 단위 — 인스펙터 리스트에서 항목별로 설정
     [System.Serializable]
     private struct EffectInfo
     {
-        [SerializeField] private ParticleSystem _effect;       // 재생할 파티클
-        [SerializeField] private EffectTiming   _timing;       // 발동 시점
-        [SerializeField] private float          _fTriggerTime; // TIMING일 때 발동 시각(초)
-        [SerializeField] private float          _fDelay;       // 발동까지 지연(초)
+        [SerializeField] private PoolObjectType    _effectType;   // 재생할 이펙트 종류(풀 키)
+        [SerializeField] private EffectStartTiming _startTiming;  // 시작 시점
+        [SerializeField] private EffectEndTiming   _endTiming;    // 종료 시점
 
-        public ParticleSystem Effect      => _effect;
-        public EffectTiming   Timing      => _timing;
-        public float          TriggerTime => _fTriggerTime;
-        public float          Delay       => _fDelay;
+        public PoolObjectType    Effect      => _effectType;
+        public EffectStartTiming StartTiming => _startTiming;
+        public EffectEndTiming   EndTiming   => _endTiming;
     }
-
     [SerializeField] private List<EffectInfo> _effects = new List<EffectInfo>();
-
-    private float _fElapsed;
+    private readonly Dictionary<int, EffectView> _activeEffects = new Dictionary<int, EffectView>();
 
     public void Bind(Skill skill) { }
 
-    // 스킬 발동 — 경과 시간 초기화 및 모든 이펙트 정지 전파
+    // 스킬 발동 — 상태 초기화
     public void Enter()
     {
-        _fElapsed = 0f;
-    }
-
-    // 서버 권위 — 시간 기반(ENTER/TIMING) 발동 판정 후 전 클라에 재생 전파
-    public void ServerTick(float fTimeDelta)
-    {
-        float fPrev = _fElapsed;
-        _fElapsed += fTimeDelta;
+        _activeEffects.Clear();
 
         for (int i = 0; i < _effects.Count; ++i)
-        {
-            EffectInfo info = _effects[i];
-
-            // 시간 기반(ENTER/TIMING)만 처리 — COLLISION은 콜백에서
-            if (info.Timing != EffectTiming.ENTER && info.Timing != EffectTiming.TIMING)
-                continue;
-
-            // ENTER는 TriggerTime이 0 → 딜레이만, TIMING은 지정 시각 + 딜레이
-            float fTarget = info.TriggerTime + info.Delay;
-
-            if (fTarget >= fPrev && fTarget < _fElapsed)
+            if (_effects[i].StartTiming == EffectStartTiming.ENTER)
                 Play_ClientRpc(i);
-        }
+    }
+
+    // 서버 권위 — ENTER 이펙트를 첫 틱에 1회 발동
+    public void ServerTick(float fTimeDelta)
+    {
     }
 
     public void ClientTick(float fTimeDelta) { }
 
-    // 피격 시(서버 판정) — COLLISION 이펙트 재생 전파
-    public void Collision(IHitter.HitInfo hitinfo)
+    // 스킬 종료 — 로컬에서 캐시된 이펙트를 전부 정지 (looping 누수 방지)
+    public void Exit()
+    {
+        foreach (var kv in _activeEffects)
+            kv.Value.Stop();
+
+        _activeEffects.Clear();
+    }
+
+    // 각 클라에서 풀의 이펙트를 꺼내 현재 스킬 위치에서 재생
+    [ClientRpc]
+    private void Play_ClientRpc(int iIndex)
+    {
+        bool isCanCache = _effects[iIndex].EndTiming != EffectEndTiming.SELF;
+        if (isCanCache && _activeEffects.ContainsKey(iIndex)) return;   // 이미 재생 중 — 1:1
+
+        EffectView effect = GameManager.Instance.objectPoolManager.Get<EffectView>(_effects[iIndex].Effect);
+        effect.Play(transform.position, transform.rotation);
+        effect.gameObject.SetActive(true);
+
+        if (isCanCache) _activeEffects[iIndex] = effect;                // 종료 제어 위해 캐싱
+    }
+
+    // 각 클라에서 캐시된 이펙트를 정지 (StopEmitting 후 콜백으로 반납)
+    [ClientRpc]
+    private void Stop_ClientRpc(int iIndex)
+    {
+        if (_activeEffects.TryGetValue(iIndex, out EffectView effect))
+        {
+            effect.Stop();
+            _activeEffects.Remove(iIndex);
+        }
+    }
+
+    public void CollisionEnter(Collider collider)
     {
         if (!IsServer) return; // RPC는 서버에서만
 
         for (int i = 0; i < _effects.Count; ++i)
         {
-            if (_effects[i].Timing == EffectTiming.COLLISION)
+            if (_effects[i].StartTiming == EffectStartTiming.COLLISION)
                 Play_ClientRpc(i);
+
+            if (_effects[i].EndTiming == EffectEndTiming.COLLISION)
+                Stop_ClientRpc(i);
         }
     }
 
-    // 스킬 종료 — 모든 이펙트 정지 전파
-    public void Exit()
+    public void CollisionStay(Collider collider)
     {
-        if (!IsServer) return; // RPC는 서버에서만
-        StopAll();
-    }
-
-    // 각 클라에서 해당 파티클 재생
-    [ClientRpc]
-    private void Play_ClientRpc(int iIndex)
-    {
-        ParticleSystem ps = _effects[iIndex].Effect;
-        ps.gameObject.SetActive(true);
-        ps.Play();
-    }
-
-    // 각 클라에서 해당 파티클 정지
-    [ClientRpc]
-    private void Stop_ClientRpc(int iIndex)
-    {
-        _effects[iIndex].Effect.Stop();
-    }
-
-    // 모든 이펙트 정지 전파
-    private void StopAll()
-    {
-        for (int i = 0; i < _effects.Count; ++i)
-            Stop_ClientRpc(i);
     }
 }

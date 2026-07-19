@@ -6,6 +6,7 @@ public interface ISkillModule
     void Enter();
     void ServerTick(float fTimeDelta);
     void ClientTick(float fTimeDelta);
-    void Collision(IHitter.HitInfo hitinfo);
+    void CollisionEnter(Collider collider);
+    void CollisionStay(Collider collider);
     void Exit();
 }
