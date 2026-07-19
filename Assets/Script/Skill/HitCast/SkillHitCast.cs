@@ -3,11 +3,6 @@ using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
 
-// 트리거 기반 스킬 판정 컴포넌트.
-// 같은 GameObject에 붙은 isTrigger SphereCollider가 판정 범위를 정의하고,
-// OnTriggerEnter/Exit로 현재 겹친 대상 집합을 유지한다.
-// HitOn~HitOff 구간 동안 Update에서 집합을 순회하며 최초 진입은 HitEnterEvent,
-// 이후 겹쳐 있는 동안은 HitStayEvent를 매 프레임 발생시킨다.
 public class SkillHitCast : MonoBehaviour
 {
     [Header("판정 대상")]
@@ -39,12 +34,6 @@ public class SkillHitCast : MonoBehaviour
         }
     }
 
-    // 스폰 시 지정된 주인(OwnerClientId)으로 시전자 플레이어 루트를 되찾음 — 자해 방지 비교용
-    private Transform GetOwnerRoot()
-    {
-        return NetworkManager.Singleton.SpawnManager
-            .GetPlayerNetworkObject(_networkObject.OwnerClientId).transform;
-    }
     // 대상 레이어 콜라이더가 범위에 들어오면 집합에 추가 — 시전자는 제외
     private void OnTriggerEnter(Collider other)
     {
@@ -56,15 +45,25 @@ public class SkillHitCast : MonoBehaviour
     private void OnTriggerStay(Collider other) 
     {
         if(CheckLayer(other) == false) return;
+
+        HitStayEvent?.Invoke(other);
     }
 
     private bool CheckLayer(Collider other)
     {
         if (((1 << other.gameObject.layer) & _targetMask) == 0) return false;
-        if (other.transform.root == GetOwnerRoot()) return false;
+
+        // 시전자(OwnerClientId)의 PlayerObject를 조회 — 프리웜/미스폰 등으로 주인이 없으면 판정 제외
+        NetworkObject owner = NetworkManager.Singleton.SpawnManager
+            .GetPlayerNetworkObject(_networkObject.OwnerClientId);
+            
+        if (owner == null) return false;
+
+        if (other.transform.root == owner.transform) return false; // 시전자는 제외
 
         return true;
     }
+    
     private void OnDestroy()
     {
         HitEnterEvent = null;

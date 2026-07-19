@@ -23,12 +23,20 @@ public class EffectView : MonoBehaviour, IPoolable
         _particle.Play();
     }
 
-    // Effector가 looping 이펙트를 명시적으로 정지 — StopEmitting 후 종료 콜백으로 스스로 반납
-    public void Stop() => _particle.Stop();
+    // 대상 Transform에 부착 — 대상을 따라 이동 (월드 위치 유지)
+    public void Attach(Transform parent) => transform.SetParent(parent, true);
 
-    // 풀에 반납될 때 — 파티클 정지 및 비활성화
+    // Effector가 looping 이펙트를 명시적으로 정지 — 부모에서 떼어(스킬 비활성화에 안 끌리도록) StopEmitting 후 콜백으로 반납
+    public void Stop()
+    {
+        transform.SetParent(null);
+        _particle.Stop();
+    }
+
+    // 풀에 반납될 때 — 부모 해제 후 파티클 정지 및 비활성화 (풀 오브젝트는 항상 루트 보장)
     public void Release()
     {
+        transform.SetParent(null);
         _particle.Stop();
         gameObject.SetActive(false);
     }

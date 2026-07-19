@@ -11,7 +11,8 @@ public class SkillFactory
         // Init이 위치/회전을 확정 → 그 뒤 스폰해야 스폰 스냅샷에 반영돼 클라가 올바른 위치에서 인스턴스화한다.
         skill.Init(type, vPos, vDir, clientID, owner);
         skill.GetComponent<NetworkObject>().SpawnWithOwnership(clientID);
-
+        skill.Enter();
+        
         return skill;
     }
 }

@@ -7,7 +7,6 @@ public interface IPoolable
     void Release();
     void Destroy();
 
-    // 스스로 풀에 반납 (수명 종료 판단은 각 구현부에서)
     public void ReturnToPool()
     {
         Handler.Return(this);

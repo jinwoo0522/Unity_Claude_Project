@@ -133,14 +133,14 @@ MonoBehaviour:
       type: {class: SkillMovement, ns: , asm: Assembly-CSharp}
       data:
         _movements:
-        - rid: 6238406191773646936
+        - rid: 6238406212872306775
         _stopOnHit: 1
-    - rid: 6238406191773646936
+    - rid: 6238406212872306775
       type: {class: ProjectileMove, ns: , asm: Assembly-CSharp}
       data:
         _vCustomDir: {x: 0, y: 0, z: 0}
         _fDelay: 0
-        _fSpeed: 12
+        _fSpeed: 26
 --- !u!114 &2029163365358526597
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -157,10 +157,15 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 448
   _fHitTime: 0
-  _collisions: []
+  _collisions:
+  - rid: 6238406212872306776
   references:
     version: 2
-    RefIds: []
+    RefIds:
+    - rid: 6238406212872306776
+      type: {class: ReturnToPoolOnCollision, ns: , asm: Assembly-CSharp}
+      data:
+        _timing: 0
 --- !u!114 &1595309184926846098
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -177,11 +182,12 @@ MonoBehaviour:
   _effects:
   - _effectType: 1
     _startTiming: 0
-    _endTiming: 0
+    _endTiming: 1
+    _bFollow: 1
   - _effectType: 0
     _startTiming: 1
     _endTiming: 0
-  _timing: 0
+    _bFollow: 0
 --- !u!54 &2875927014575444241
 Rigidbody:
   m_ObjectHideFlags: 0
