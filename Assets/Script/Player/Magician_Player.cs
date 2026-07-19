@@ -1,8 +1,11 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 
 public class Magician_Player : Player
 {
+    [SerializeField] Transform _rightHand;
+    [SerializeField] Transform _LeftHand;
     public override void OnNetworkSpawn()
     {
         base.OnNetworkSpawn();
@@ -38,8 +41,11 @@ public class Magician_Player : Player
     {
         _upperStateMachine.CreateState((ushort)ENTITY.UpperStateType.IDLE, new PlayerUpperIdleState(this));
         _upperStateMachine.CreateState((ushort)ENTITY.UpperStateType.HIT,  new PlayerHitState(this));
+        _upperStateMachine.CreateState((ushort)MAGICIAN.UpperStateType.ATTACK, new MagicainUpperAttackState(this, _rightHand));
 
         // 피격 반응 — 서버에서 데미지 판정 후 IDamagable(Stat)을 통해 HIT 전환 트리거
         _upperStateMachine.CreateAnyTransition(new AnyToHit_Player(_upperAniController, _stat));
+
+        _upperStateMachine.AddTransition((ushort)ENTITY.UpperStateType.IDLE, new IdleToMagicianAttack_Magician(_input));
     }
 }

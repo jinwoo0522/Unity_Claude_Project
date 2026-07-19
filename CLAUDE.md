@@ -12,6 +12,7 @@
 
 ## 코드 작성 규칙
 
+- 코드 작성을 시작하기 전 반드시 루트의 `CONVENTIONS.md`를 읽고 네이밍·스타일 규칙을 준수할 것
 - 외부에서 Inspector로 입력받아야 하는 필드는 `public` 대신 `[SerializeField]` + `private` 또는 `protected` 사용
 - 스크립트 내부에서 `public` 변수 사용 금지 (은닉화 원칙 준수)
 - 게임 로직은 서버 권위적(Server-Authoritative)으로 설계할 것 — 클라이언트는 입력만 전송하고, 검증/판정은 반드시 서버에서 수행

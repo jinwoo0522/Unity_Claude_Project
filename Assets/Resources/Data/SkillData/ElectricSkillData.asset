@@ -19,7 +19,7 @@ MonoBehaviour:
   fDamage: 10
   fRadius: 0.1
   nPoolSize: 5
-  prefab: {fileID: 4427000628938413266, guid: 5733935386b21e043be715cb61760e7a, type: 3}
+  prefab: {fileID: 5433324361279344289, guid: 5733935386b21e043be715cb61760e7a, type: 3}
   _fCooldown: 0
   _strSkillState: 
   _fKnockback: 5

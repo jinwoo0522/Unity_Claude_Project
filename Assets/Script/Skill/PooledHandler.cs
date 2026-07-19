@@ -1,55 +1,48 @@
 using UnityEngine;
-using Unity.Netcode;
 using UnityEngine.Pool;
-public class PooledHandler : INetworkPrefabInstanceHandler
+
+// 순수 오브젝트 풀 — NGO를 모른다. IPoolable을 구현한 Component 프리팹(스킬/이펙트 등)을 풀링한다.
+public class PooledHandler : IPoolReturner
 {
+    private readonly ObjectPool<IPoolable> _pool;
+    private readonly GameObject _prefab;   // IPoolable을 구현한 Component 프리팹
 
-    ObjectPool<Skill> SkillPool;
-    private Skill SkillPrefeb;
-
-    public PooledHandler(Skill _SkillPrefeb , int min_Size , int max_Size)
+    public PooledHandler(GameObject prefab, int iMinSize, int iMaxSize)
     {
-        Debug.Log("핸들러 생성자 들어옴!");
-        SkillPrefeb = _SkillPrefeb;
-        SkillPool = new ObjectPool<Skill>(
-            CreateNetworkObject,
-            Active,
-            Release,
-            DestoryObject,
+        _prefab = prefab;
+        _pool = new ObjectPool<IPoolable>(
+            Create,
+            OnGet,
+            OnReturn,
+            OnDestroy,
             false,
-            min_Size,
-            max_Size);
-    }
-    
-    private Skill CreateNetworkObject() // 생성
-    {
-        return GameObject.Instantiate(SkillPrefeb);
-    }
-    private void DestoryObject(Skill obj) => obj.Destroy();
-    private void Active(Skill obj) => obj.Active();
-    private void Release(Skill obj) => obj.Release();
-    
-    public void Destroy(NetworkObject networkObject)
-    {
-        SkillPool.Release(networkObject.gameObject.GetComponent<Skill>());
-    }
-    public NetworkObject Instantiate(ulong ownerClientId, Vector3 position, Quaternion rotation)
-    {
-        Skill obj = SkillPool.Get();
-        obj.transform.SetPositionAndRotation(position, rotation);
-
-        NetworkObject nbj = obj.GetComponent<NetworkObject>();
-        if(nbj == null)
-            GameManager.Instance.DebugMessage<PooledHandler>("네트워크 오브젝트 없음");
-        return nbj;
+            iMinSize,
+            iMaxSize);
     }
 
-    public void Prewarm(int count)
+    private IPoolable Create()
     {
-        var temp = new Skill[count];
-        for (int i = 0; i < count; i++)
-            temp[i] = SkillPool.Get();        // 생성 + 활성화
-        for (int i = 0; i < count; i++)
-            SkillPool.Release(temp[i]);       // 비활성화하고 풀에 반납
+        GameObject obj = Object.Instantiate(_prefab);
+        IPoolable poolable = obj.GetComponent<IPoolable>();   // 생성한 인스턴스에서 IPoolable 획득
+        poolable.Handler = this;               // 스스로 반납할 수 있도록 핸들러 주입
+        return poolable;
+    }
+
+    private void OnGet(IPoolable obj)     => obj.Active();
+    private void OnReturn(IPoolable obj)  => obj.Release();
+    private void OnDestroy(IPoolable obj) => obj.Destroy();
+
+    public IPoolable Get() => _pool.Get();
+
+    // IPoolReturner — 풀링 대상이 스스로를 반납
+    public void Return(object obj) => _pool.Release((IPoolable)obj);
+
+    public void Prewarm(int iCount)
+    {
+        var temp = new IPoolable[iCount];
+        for (int i = 0; i < iCount; ++i)
+            temp[i] = _pool.Get();        // 생성 + 활성화
+        for (int i = 0; i < iCount; ++i)
+            _pool.Release(temp[i]);       // 비활성화하고 풀에 반납
     }
 }

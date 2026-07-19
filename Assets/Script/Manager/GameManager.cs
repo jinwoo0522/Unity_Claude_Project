@@ -10,7 +10,8 @@ public class GameManager : MonoBehaviour
     private Camera PlayerCamera;
 
     public CameraManager cameraManager {get; private set;}
-    public SkillPool skillPool {get; private set;}
+    public ObjectPoolManager objectPoolManager {get; private set;}
+    public SkillFactory skillFactory {get; private set;}
     public ScoreManager scoreManager {get; private set;}
     public static GameManager Instance
     {
@@ -46,8 +47,11 @@ public class GameManager : MonoBehaviour
         if(cameraManager == null)
             cameraManager = new CameraManager();
 
-        if(skillPool == null)
-            skillPool = new SkillPool(20 , 100);
+        if(objectPoolManager == null)
+            objectPoolManager = new ObjectPoolManager(20 , 100);
+
+        if(skillFactory == null)
+            skillFactory = new SkillFactory();
 
         if(scoreManager == null)
             scoreManager = new ScoreManager();

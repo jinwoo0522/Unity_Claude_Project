@@ -3,7 +3,7 @@ using UnityEngine;
 // Golem 플레이어 — Elf와 동일한 공통 상태를 재사용하되 스킬 전환은 등록하지 않음
 public class Golem_Player : Player
 {
-     public IHitter _hitter {get; private set;}
+    public IHitter _hitter {get; private set;}
     public override void OnNetworkSpawn()
     {
         base.OnNetworkSpawn();

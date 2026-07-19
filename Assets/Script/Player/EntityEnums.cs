@@ -100,3 +100,14 @@ namespace GOLEM
         WEAPON_TRAIL,
     }
 }
+
+namespace MAGICIAN
+{
+    public enum UpperStateType : ushort
+    {
+        NONE = 0,
+        IDLE = 1 << 0,
+        HIT = 1 << 1,
+        ATTACK = 1 << 2,
+    }
+}

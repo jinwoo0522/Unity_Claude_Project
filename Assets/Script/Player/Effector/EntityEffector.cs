@@ -34,6 +34,14 @@ public class EntityEffector : NetworkBehaviour , IEffector
         BuildPools();
     }
 
+    public void PlayEffect(int iEffectNumber, Vector3 vPos = default) => PlayEffect_ClientRpc(iEffectNumber, vPos);
+
+    public void PlayTrail(int iTrailtNumber) => PlayTrail_ClientRpc(iTrailtNumber);
+
+    public void StopEffect(int iEffectNumber) => StopEffect_ClientRpc(iEffectNumber);
+
+    public void StopTrail(int iTrailtNumber) => StopTrail_ClientRpc(iTrailtNumber); 
+
     // 인스펙터 설정대로 이펙트별 풀을 구성
     void BuildPools()
     {
@@ -76,6 +84,8 @@ public class EntityEffector : NetworkBehaviour , IEffector
         return pool[idx];
     }
 
+    
+
     [ClientRpc]
     void PlayEffect_ClientRpc(int iEffectNumber, Vector3 vPos = default)
     {
@@ -97,7 +107,7 @@ public class EntityEffector : NetworkBehaviour , IEffector
         }
     }
     [ClientRpc]
-    public void StopEffect_ClientRpc(int iEffectNumber) // 파티클 이펙트에 StopAction -> Disable 필수
+    void StopEffect_ClientRpc(int iEffectNumber) // 파티클 이펙트에 StopAction -> Disable 필수
     {
         foreach(var ps in _pools[iEffectNumber])
         {
@@ -105,20 +115,12 @@ public class EntityEffector : NetworkBehaviour , IEffector
         }
     }
     [ClientRpc]
-    public void StopTrail_ClientRpc(int iTrailtNumber)
+    void StopTrail_ClientRpc(int iTrailtNumber)
     {
         foreach(var trail in Trails[iTrailtNumber].trailRenderers)
         {
             trail.emitting = false;
         }
     }
-
-    public void PlayEffect(int iEffectNumber, Vector3 vPos = default) => PlayEffect_ClientRpc(iEffectNumber, vPos);
-
-    public void PlayTrail(int iTrailtNumber) => PlayTrail_ClientRpc(iTrailtNumber);
-
-    public void StopEffect(int iEffectNumber) => StopEffect_ClientRpc(iEffectNumber);
-
-    public void StopTrail(int iTrailtNumber) => StopTrail_ClientRpc(iTrailtNumber);
 
 }
