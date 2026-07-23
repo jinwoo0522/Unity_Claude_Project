@@ -2,18 +2,18 @@ using System;
 using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
-
-public class SkillHitCast : MonoBehaviour
-{
+public class SkillHitCast : NetworkBehaviour {
+    
     [Header("판정 대상")]
     [SerializeField] private LayerMask _targetMask;
 
     [Header("판정 정보")]
-    [SerializeField] private float _fHitTime;  
+    [SerializeField] private float _fHitDelayTime;  
 
     [Header("충돌 이벤트")]
     [SerializeReference, SubclassSelector] private List<ICollsionEventModule> _collisions = new List<ICollsionEventModule>();
     private NetworkObject _networkObject;   // 탄환 자신의 NetworkObject — 시전자를 스스로 역추적 (Skill 비의존)
+    private float _fNextStayHitTime;        // 다음 Stay 판정 허용 시각 — 매 프레임 폴링을 _fHitDelayTime 간격으로 제한
     public event Action<Collider> HitEnterEvent;
     public event Action<Collider> HitStayEvent;
 
@@ -42,15 +42,21 @@ public class SkillHitCast : MonoBehaviour
         HitEnterEvent?.Invoke(other);
     }
     
-    private void OnTriggerStay(Collider other) 
+    private void OnTriggerStay(Collider other)
     {
         if(CheckLayer(other) == false) return;
+
+        // _fHitDelayTime 간격으로만 Stay 판정 — 그 사이 프레임은 폴링만 하고 통과
+        if(Time.time < _fNextStayHitTime) return;
+        _fNextStayHitTime = Time.time + _fHitDelayTime;
 
         HitStayEvent?.Invoke(other);
     }
 
     private bool CheckLayer(Collider other)
     {
+        if(IsServer == false) return false; 
+        
         if (((1 << other.gameObject.layer) & _targetMask) == 0) return false;
 
         // 시전자(OwnerClientId)의 PlayerObject를 조회 — 프리웜/미스폰 등으로 주인이 없으면 판정 제외

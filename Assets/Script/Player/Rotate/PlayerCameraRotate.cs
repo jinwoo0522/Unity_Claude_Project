@@ -1,42 +1,31 @@
 using Unity.Netcode;
 using UnityEngine;
 
+// 조준 방향(입력이 소유)을 소비해 몸통 yaw만 회전 — 상하(pitch)는 몸통에 반영하지 않는다
 public class PlayerCameraRotate : NetworkBehaviour
 {
-    Camera _mainCam;
-    NetworkVariable<float> fCameraYaw = new NetworkVariable<float>
-    (0f
-    , NetworkVariableReadPermission.Everyone 
-    , NetworkVariableWritePermission.Owner);
+    private Player_Input _input;
+
     public override void OnNetworkSpawn()
     {
-        if(IsOwner == false) return;
+        _input = GetComponent<Player_Input>();
+    }
+
+    private void Update()
+    {
+        if(IsServer == false) return;
         
-        _mainCam = GameManager.Instance.cameraManager.Get_Camera(CameraManager.CameraTag.MAIN);
+        RotateBodyYaw();
     }
 
-    void Update()
+    // 조준 방향에서 수평 성분만 뽑아 몸통을 회전 (수직 조준 시 기존 회전 유지)
+    private void RotateBodyYaw()
     {
-        if(IsOwner == true)
-        {
-            SyncCameraYaw();
-        }
+        Vector3 vFlat = _input.AimDir;
+        vFlat.y = 0f;
 
-        if(IsServer == true)
-        {
-            RotateWithCamera();
-        }
-    }
-    private void SyncCameraYaw()
-    {
-        if(_mainCam == null)
-            Debug.LogWarning("카메라 NULL");
+        if(vFlat.sqrMagnitude < 0.0001f) return;
 
-        fCameraYaw.Value = _mainCam.transform.eulerAngles.y;
+        transform.rotation = Quaternion.LookRotation(vFlat);
     }
-    private void RotateWithCamera()
-    {
-        transform.rotation = Quaternion.Euler(0f, fCameraYaw.Value , 0f);
-    }
-    
 }

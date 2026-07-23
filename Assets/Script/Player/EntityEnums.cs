@@ -103,11 +103,27 @@ namespace GOLEM
 
 namespace MAGICIAN
 {
+    public enum StateType : ushort
+    {
+        MOUSE_SKILL = 1 << 10,
+    }
+
     public enum UpperStateType : ushort
     {
         NONE = 0,
         IDLE = 1 << 0,
         HIT = 1 << 1,
         ATTACK = 1 << 2,
+        QSKILL = 1 << 3,
+    }
+
+    public enum MagicianEffect
+    {
+        QSKILL,
+    }
+    public enum  MagicianTrail
+    {
+        Right_Hand,
+        Left_Hand,
     }
 }

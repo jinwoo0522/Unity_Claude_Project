@@ -2,5 +2,8 @@
 public enum NetworkObjectType
 {
     ELECTRONIC_SKILL,
+    ICE_EXPLOSION,
+    STORM,
+
 }
 

@@ -5,15 +5,17 @@ public class MagicainUpperAttackState : EntityState
 {
     readonly private Magician_Player _player;
     readonly private EntityAnimator _upperAniController;
+    readonly private IEffector _effector;
     readonly private Transform _shootPos;
 
-    const float fFireTime = 0.7f;                              // 스킬 발사 타이밍(초)
-    static readonly Vector3 vSpawnOffset = new Vector3(0f, 1f, 1f); // 발사 위치 오프셋(전방/높이, 로컬 기준)
+    const float fFireTime = 0.4f;                              // 스킬 발사 타이밍(초)
+    const float fTrailStopTime = 0.7f;                         // 오른손 트레일 종료 타이밍(초)
 
     public MagicainUpperAttackState(Magician_Player player , Transform ShootPos)
     {
         _player = player;
         _upperAniController = player._upperAniController;
+        _effector = player._effector;
         _shootPos = ShootPos;
 
     }
@@ -23,11 +25,13 @@ public class MagicainUpperAttackState : EntityState
         // 공격 애니메이션이 끝나면 IDLE로 복귀 (1타 종료)
         TransitionList.Add(new StateToIdle_Player(_upperAniController));
         StateEvents.Add((fFireTime, FireElectric));
+        StateEvents.Add((fTrailStopTime, () => _effector.StopTrail((int)MAGICIAN.MagicianTrail.Right_Hand)));
     }
 
     public override void Enter()
     {
         _upperAniController._state.Value = (ushort)MAGICIAN.UpperStateType.ATTACK;
+        _effector.PlayTrail((int)MAGICIAN.MagicianTrail.Right_Hand);   // 오른손 트레일 시작
     }
 
     public override void Exit() { }
@@ -38,7 +42,8 @@ public class MagicainUpperAttackState : EntityState
 
     void FireElectric()
     {
-        Vector3 vDir = GameManager.Instance.cameraManager.Get_Camera(CameraManager.CameraTag.MAIN).transform.forward;
+        // 조준 방향은 입력이 서버로 동기화 — 카메라를 직접 읽지 않고 소비만 한다 (상하 포함)
+        Vector3 vDir = _player._input.AimDir;
 
         GameManager.Instance.skillFactory.Create(
             NetworkObjectType.ELECTRONIC_SKILL, _shootPos.position, vDir, _player.OwnerClientId, _player.gameObject);

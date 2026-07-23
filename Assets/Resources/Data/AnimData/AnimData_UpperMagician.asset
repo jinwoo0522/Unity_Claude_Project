@@ -24,3 +24,5 @@ MonoBehaviour:
     clipName: Hit
   - key: 4
     clipName: Attack
+  - key: 8
+    clipName: QSkill
