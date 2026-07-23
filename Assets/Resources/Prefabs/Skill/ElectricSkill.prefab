@@ -50,7 +50,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
-  GlobalObjectIdHash: 3866441891
+  GlobalObjectIdHash: 619532334
   InScenePlacedSourceGlobalObjectIdHash: 0
   DeferredDespawnTick: 0
   Ownership: 1
@@ -126,6 +126,7 @@ MonoBehaviour:
   _hitter: {fileID: 2029163365358526597}
   _skillModules:
   - rid: 6238406167958388737
+  - rid: 6238406280567586902
   references:
     version: 2
     RefIds:
@@ -141,6 +142,12 @@ MonoBehaviour:
         _vCustomDir: {x: 0, y: 0, z: 0}
         _fDelay: 0
         _fSpeed: 26
+    - rid: 6238406280567586902
+      type: {class: SkillDamagable, ns: , asm: Assembly-CSharp}
+      data:
+        _mode: 0
+        _fBaseDamage: 15
+        _fDamageInterval: 0
 --- !u!114 &2029163365358526597
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -153,6 +160,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2575972d2311be84484834b528973aa1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SkillHitCast
+  ShowTopMostFoldoutHeaderGroup: 1
   _targetMask:
     serializedVersion: 2
     m_Bits: 448
@@ -234,5 +242,5 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 1
+  m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}

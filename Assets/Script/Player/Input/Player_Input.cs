@@ -7,6 +7,8 @@ public class Player_Input : NetworkBehaviour , IEntityMoveInput , IEntityInputSt
 {
     PlayerInput _inputAction;
     private InputCommand _input = new();
+    private Camera _mainCam;
+    public Vector3 AimDir => _input.AimDir;
     public Vector2 MoveInput => _input.MoveDir;
     public bool isSprint => (_input.InputFlag & ENTITY.InputFlagType.SPRINT) == ENTITY.InputFlagType.SPRINT;
     public ushort inputState => (ushort)_input.InputFlag;
@@ -14,6 +16,8 @@ public class Player_Input : NetworkBehaviour , IEntityMoveInput , IEntityInputSt
     public override void OnNetworkSpawn()
     {
         if(IsOwner == false) return;
+
+        _mainCam = GameManager.Instance.cameraManager.Get_Camera(CameraManager.CameraTag.MAIN);
 
         _inputAction = GetComponent<PlayerInput>();
 
@@ -35,6 +39,14 @@ public class Player_Input : NetworkBehaviour , IEntityMoveInput , IEntityInputSt
         _inputAction.actions["Player/Q"].performed += OnQSkillPerformed;
         _inputAction.actions["Player/Q"].canceled += OnQSkillCanceled;
     }
+    // 조준 방향은 로컬 카메라(시네머신)에만 존재 → Owner가 서버로 동기화
+    private void Update()
+    {
+        if(IsOwner == false) return;
+
+        _input.AimDir = _mainCam.transform.forward;
+    }
+
     // Inpu처리는 클라에서 행하는 것이기 때문에 서버가 모름
     void OnMovePerformed(InputAction.CallbackContext ctx)
     {
@@ -149,11 +161,13 @@ public class Player_Input : NetworkBehaviour , IEntityMoveInput , IEntityInputSt
     public struct InputCommand : INetworkSerializable
     {
         public Vector2 MoveDir;
+        public Vector3 AimDir;
         public ENTITY.InputFlagType InputFlag;
 
         public void NetworkSerialize<T>(BufferSerializer<T> serializer) where T : IReaderWriter
         {
             serializer.SerializeValue(ref MoveDir);
+            serializer.SerializeValue(ref AimDir);
             
             // enum은 캐스팅을 해서 직렬화 하는게 안전하다
             ushort raw = (ushort)InputFlag; 

@@ -34,19 +34,10 @@ public class SkillMovement : ISkillModule
             _movements[i].Move(fTimeDelta);
     }
 
-    public void ClientTick(float fTimeDelta) { }
-
-    public void Exit() { }
-
     // 대상 진입 시 — 옵션이 켜져 있으면 스스로 정지 (다른 모듈을 참조하지 않음)
     public void CollisionEnter(Collider collider)
     {
         if (_stopOnHit)
             Move = false;
     }
-
-    public void CollisionStay(Collider collider)
-    {
-    }
-
 }

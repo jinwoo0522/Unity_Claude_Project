@@ -5019,7 +5019,7 @@ GameObject:
   - component: {fileID: 1750554950601638356}
   - component: {fileID: 1750554950601638358}
   - component: {fileID: 1750554950601638357}
-  - component: {fileID: 8628883004590890511}
+  - component: {fileID: 7838505039870881950}
   m_Layer: 0
   m_Name: ElectronicProjectileEffect
   m_TagString: Untagged
@@ -9920,7 +9920,7 @@ ParticleSystemRenderer:
   m_MeshWeighting1: 1
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
---- !u!114 &8628883004590890511
+--- !u!114 &7838505039870881950
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

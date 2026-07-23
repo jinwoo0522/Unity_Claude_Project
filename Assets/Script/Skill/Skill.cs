@@ -13,12 +13,15 @@ public class Skill : NetworkBehaviour , IPoolable
     [SerializeField] private SkillEffector _effector;
     [SerializeField] private SkillHitCast _hitter;
     private ulong  ClinetID;
+    private ISkillModule _effectorModule;   // 이펙터를 모듈로 취급 — DIM 기본 구현을 쓰려면 인터페이스 경유 호출 필요
     // 인스펙터에서 SubclassSelector 드롭다운으로 모듈 조합 — 프리팹 인스턴스마다 리스트가 복제돼 상태 독립
     [SerializeReference, SubclassSelector] private List<ISkillModule> _skillModules = new List<ISkillModule>();
 
     // 1회성 — 직렬화 모듈 + 이펙터를 Bind하고 충돌 이벤트에 구독 (프리팹 생성 시 1회)
     private void Awake()
     {
+        _effectorModule = _effector;
+
         for (int i = 0; i < _skillModules.Count; ++i)
         {
             _skillModules[i].Bind(this);
@@ -27,9 +30,9 @@ public class Skill : NetworkBehaviour , IPoolable
             _hitter.HitStayEvent += _skillModules[i].CollisionStay;
         }
 
-        _effector.Bind(this);
-        _hitter.HitEnterEvent += _effector.CollisionEnter;
-        _hitter.HitStayEvent  += _effector.CollisionStay;
+        _effectorModule.Bind(this);
+        _hitter.HitEnterEvent += _effectorModule.CollisionEnter;
+        _hitter.HitStayEvent  += _effectorModule.CollisionStay;
     }
 
     // 풀에서 생성될 때 자신의 핸들러를 주입받음
@@ -54,7 +57,7 @@ public class Skill : NetworkBehaviour , IPoolable
         for (int i = 0; i < _skillModules.Count; ++i)
             _skillModules[i].Enter();
 
-        _effector.Enter();
+        _effectorModule.Enter();
     }
 
     private void Update()
@@ -65,14 +68,14 @@ public class Skill : NetworkBehaviour , IPoolable
         {
             for (int i = 0; i < _skillModules.Count; ++i)
                 _skillModules[i].ServerTick(fTimeDelta);
-            _effector.ServerTick(fTimeDelta);
+            _effectorModule.ServerTick(fTimeDelta);
         }
 
         if (IsClient)
         {
             for (int i = 0; i < _skillModules.Count; ++i)
                 _skillModules[i].ClientTick(fTimeDelta);
-            _effector.ClientTick(fTimeDelta);
+            _effectorModule.ClientTick(fTimeDelta);
         }
     }
 
@@ -80,7 +83,7 @@ public class Skill : NetworkBehaviour , IPoolable
     {
         for (int i = 0; i < _skillModules.Count; ++i)
             _skillModules[i].Exit();
-        _effector.Exit();
+        _effectorModule.Exit();
 
         gameObject.SetActive(false);
     }
