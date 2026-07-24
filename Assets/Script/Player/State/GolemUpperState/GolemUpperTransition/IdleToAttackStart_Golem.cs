@@ -14,7 +14,7 @@ public class IdleToAttackStart_Golem : ITransition
     }
     public bool CheckRule(float fTimeDelta)
     {
-        if((_inputState.inputState & (ushort)ENTITY.InputFlagType.MOUSE_RIGHT) == 0)
+        if((_inputState.inputState & (ushort)ENTITY.InputFlagType.MOUSE_LEFT) == 0)
             return false;
 
         return true;

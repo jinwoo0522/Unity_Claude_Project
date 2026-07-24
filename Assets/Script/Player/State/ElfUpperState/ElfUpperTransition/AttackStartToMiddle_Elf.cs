@@ -17,7 +17,7 @@ public class AttackStartToMiddle_Elf : ITransition
         if(_upperAniController.IsCurrentStateFinished() == false)
             return false;
 
-        if((_inputState.inputState & (ushort)ENTITY.InputFlagType.MOUSE_RIGHT) == 0)
+        if((_inputState.inputState & (ushort)ENTITY.InputFlagType.MOUSE_LEFT) == 0)
             return false;
 
         return true;

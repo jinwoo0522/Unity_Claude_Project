@@ -10,8 +10,11 @@ public class MagicianMouseSkillState : EntityState
     private Player_Input _input;
     private LayerMask _groundMask;
     private Transform _headPos;
-    private const float _fMaxRayDistance = 10f;   // 전환 조건과 동일한 사거리
+    readonly private IEffector _effector;
+    private const float _fMaxRayDistance = 15f;   // 전환 조건과 동일한 사거리
     private const float _fSkillHeight = 3.5f;    // 레이 원점 눈높이 오프셋 (전환과 동일해야 함)
+
+    private const float _fSkillTime = 0.7f;
 
     public MagicianMouseSkillState(Magician_Player player, LayerMask groundMask , Transform headPos)
     {
@@ -21,18 +24,21 @@ public class MagicianMouseSkillState : EntityState
         _input = player._input;
         _groundMask = groundMask;
         _headPos = headPos;
+        _effector = player._effector;
     }
 
     public override void Create()
     {
         // 마우스 스킬 애니메이션이 끝까지 재생되면 IDLE로 복귀
         TransitionList.Add(new StateToIdle_Player(_aniController));
+        StateEvents.Add((_fSkillTime, CastStorm));
+        StateEvents.Add((_fSkillTime + 0.1f, () => _effector.StopTrail((int)MAGICIAN.MagicianTrail.Left_Hand)));
     }
 
     public override void Enter()
     {
         _aniController._state.Value = (ushort)MAGICIAN.StateType.MOUSE_SKILL;
-        CastStorm();
+        _effector.PlayTrail((int)MAGICIAN.MagicianTrail.Left_Hand);     // 왼손 트레일 시작
     }
 
     public override void Exit()

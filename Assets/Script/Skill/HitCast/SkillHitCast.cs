@@ -13,7 +13,6 @@ public class SkillHitCast : NetworkBehaviour {
     [Header("충돌 이벤트")]
     [SerializeReference, SubclassSelector] private List<ICollsionEventModule> _collisions = new List<ICollsionEventModule>();
     private NetworkObject _networkObject;   // 탄환 자신의 NetworkObject — 시전자를 스스로 역추적 (Skill 비의존)
-    private float _fNextStayHitTime;        // 다음 Stay 판정 허용 시각 — 매 프레임 폴링을 _fHitDelayTime 간격으로 제한
     public event Action<Collider> HitEnterEvent;
     public event Action<Collider> HitStayEvent;
 
@@ -37,18 +36,17 @@ public class SkillHitCast : NetworkBehaviour {
     // 대상 레이어 콜라이더가 범위에 들어오면 집합에 추가 — 시전자는 제외
     private void OnTriggerEnter(Collider other)
     {
+        // [디버그] 트리거에 실제로 들어온 콜라이더 전부 기록 — "안 닿았다"를 검증
+        Debug.Log($"[HitCast:{name}] OnTriggerEnter other={other.name} root={other.transform.root.name} layer={other.gameObject.layer} IsServer={IsServer}");
+
         if(CheckLayer(other) == false) return;
 
         HitEnterEvent?.Invoke(other);
     }
-    
+
     private void OnTriggerStay(Collider other)
     {
         if(CheckLayer(other) == false) return;
-
-        // _fHitDelayTime 간격으로만 Stay 판정 — 그 사이 프레임은 폴링만 하고 통과
-        if(Time.time < _fNextStayHitTime) return;
-        _fNextStayHitTime = Time.time + _fHitDelayTime;
 
         HitStayEvent?.Invoke(other);
     }
@@ -57,12 +55,19 @@ public class SkillHitCast : NetworkBehaviour {
     {
         if(IsServer == false) return false; 
         
-        if (((1 << other.gameObject.layer) & _targetMask) == 0) return false;
+        if (((1 << other.gameObject.layer) & _targetMask) == 0)
+        {
+            Debug.Log($"[HitCast:{name}] 레이어 미포함 → 제외 other={other.name} layer={other.gameObject.layer} mask={(int)_targetMask}");
+            return false;
+        }
 
         // 시전자(OwnerClientId)의 PlayerObject를 조회 — 프리웜/미스폰 등으로 주인이 없으면 판정 제외
         NetworkObject owner = NetworkManager.Singleton.SpawnManager
             .GetPlayerNetworkObject(_networkObject.OwnerClientId);
-            
+
+        // [디버그] 시전자 역추적 결과와 제외 비교 — 여기서 자기피격 원인이 드러남
+        Debug.Log($"[HitCast:{name}] 판정 후보 other={other.name} otherRoot={other.transform.root.name} ownerId={_networkObject.OwnerClientId} owner={(owner == null ? "null" : owner.name)} 제외일치={(owner != null && other.transform.root == owner.transform)}");
+
         if (owner == null) return false;
 
         if (other.transform.root == owner.transform) return false; // 시전자는 제외

@@ -14,8 +14,6 @@ GameObject:
   - component: {fileID: 5433324361279344289}
   - component: {fileID: 2029163365358526597}
   - component: {fileID: 1595309184926846098}
-  - component: {fileID: 2875927014575444241}
-  - component: {fileID: 7914889206072944326}
   m_Layer: 0
   m_Name: Storm
   m_TagString: Skill
@@ -125,16 +123,26 @@ MonoBehaviour:
   _effector: {fileID: 1595309184926846098}
   _hitter: {fileID: 2029163365358526597}
   _skillModules:
-  - rid: 6238406301898244373
+  - rid: 6238406325766979867
+  - rid: 6238406325766979868
   references:
     version: 2
     RefIds:
-    - rid: 6238406301898244373
-      type: {class: SkillDamagable, ns: , asm: Assembly-CSharp}
+    - rid: 6238406325766979867
+      type: {class: SkillSphereDamage, ns: , asm: Assembly-CSharp}
       data:
-        _mode: 0
-        _fBaseDamage: 20
-        _fDamageInterval: 0
+        _timing: 0
+        _fDelay: 0.5
+        _vOffset: {x: 0, y: -3.5, z: 0}
+        _fRadius: 3
+        _targetMask:
+          serializedVersion: 2
+          m_Bits: 128
+        _fBaseDamage: 2
+    - rid: 6238406325766979868
+      type: {class: ReturnToPoolOnTime, ns: , asm: Assembly-CSharp}
+      data:
+        _fLifetime: 3
 --- !u!114 &2029163365358526597
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -151,16 +159,11 @@ MonoBehaviour:
   _targetMask:
     serializedVersion: 2
     m_Bits: 448
-  _fHitDelayTime: 1
-  _collisions:
-  - rid: 6238406212872306776
+  _fHitDelayTime: 0
+  _collisions: []
   references:
     version: 2
-    RefIds:
-    - rid: 6238406212872306776
-      type: {class: ReturnToPoolOnCollision, ns: , asm: Assembly-CSharp}
-      data:
-        _timing: 0
+    RefIds: []
 --- !u!114 &1595309184926846098
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -179,51 +182,3 @@ MonoBehaviour:
     _startTiming: 0
     _endTiming: 0
     _bFollow: 0
---- !u!54 &2875927014575444241
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4427000628938413266}
-  serializedVersion: 5
-  m_Mass: 1
-  m_LinearDamping: 0
-  m_AngularDamping: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 0
-  m_IsKinematic: 1
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
---- !u!135 &7914889206072944326
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4427000628938413266}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}

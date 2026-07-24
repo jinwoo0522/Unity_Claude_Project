@@ -37,6 +37,9 @@ public class SkillDamagable : ISkillModule
 
         if (collider.gameObject.TryGetComponent(out IDamagable target) == false) return;
 
+        // [디버그] 실제 Hit 순간 — 어느 스킬이 / 누구 소유로 / 누구를 때리는지 못박음
+        Debug.Log($"[SkillDamagable:{_skill.name}] Hit! target={collider.name} targetRoot={collider.transform.root.name} skillOwner={(_skill.Owner == null ? "null" : _skill.Owner.name)}");
+
         target.Hit(FinalDamage());
     }
 
@@ -55,6 +58,9 @@ public class SkillDamagable : ISkillModule
         if (_iDamageFrame != Time.frameCount) return;   // 이번 프레임은 데미지 프레임 아님
 
         if (collider.gameObject.TryGetComponent(out IDamagable target) == false) return;
+
+        // [디버그] 실제 Hit 순간 — 어느 스킬이 / 누구 소유로 / 누구를 때리는지 못박음
+        Debug.Log($"[SkillDamagable:{_skill.name}] (Stay) Hit! target={collider.name} targetRoot={collider.transform.root.name} skillOwner={(_skill.Owner == null ? "null" : _skill.Owner.name)}");
 
         target.Hit(FinalDamage());
     }

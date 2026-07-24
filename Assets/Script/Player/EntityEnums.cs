@@ -31,8 +31,8 @@ namespace ENTITY
         NONE = 0,
         JUMP = 1 << 0,
         Q =  1 << 1,
-        MOUSE_RIGHT = 1 << 2,
-        MOUSE_LEFT = 1 << 3,
+        MOUSE_LEFT = 1 << 2,
+        MOUSE_RIGHT = 1 << 3,
         SPRINT = 1 << 4,
         MOVE = 1 << 5,
     }
