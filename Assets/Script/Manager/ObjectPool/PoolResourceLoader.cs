@@ -32,6 +32,14 @@ public class PoolResourceLoader
             return;
         }
         prefabs.Add(Storm);
+
+        GameObject Fire_Explosion = Resources.Load<GameObject>("Prefabs/Skill/Fire_Explosion");
+        if (skill == null)
+        {
+            GameManager.Instance.DebugMessage<PoolResourceLoader>("Fire_Explosion 스킬 NULL");
+            return;
+        }
+        prefabs.Add(Fire_Explosion);
     }
 
     // 로컬(이펙트) 프리팹 로드 — enum 순서와 로드 순서를 일치시킨다
@@ -73,5 +81,14 @@ public class PoolResourceLoader
             return;
         }
         prefabs.Add(Storm_Effect);
+
+        //4
+        GameObject Fire_Explosion_Effect = Resources.Load<GameObject>("Prefabs/Effect/Golem/Fire_Explosion");
+        if (Fire_Explosion_Effect == null)
+        {
+            GameManager.Instance.DebugMessage<PoolResourceLoader>("Fire_Explosion 이펙트 NULL");
+            return;
+        }
+        prefabs.Add(Fire_Explosion_Effect);
     }
 }

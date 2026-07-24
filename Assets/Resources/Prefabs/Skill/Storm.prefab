@@ -123,26 +123,36 @@ MonoBehaviour:
   _effector: {fileID: 1595309184926846098}
   _hitter: {fileID: 2029163365358526597}
   _skillModules:
-  - rid: 6238406325766979867
+  - rid: 6238406325766979874
   - rid: 6238406325766979868
   references:
     version: 2
     RefIds:
-    - rid: 6238406325766979867
-      type: {class: SkillSphereDamage, ns: , asm: Assembly-CSharp}
-      data:
-        _timing: 0
-        _fDelay: 0.5
-        _vOffset: {x: 0, y: -3.5, z: 0}
-        _fRadius: 3
-        _targetMask:
-          serializedVersion: 2
-          m_Bits: 128
-        _fBaseDamage: 2
     - rid: 6238406325766979868
       type: {class: ReturnToPoolOnTime, ns: , asm: Assembly-CSharp}
       data:
         _fLifetime: 3
+    - rid: 6238406325766979874
+      type: {class: SkillSphereCast, ns: , asm: Assembly-CSharp}
+      data:
+        _fDelay: 0.5
+        _vOffset: {x: 0, y: -3, z: 0}
+        _fRadius: 3
+        _targetMask:
+          serializedVersion: 2
+          m_Bits: 128
+        _onHit:
+        - rid: 6238406325766979875
+        - rid: 6238406325766979876
+    - rid: 6238406325766979875
+      type: {class: DamageOnCollision, ns: , asm: Assembly-CSharp}
+      data:
+        _timing: 0
+        _fBaseDamage: 12
+    - rid: 6238406325766979876
+      type: {class: ReturnToPoolOnCollision, ns: , asm: Assembly-CSharp}
+      data:
+        _timing: 0
 --- !u!114 &2029163365358526597
 MonoBehaviour:
   m_ObjectHideFlags: 0
