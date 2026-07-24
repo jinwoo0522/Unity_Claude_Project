@@ -76,6 +76,9 @@ public class Stat : NetworkBehaviour , IDamagable
 
     public void Hit(float fDamage)
     {
+        // [디버그] _isHit이 실제로 켜지는 유일한 지점 — 언제/누구에게 데미지가 들어오는지 기록
+        Debug.Log($"[Stat:{name}] Hit 호출 dmg={fDamage} 이전_isHit={_isHit} frame={Time.frameCount}");
+
         if(_isHit == true) return;
 
         _isHit = true;

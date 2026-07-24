@@ -18,6 +18,7 @@ public class PlayerHitState : EntityState
 
     public override void Enter()
     {
+        Debug.Log($"[HitState] Enter frame={Time.frameCount}");
         _upperAniController._state.Value = (ushort)ENTITY.UpperStateType.HIT;
     }
 
@@ -29,6 +30,5 @@ public class PlayerHitState : EntityState
 
     protected override void UpdateState(float fTimedelta, ushort curState)
     {
-        Debug.Log("히트 중");
     }
 }

@@ -8,7 +8,11 @@ public class Player_Input : NetworkBehaviour , IEntityMoveInput , IEntityInputSt
     PlayerInput _inputAction;
     private InputCommand _input = new();
     private Camera _mainCam;
-    public Vector3 AimDir => _input.AimDir;
+
+    private readonly NetworkVariable<Vector3> _aimDir =
+        new(Vector3.forward, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+
+    public Vector3 AimDir => _aimDir.Value;
     public Vector2 MoveInput => _input.MoveDir;
     public bool isSprint => (_input.InputFlag & ENTITY.InputFlagType.SPRINT) == ENTITY.InputFlagType.SPRINT;
     public ushort inputState => (ushort)_input.InputFlag;
@@ -44,7 +48,7 @@ public class Player_Input : NetworkBehaviour , IEntityMoveInput , IEntityInputSt
     {
         if(IsOwner == false) return;
 
-        _input.AimDir = _mainCam.transform.forward;
+        _aimDir.Value = _mainCam.transform.forward;
     }
 
     // Inpu처리는 클라에서 행하는 것이기 때문에 서버가 모름
@@ -84,14 +88,14 @@ public class Player_Input : NetworkBehaviour , IEntityMoveInput , IEntityInputSt
     {
         if(IsOwner != true) return;
 
-        AddFlag(ENTITY.InputFlagType.MOUSE_RIGHT);
+        AddFlag(ENTITY.InputFlagType.MOUSE_LEFT);
         SyncInputData_ServerRpc(_input);
     }
     void OnAttackCanceled(InputAction.CallbackContext ctx)
     {
         if(IsOwner != true) return;
 
-        SubFlag(ENTITY.InputFlagType.MOUSE_RIGHT);
+        SubFlag(ENTITY.InputFlagType.MOUSE_LEFT);
         SyncInputData_ServerRpc(_input);
     }  
 
@@ -99,14 +103,14 @@ public class Player_Input : NetworkBehaviour , IEntityMoveInput , IEntityInputSt
     {
         if(IsOwner != true) return;
 
-        AddFlag(ENTITY.InputFlagType.MOUSE_LEFT);
+        AddFlag(ENTITY.InputFlagType.MOUSE_RIGHT);
         SyncInputData_ServerRpc(_input);
     }
     void OnAttack_SkillCanceled(InputAction.CallbackContext ctx)
     {
         if(IsOwner != true) return;
 
-        SubFlag(ENTITY.InputFlagType.MOUSE_LEFT);
+        SubFlag(ENTITY.InputFlagType.MOUSE_RIGHT);
         SyncInputData_ServerRpc(_input);
     }  
 
@@ -161,14 +165,12 @@ public class Player_Input : NetworkBehaviour , IEntityMoveInput , IEntityInputSt
     public struct InputCommand : INetworkSerializable
     {
         public Vector2 MoveDir;
-        public Vector3 AimDir;
         public ENTITY.InputFlagType InputFlag;
 
         public void NetworkSerialize<T>(BufferSerializer<T> serializer) where T : IReaderWriter
         {
             serializer.SerializeValue(ref MoveDir);
-            serializer.SerializeValue(ref AimDir);
-            
+
             // enum은 캐스팅을 해서 직렬화 하는게 안전하다
             ushort raw = (ushort)InputFlag; 
             serializer.SerializeValue(ref raw);

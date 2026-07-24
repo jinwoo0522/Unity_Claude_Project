@@ -5,7 +5,6 @@ public class AnyToHit_Player : ITransition
     public ushort NextState => (ushort)ENTITY.UpperStateType.HIT;
 
     IDamagable _damagable;
-
     EntityAnimator _upperAniController;
 
     public AnyToHit_Player(EntityAnimator upperAniController , IDamagable damagalbe)
