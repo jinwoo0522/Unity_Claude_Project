@@ -5,4 +5,5 @@ public enum PoolObjectType
     ELECTRIC_PROJECTILE_EFFECT,
     ICE_EXPLOSION_EFFECT,
     STORM_EFFECT,
+    FIRE_EXPLOSION,
 }

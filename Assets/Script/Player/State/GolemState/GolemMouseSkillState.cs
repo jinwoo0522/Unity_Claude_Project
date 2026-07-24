@@ -2,30 +2,25 @@ using UnityEngine;
 
 public class GolemMouseSkillState : EntityState
 {
-    
+
+    Golem_Player _player;
     EntityAnimator _aniController;
-    IHitter _hitter;
-    IEntityMovement _move;
     IEffector _effector;
-    Stat _stat;
 
-    Vector3 vCentor = new Vector3(0f,0.25f,0.0f);
-    Vector3 vHalfExtents = new Vector3(1f,0.25f,1f);
-
-    const float fHitDuration = 0.2f;   // 판정 지속시간(초)
+    const float _fFireCastTime = 1.8f;   // Fire_Explosion 스폰 타이밍(초)
+    const float _fFireDistance = 3f;     // 플레이어 정면 방향 스폰 거리
 
     public GolemMouseSkillState(Golem_Player player)
     {
+        _player = player;
         _aniController = player._aniController;
-        _hitter = player._hitter;
-        _move = player._move;
         _effector = player._effector;
-        _stat = player._stat;
     }
     public override void Create()
     {
         TransitionList.Add(new StateToIdle_Player(_aniController));
         StateEvents.Add((1.7f , () => _effector.StopEffect((int)GOLEM.GolemEffect.DASH_TRAIL)));
+        StateEvents.Add((_fFireCastTime, FireExplosion));
     }
 
     public override void Enter()
@@ -45,8 +40,14 @@ public class GolemMouseSkillState : EntityState
     protected override void UpdateState(float fTimedelta, ushort curState)
     {
     }
-    void EventFunc()
+
+    // 서버 권위 — 플레이어 정면 방향 +3 위치에 Fire_Explosion 스폰
+    void FireExplosion()
     {
+        Vector3 vPos = _player.transform.position + _player.transform.forward * _fFireDistance;
+
+        GameManager.Instance.skillFactory.Create(
+            NetworkObjectType.FIRE_EXPLOSION, vPos, Vector2.zero, _player.OwnerClientId, _player.gameObject);
     }
 
 }
