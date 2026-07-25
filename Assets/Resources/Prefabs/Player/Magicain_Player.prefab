@@ -541,7 +541,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
-  GlobalObjectIdHash: 2912079774
+  GlobalObjectIdHash: 3019987179
   InScenePlacedSourceGlobalObjectIdHash: 0
   DeferredDespawnTick: 0
   Ownership: 1
@@ -1144,7 +1144,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: Meshy_AI_A_skeleton_mage_chara_biped_Character_output
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5866666021909216657, guid: 8880f3a7e9a359a4c8b07df098e0fbf7, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 4971310860725525745, guid: 8880f3a7e9a359a4c8b07df098e0fbf7, type: 3}

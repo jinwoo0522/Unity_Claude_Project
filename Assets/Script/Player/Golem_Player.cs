@@ -1,8 +1,10 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 // Golem 플레이어 — Elf와 동일한 공통 상태를 재사용하되 스킬 전환은 등록하지 않음
 public class Golem_Player : Player
 {
+    [SerializeField] private Transform _bodyPosition;
     public IHitter _hitter {get; private set;}
     public override void OnNetworkSpawn()
     {
@@ -32,7 +34,7 @@ public class Golem_Player : Player
         _stateMachine.CreateState((ushort)ENTITY.StateType.JUMP,     new PlayerJumpState(this, 0.1f));
         _stateMachine.CreateState((ushort)ENTITY.StateType.LAND,     new PlayerLandState(this));
         _stateMachine.CreateState((ushort)ENTITY.StateType.AIRBORNE, new EntityAirborneState(this));
-        _stateMachine.CreateState((ushort)GOLEM.StateType.Q_SKILL, new GolemQSkillState(this));
+        _stateMachine.CreateState((ushort)GOLEM.StateType.Q_SKILL, new GolemQSkillState(this, _bodyPosition));
         _stateMachine.CreateState((ushort)GOLEM.StateType.MOUSE_SKILL, new GolemMouseSkillState(this));
 
 
