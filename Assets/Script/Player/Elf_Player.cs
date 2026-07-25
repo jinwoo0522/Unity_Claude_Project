@@ -3,8 +3,10 @@ using UnityEngine;
 
 public class Elf_Player : Player
 {
+    [SerializeField] private MotionTrailer _motionTrailer;   // 인스펙터로 주입 — 상태에서 잔상 재생에 사용
 
     public IHitter _hitter {get; private set;}
+    public MotionTrailer _MotionTrailer => _motionTrailer;
     public override void OnNetworkSpawn()
     {
         base.OnNetworkSpawn();

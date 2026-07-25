@@ -664,7 +664,7 @@ ParticleSystem:
   ShapeModule:
     serializedVersion: 6
     enabled: 1
-    type: 8
+    type: 0
     angle: 50.4
     length: 2.32
     boxThickness: {x: 0, y: 0, z: 0}
@@ -4871,7 +4871,6 @@ ParticleSystemRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: c70cdc149f5e26f4ca4b4f67f899fb56, type: 2}
-  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -5589,7 +5588,7 @@ ParticleSystem:
   ShapeModule:
     serializedVersion: 6
     enabled: 1
-    type: 8
+    type: 0
     angle: 56.8
     length: 2.12
     boxThickness: {x: 0, y: 0, z: 0}
@@ -5676,7 +5675,7 @@ ParticleSystem:
     sphericalDirectionAmount: 0
     randomPositionAmount: 0.1
     radius:
-      value: 2
+      value: 5
       mode: 0
       spread: 0
       speed:
@@ -9814,7 +9813,6 @@ ParticleSystemRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: 27466f274f163e443ae6680f3d851425, type: 2}
-  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -10532,7 +10530,7 @@ ParticleSystem:
   ShapeModule:
     serializedVersion: 6
     enabled: 1
-    type: 8
+    type: 0
     angle: 56.8
     length: 2.18
     boxThickness: {x: 0, y: 0, z: 0}
@@ -14757,7 +14755,6 @@ ParticleSystemRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: 27466f274f163e443ae6680f3d851425, type: 2}
-  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -15475,7 +15472,7 @@ ParticleSystem:
   ShapeModule:
     serializedVersion: 6
     enabled: 1
-    type: 8
+    type: 0
     angle: 50
     length: 5
     boxThickness: {x: 0, y: 0, z: 0}
@@ -15562,7 +15559,7 @@ ParticleSystem:
     sphericalDirectionAmount: 1
     randomPositionAmount: 0.1
     radius:
-      value: 0.0001
+      value: 6
       mode: 0
       spread: 0
       speed:
@@ -19681,7 +19678,6 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a7d7c4a1507acdc4889ddcaf63d14c69, type: 2}
   - {fileID: 2100000, guid: a7d7c4a1507acdc4889ddcaf63d14c69, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
@@ -24589,7 +24585,6 @@ ParticleSystemRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: 6c63758d221cfd14d822a3b8d8b3e911, type: 2}
-  - {fileID: 2100000, guid: 6c63758d221cfd14d822a3b8d8b3e911, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -25307,7 +25302,7 @@ ParticleSystem:
   ShapeModule:
     serializedVersion: 6
     enabled: 1
-    type: 8
+    type: 0
     angle: 50
     length: 4.86
     boxThickness: {x: 0, y: 0, z: 0}
@@ -29496,7 +29491,6 @@ ParticleSystemRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: 5668313eca2c61744b33e319bcf87ba8, type: 2}
-  - {fileID: 2100000, guid: 5668313eca2c61744b33e319bcf87ba8, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -30220,7 +30214,7 @@ ParticleSystem:
   ShapeModule:
     serializedVersion: 6
     enabled: 1
-    type: 8
+    type: 0
     angle: 56.8
     length: 2.18
     boxThickness: {x: 0, y: 0, z: 0}
@@ -30307,7 +30301,7 @@ ParticleSystem:
     sphericalDirectionAmount: 0
     randomPositionAmount: 0.1
     radius:
-      value: 0.0001
+      value: 3
       mode: 0
       spread: 0
       speed:
@@ -34445,7 +34439,6 @@ ParticleSystemRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: 27466f274f163e443ae6680f3d851425, type: 2}
-  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

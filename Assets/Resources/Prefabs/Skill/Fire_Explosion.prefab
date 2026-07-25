@@ -139,20 +139,22 @@ MonoBehaviour:
         _onHit:
         - rid: 6238406325766979878
         - rid: 6238406325766979879
-        - rid: 6238406325766979881
+        - rid: 6238406349884751961
     - rid: 6238406325766979878
       type: {class: DamageOnCollision, ns: , asm: Assembly-CSharp}
       data:
         _timing: 0
-        _fBaseDamage: 2
+        _fBaseDamage: 20
     - rid: 6238406325766979879
       type: {class: ReturnToPoolOnCollision, ns: , asm: Assembly-CSharp}
       data:
         _timing: 0
-    - rid: 6238406325766979881
-      type: {class: ReturnToPoolOnCollision, ns: , asm: Assembly-CSharp}
+    - rid: 6238406349884751961
+      type: {class: AirborneOnCollision, ns: , asm: Assembly-CSharp}
       data:
         _timing: 0
+        _fAirbornePower: 25
+        _fAirborneDecay: 3
 --- !u!114 &6887755163937273642
 MonoBehaviour:
   m_ObjectHideFlags: 0

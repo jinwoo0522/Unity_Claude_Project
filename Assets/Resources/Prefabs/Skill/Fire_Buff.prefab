@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &4427000628938413266
+--- !u!1 &8318284260995122833
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,66 +8,66 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 8224425568607484665}
-  - component: {fileID: 5852248775966274303}
-  - component: {fileID: 7728121224989715948}
-  - component: {fileID: 5433324361279344289}
-  - component: {fileID: 2029163365358526597}
-  - component: {fileID: 1595309184926846098}
+  - component: {fileID: 7734738328887169405}
+  - component: {fileID: 7723781928259015556}
+  - component: {fileID: 4797254427216128851}
+  - component: {fileID: 951630376874915276}
+  - component: {fileID: 6887755163937273642}
+  - component: {fileID: 6006634995053185346}
   m_Layer: 0
-  m_Name: Storm
-  m_TagString: Skill
+  m_Name: Fire_Buff
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &8224425568607484665
+--- !u!4 &7734738328887169405
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4427000628938413266}
+  m_GameObject: {fileID: 8318284260995122833}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5852248775966274303
+--- !u!114 &7723781928259015556
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4427000628938413266}
+  m_GameObject: {fileID: 8318284260995122833}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
-  GlobalObjectIdHash: 2370979106
+  GlobalObjectIdHash: 572409385
   InScenePlacedSourceGlobalObjectIdHash: 0
   DeferredDespawnTick: 0
   Ownership: 1
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1
   ActiveSceneSynchronization: 0
-  SceneMigrationSynchronization: 1
+  SceneMigrationSynchronization: 0
   SpawnWithObservers: 1
   DontDestroyWithOwner: 0
   AutoObjectParentSync: 1
   SyncOwnerTransformWhenParented: 1
   AllowOwnerToParent: 0
---- !u!114 &7728121224989715948
+--- !u!114 &4797254427216128851
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4427000628938413266}
+  m_GameObject: {fileID: 8318284260995122833}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e96cb6065543e43c4a752faaa1468eb1, type: 3}
@@ -107,59 +107,84 @@ MonoBehaviour:
   SwitchTransformSpaceWhenParented: 0
   Interpolate: 1
   SlerpPosition: 0
---- !u!114 &5433324361279344289
+--- !u!114 &951630376874915276
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4427000628938413266}
+  m_GameObject: {fileID: 8318284260995122833}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 760b4c0e3791c484295f986cb4e78096, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Skill
   ShowTopMostFoldoutHeaderGroup: 1
-  _effector: {fileID: 1595309184926846098}
-  _hitter: {fileID: 2029163365358526597}
+  _effector: {fileID: 6887755163937273642}
+  _hitter: {fileID: 6006634995053185346}
   _skillModules:
-  - rid: 6238406325766979874
-  - rid: 6238406325766979868
+  - rid: 6238406325766979877
+  - rid: 6238406349884751963
   references:
     version: 2
     RefIds:
-    - rid: 6238406325766979868
-      type: {class: ReturnToPoolOnTime, ns: , asm: Assembly-CSharp}
-      data:
-        _fLifetime: 3
-    - rid: 6238406325766979874
+    - rid: 6238406325766979877
       type: {class: SkillSphereCast, ns: , asm: Assembly-CSharp}
       data:
-        _fDelay: 0.5
-        _vOffset: {x: 0, y: -3, z: 0}
+        _fDelay: 0.7
+        _vOffset: {x: 0, y: 0, z: 0}
         _fRadius: 3
         _targetMask:
           serializedVersion: 2
           m_Bits: 128
         _onHit:
-        - rid: 6238406325766979875
-        - rid: 6238406325766979876
-    - rid: 6238406325766979875
+        - rid: 6238406325766979878
+        - rid: 6238406325766979879
+        - rid: 6238406349884751962
+    - rid: 6238406325766979878
       type: {class: DamageOnCollision, ns: , asm: Assembly-CSharp}
       data:
         _timing: 0
-        _fBaseDamage: 12
-    - rid: 6238406325766979876
+        _fBaseDamage: 10
+    - rid: 6238406325766979879
       type: {class: ReturnToPoolOnCollision, ns: , asm: Assembly-CSharp}
       data:
         _timing: 0
---- !u!114 &2029163365358526597
+    - rid: 6238406349884751962
+      type: {class: KnockbackOnCollision, ns: , asm: Assembly-CSharp}
+      data:
+        _timing: 0
+        _fKnockbackPower: 50
+        _fKnockbackDecay: 5
+    - rid: 6238406349884751963
+      type: {class: ReturnToPoolOnTime, ns: , asm: Assembly-CSharp}
+      data:
+        _fLifetime: 2
+--- !u!114 &6887755163937273642
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4427000628938413266}
+  m_GameObject: {fileID: 8318284260995122833}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7c60c55113d2444f85170cd0d4513ef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SkillEffector
+  ShowTopMostFoldoutHeaderGroup: 1
+  _effects:
+  - _effectType: 5
+    _startTiming: 0
+    _endTiming: 0
+    _bFollow: 0
+--- !u!114 &6006634995053185346
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8318284260995122833}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2575972d2311be84484834b528973aa1, type: 3}
@@ -168,27 +193,9 @@ MonoBehaviour:
   ShowTopMostFoldoutHeaderGroup: 1
   _targetMask:
     serializedVersion: 2
-    m_Bits: 448
+    m_Bits: 128
   _fHitDelayTime: 0
   _collisions: []
   references:
     version: 2
     RefIds: []
---- !u!114 &1595309184926846098
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4427000628938413266}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f7c60c55113d2444f85170cd0d4513ef, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SkillEffector
-  ShowTopMostFoldoutHeaderGroup: 1
-  _effects:
-  - _effectType: 3
-    _startTiming: 0
-    _endTiming: 0
-    _bFollow: 0

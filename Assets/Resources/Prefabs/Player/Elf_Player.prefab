@@ -2087,6 +2087,7 @@ GameObject:
   - component: {fileID: 4286714939965657102}
   - component: {fileID: 1102142476755284709}
   - component: {fileID: 6531188162290506021}
+  - component: {fileID: 9124449192949097940}
   m_Layer: 7
   m_Name: Elf_Player
   m_TagString: Player
@@ -2126,7 +2127,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
-  GlobalObjectIdHash: 3901262420
+  GlobalObjectIdHash: 1491011233
   InScenePlacedSourceGlobalObjectIdHash: 0
   DeferredDespawnTick: 0
   Ownership: 1
@@ -2338,6 +2339,7 @@ MonoBehaviour:
   ShowTopMostFoldoutHeaderGroup: 1
   animData: {fileID: 11400000, guid: 38f898a7cf89d9144a88fecbf8e65b8b, type: 2}
   upperAnimData: {fileID: 11400000, guid: ff80f99442bd54947bf5c87f320d59eb, type: 2}
+  _motionTrailer: {fileID: 9124449192949097940}
 --- !u!114 &3609667280706908885
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2452,6 +2454,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1eb486c6446000141b4a8bae91e7ba65, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CrowdController
+--- !u!114 &9124449192949097940
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3448056407326184070}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd4d30ea67b90d149bf3e9a26a7659dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MotionTrailer
+  ShowTopMostFoldoutHeaderGroup: 1
+  _smr: {fileID: 7305141758908714847}
+  _rimColor: {r: 0.6, g: 0.1960784, b: 0.8000001, a: 1}
+  _fTrailTime: 0.5
+  _fInterval: 0.02
 --- !u!1 &3648312818719334364
 GameObject:
   m_ObjectHideFlags: 0

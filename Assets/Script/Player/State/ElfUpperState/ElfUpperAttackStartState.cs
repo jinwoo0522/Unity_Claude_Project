@@ -8,6 +8,7 @@ public class ElfUpperAttackStartState : EntityState
     IHitter _hitter;
     IEffector _effector;
     Stat _stat;
+    MotionTrailer _motionTrailer;
     Vector3 vCentor = new Vector3(0f,1f,0.9f);
     Vector3 vHalfExtents = new Vector3(0.25f,0.25f,0.5f);
 
@@ -25,6 +26,7 @@ public class ElfUpperAttackStartState : EntityState
         _move = player._move;
         _effector = player._effector;
         _stat = player._stat;
+        _motionTrailer = player._MotionTrailer;
     }
     public override void Create()
     {
@@ -40,6 +42,7 @@ public class ElfUpperAttackStartState : EntityState
         _upperAniController._state.Value = (ushort)ELF.UpperStateType.ATTACK_START;
         _effector.PlayTrail((int)ELF.ElfTrail.WEAPON_TRAIL);
         _effector.PlayEffect((int)ELF.ElfEffect.WEAPON_PARTICLE);
+        _motionTrailer.Play_Trail(1f);
     }
 
     public override void Exit()

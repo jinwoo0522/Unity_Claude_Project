@@ -7,6 +7,7 @@ public class ElfUpperAttackLastState : EntityState
     IEntityMovement _move;
     IEffector _effector;
     Stat _stat;
+    MotionTrailer _motionTrailer;
     Vector3 vCentor = new Vector3(0f,1f,0.5f);
     Vector3 vHalfExtents = new Vector3(0.5f,0.25f,0.25f);
     const float fDashSpeed = 9f;
@@ -21,6 +22,7 @@ public class ElfUpperAttackLastState : EntityState
         _move = player._move;
         _effector = player._effector;
         _stat = player._stat;
+        _motionTrailer = player._MotionTrailer;
     }
     public override void Create()
     {
@@ -35,6 +37,7 @@ public class ElfUpperAttackLastState : EntityState
         _upperAniController._state.Value = (ushort)ELF.UpperStateType.ATTACK_LAST;
         _effector.PlayTrail((int)ELF.ElfTrail.WEAPON_TRAIL);
         _effector.PlayEffect((int)ELF.ElfEffect.WEAPON_PARTICLE);
+        _motionTrailer.Play_Trail(0.5f);
     }
 
     public override void Exit()
