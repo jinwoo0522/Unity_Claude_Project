@@ -8,4 +8,5 @@ public enum PoolObjectType
     FIRE_EXPLOSION_EFFECT,
     FIRE_BUFF_EFFECT,
     MOTION_TRAIL_OBJECT,
+    FROZEN_SMOKE_EFFECT,
 }

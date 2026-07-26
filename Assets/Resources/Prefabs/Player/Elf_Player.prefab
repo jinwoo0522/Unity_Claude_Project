@@ -2088,6 +2088,7 @@ GameObject:
   - component: {fileID: 1102142476755284709}
   - component: {fileID: 6531188162290506021}
   - component: {fileID: 9124449192949097940}
+  - component: {fileID: 51585232012607564}
   m_Layer: 7
   m_Name: Elf_Player
   m_TagString: Player
@@ -2472,6 +2473,21 @@ MonoBehaviour:
   _rimColor: {r: 0.6, g: 0.1960784, b: 0.8000001, a: 1}
   _fTrailTime: 0.5
   _fDistInterval: 0.35
+--- !u!114 &51585232012607564
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3448056407326184070}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2cb32a314ea34454d831221e1f73dea7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MaterialChanger
+  ShowTopMostFoldoutHeaderGroup: 1
+  _changeMats:
+  - {fileID: 2100000, guid: f72c08af95547be489836fdf0b04e8a3, type: 2}
 --- !u!1 &3648312818719334364
 GameObject:
   m_ObjectHideFlags: 0

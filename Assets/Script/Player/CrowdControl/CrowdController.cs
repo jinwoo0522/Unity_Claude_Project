@@ -15,10 +15,12 @@ public class CrowdController : MonoBehaviour
     void Awake()
     {
         CharacterController cct = GetComponent<CharacterController>();
-        
+        MaterialChanger matChanger = GetComponent<MaterialChanger>();
+        EntityEffector effector = GetComponent<EntityEffector>();
+
         CrowdControls.Add(CC_TAG.KNOCKBACK , new CC_Knockback(cct));
         CrowdControls.Add(CC_TAG.AIRBORNE , new CC_AirBorne(cct));
-        CrowdControls.Add(CC_TAG.FREEZE , new CC_Freeze());
+        CrowdControls.Add(CC_TAG.FREEZE , new CC_Freeze(matChanger, effector));
     }
 
     public void CrowdController_Update(float fTimeDelat)

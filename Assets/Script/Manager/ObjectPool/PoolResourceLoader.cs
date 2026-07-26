@@ -114,5 +114,13 @@ public class PoolResourceLoader
             return;
         }
         prefabs.Add(Motion_Trail_Object);
+
+        GameObject FrozenSmoke = Resources.Load<GameObject>("Prefabs/Effect/FrozenSmoke");
+        if (Motion_Trail_Object == null)
+        {
+            GameManager.Instance.DebugMessage<PoolResourceLoader>("FrozenSmoke 이펙트 NULL");
+            return;
+        }
+        prefabs.Add(FrozenSmoke);
     }
 }

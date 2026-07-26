@@ -9,11 +9,19 @@ public class StateMachine
 
     private ushort CurState = 0;
 
+    private bool _isLock;   // 빙결 등으로 잠기면 상태 갱신·전환을 모두 멈춘다
+
     // 다른 상태머신(상·하체)이 현재 상태를 조회할 때 사용
     public ushort CurrentState => CurState;
 
+    // 현재 상태·포즈를 그대로 둔 채 갱신만 정지 (외부 상태머신이 제어)
+    public void Lock() => _isLock = true;
+    public void Unlock() => _isLock = false;
+
     public void State_Update(float fTimeDelta)
     {
+        if(_isLock == true) return;
+
         if(ChangeAnyState(fTimeDelta) == true) return;
         if(ChangeState(fTimeDelta) == true) return;
 

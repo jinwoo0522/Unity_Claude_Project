@@ -15,7 +15,7 @@ namespace ENTITY
         RUN = 1 << 6,
         LAND = 1 << 7,
         AIRBORNE = 1 << 8,
-        FREZEE = 1 << 9,
+        FROZEN = 1 << 9,
     }
 
     public enum UpperStateType : ushort

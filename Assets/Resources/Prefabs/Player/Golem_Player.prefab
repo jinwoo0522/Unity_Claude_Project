@@ -364,6 +364,7 @@ GameObject:
   - component: {fileID: 7945206968767576671}
   - component: {fileID: 7919488148856497620}
   - component: {fileID: 4856361388078937898}
+  - component: {fileID: 6726639379103552195}
   m_Layer: 7
   m_Name: Golem_Player
   m_TagString: Player
@@ -746,6 +747,21 @@ MonoBehaviour:
   _rimColor: {r: 1, g: 0.2705882, b: 0, a: 1}
   _fTrailTime: 0.5
   _fDistInterval: 0.25
+--- !u!114 &6726639379103552195
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4754220212716445872}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2cb32a314ea34454d831221e1f73dea7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MaterialChanger
+  ShowTopMostFoldoutHeaderGroup: 1
+  _changeMats:
+  - {fileID: 2100000, guid: f72c08af95547be489836fdf0b04e8a3, type: 2}
 --- !u!1 &4993173485944839245
 GameObject:
   m_ObjectHideFlags: 0
