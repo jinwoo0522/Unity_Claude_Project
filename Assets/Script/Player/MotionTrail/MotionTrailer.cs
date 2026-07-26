@@ -1,9 +1,10 @@
+using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
 
 public class MotionTrailer : NetworkBehaviour
 {
-    [SerializeField] private SkinnedMeshRenderer _smr;
+    [SerializeField] private List<SkinnedMeshRenderer> _smrList = new();
     [SerializeField] private Color _rimColor;
     [SerializeField] private float _fTrailTime = 0.5f;   // 잔상 1개의 유지 시간(초)
     [SerializeField] private float _fDistInterval = 0.5f; // 잔상 생성 간격(이동 거리, m)
@@ -48,13 +49,18 @@ public class MotionTrailer : NetworkBehaviour
         }
     }
 
-    // 모든 클라이언트가 각자 풀에서 잔상을 꺼내 재생
+    // 모든 클라이언트가 각자 풀에서 잔상을 꺼내 재생 — 렌더러 개수만큼 생성
     [ClientRpc]
     public void Start_MotionTrail_ClientRpc()
     {
-        MotionTrail trail = GameManager.Instance.objectPoolManager
-            .Get<MotionTrail>(PoolObjectType.MOTION_TRAIL_OBJECT);
+        for (int i = 0; i < _smrList.Count; ++i)
+        {
+            SkinnedMeshRenderer smr = _smrList[i];
 
-        trail.Play(_smr.transform.position, _smr.transform.rotation, _smr, _rimColor, _fTrailTime);
+            MotionTrail trail = GameManager.Instance.objectPoolManager
+                .Get<MotionTrail>(PoolObjectType.MOTION_TRAIL_OBJECT);
+
+            trail.Play(smr.transform.position, smr.transform.rotation, smr, _rimColor, _fTrailTime);
+        }
     }
 }

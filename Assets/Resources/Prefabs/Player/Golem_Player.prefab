@@ -363,6 +363,7 @@ GameObject:
   - component: {fileID: 5765010421665568576}
   - component: {fileID: 7945206968767576671}
   - component: {fileID: 7919488148856497620}
+  - component: {fileID: 4856361388078937898}
   m_Layer: 7
   m_Name: Golem_Player
   m_TagString: Player
@@ -402,7 +403,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
-  GlobalObjectIdHash: 3296484378
+  GlobalObjectIdHash: 427886385
   InScenePlacedSourceGlobalObjectIdHash: 0
   DeferredDespawnTick: 0
   Ownership: 1
@@ -582,6 +583,7 @@ MonoBehaviour:
   animData: {fileID: 11400000, guid: 983e2d9711ca40d3ac6096f7b763348c, type: 2}
   upperAnimData: {fileID: 11400000, guid: 9a1d3916458242a9802cddc021ac3dc2, type: 2}
   _bodyPosition: {fileID: 688156527877695396}
+  _motionTrailer: {fileID: 4856361388078937898}
 --- !u!114 &1000000000000002
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -722,6 +724,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerHUDBinder
   ShowTopMostFoldoutHeaderGroup: 1
   _hpTopSlider: {fileID: 1690037974995541514}
+--- !u!114 &4856361388078937898
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4754220212716445872}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd4d30ea67b90d149bf3e9a26a7659dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MotionTrailer
+  ShowTopMostFoldoutHeaderGroup: 1
+  _smrList:
+  - {fileID: 5745159598810609096}
+  - {fileID: 7731324503047124235}
+  - {fileID: 5189747816950787640}
+  - {fileID: 3919317813378948886}
+  - {fileID: 4111982552624841531}
+  _rimColor: {r: 1, g: 0.2705882, b: 0, a: 1}
+  _fTrailTime: 0.5
+  _fDistInterval: 0.25
 --- !u!1 &4993173485944839245
 GameObject:
   m_ObjectHideFlags: 0
@@ -1604,13 +1628,38 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7571699769823753819, guid: 0b61d617ad0871e44acc43a49be710cf, type: 3}
   m_PrefabInstance: {fileID: 8519488806387861287}
   m_PrefabAsset: {fileID: 0}
+--- !u!137 &3919317813378948886 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 4638561549873207345, guid: 0b61d617ad0871e44acc43a49be710cf, type: 3}
+  m_PrefabInstance: {fileID: 8519488806387861287}
+  m_PrefabAsset: {fileID: 0}
+--- !u!137 &4111982552624841531 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 5704934510402241564, guid: 0b61d617ad0871e44acc43a49be710cf, type: 3}
+  m_PrefabInstance: {fileID: 8519488806387861287}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &5008780276787522557 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3727167335170927834, guid: 0b61d617ad0871e44acc43a49be710cf, type: 3}
   m_PrefabInstance: {fileID: 8519488806387861287}
   m_PrefabAsset: {fileID: 0}
+--- !u!137 &5189747816950787640 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 4485301327154358559, guid: 0b61d617ad0871e44acc43a49be710cf, type: 3}
+  m_PrefabInstance: {fileID: 8519488806387861287}
+  m_PrefabAsset: {fileID: 0}
+--- !u!137 &5745159598810609096 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 4143775484349674223, guid: 0b61d617ad0871e44acc43a49be710cf, type: 3}
+  m_PrefabInstance: {fileID: 8519488806387861287}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &6622347787343372042 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3304520451607779373, guid: 0b61d617ad0871e44acc43a49be710cf, type: 3}
+  m_PrefabInstance: {fileID: 8519488806387861287}
+  m_PrefabAsset: {fileID: 0}
+--- !u!137 &7731324503047124235 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 2121304560479760940, guid: 0b61d617ad0871e44acc43a49be710cf, type: 3}
   m_PrefabInstance: {fileID: 8519488806387861287}
   m_PrefabAsset: {fileID: 0}

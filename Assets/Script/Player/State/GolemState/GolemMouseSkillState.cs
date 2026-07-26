@@ -28,13 +28,14 @@ public class GolemMouseSkillState : EntityState
         _aniController._state.Value = (ushort)GOLEM.StateType.MOUSE_SKILL;
         _effector.PlayEffect((int)GOLEM.GolemEffect.DASH_TRAIL);
         _aniController._animator.applyRootMotion = true;
-        
+        _player._upperStateMachine.TransitionTo((ushort)ENTITY.UpperStateType.EMPTY);   // 상체 잠금
     }
 
     public override void Exit()
     {
         _aniController._animator.applyRootMotion = false;
         _effector.StopEffect((int)ELF.ElfEffect.MOUSE_SKILL);
+        _player._upperStateMachine.TransitionTo((ushort)ENTITY.UpperStateType.IDLE);    // 상체 복귀
     }
 
     protected override void UpdateState(float fTimedelta, ushort curState)

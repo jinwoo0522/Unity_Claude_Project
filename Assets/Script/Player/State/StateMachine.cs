@@ -9,6 +9,9 @@ public class StateMachine
 
     private ushort CurState = 0;
 
+    // 다른 상태머신(상·하체)이 현재 상태를 조회할 때 사용
+    public ushort CurrentState => CurState;
+
     public void State_Update(float fTimeDelta)
     {
         if(ChangeAnyState(fTimeDelta) == true) return;

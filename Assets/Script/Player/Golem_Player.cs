@@ -5,7 +5,10 @@ using UnityEngine;
 public class Golem_Player : Player
 {
     [SerializeField] private Transform _bodyPosition;
+    [SerializeField] private MotionTrailer _motionTrailer;   // 인스펙터로 주입 — 상태에서 잔상 재생에 사용
+
     public IHitter _hitter {get; private set;}
+    public MotionTrailer _MotionTrailer => _motionTrailer;
     public override void OnNetworkSpawn()
     {
         base.OnNetworkSpawn();
@@ -42,18 +45,19 @@ public class Golem_Player : Player
         _stateMachine.CreateAnyTransition(new AnyToAirborne_Entity(_crowdController));
 
 
-        _stateMachine.AddTransition((ushort)ENTITY.StateType.IDLE, new StateToMouseAttack_Golem(_input));
-       _stateMachine.AddTransition((ushort)ENTITY.StateType.IDLE, new StateToQSkill_Golem(_input));
-       _stateMachine.AddTransition((ushort)ENTITY.StateType.WALK, new StateToMouseAttack_Golem(_input));
-       _stateMachine.AddTransition((ushort)ENTITY.StateType.WALK, new StateToQSkill_Golem(_input));
-       _stateMachine.AddTransition((ushort)ENTITY.StateType.RUN, new StateToMouseAttack_Golem(_input));
-       _stateMachine.AddTransition((ushort)ENTITY.StateType.RUN, new StateToQSkill_Golem(_input));
+        _stateMachine.AddTransition((ushort)ENTITY.StateType.IDLE, new StateToMouseAttack_Golem(_input, _upperStateMachine));
+       _stateMachine.AddTransition((ushort)ENTITY.StateType.IDLE, new StateToQSkill_Golem(_input, _upperStateMachine));
+       _stateMachine.AddTransition((ushort)ENTITY.StateType.WALK, new StateToMouseAttack_Golem(_input, _upperStateMachine));
+       _stateMachine.AddTransition((ushort)ENTITY.StateType.WALK, new StateToQSkill_Golem(_input, _upperStateMachine));
+       _stateMachine.AddTransition((ushort)ENTITY.StateType.RUN, new StateToMouseAttack_Golem(_input, _upperStateMachine));
+       _stateMachine.AddTransition((ushort)ENTITY.StateType.RUN, new StateToQSkill_Golem(_input, _upperStateMachine));
     }
 
     void CreateUpperState()
     {
         _upperStateMachine.CreateState((ushort)ENTITY.UpperStateType.IDLE, new PlayerUpperIdleState(this));
         _upperStateMachine.CreateState((ushort)ENTITY.UpperStateType.HIT,  new PlayerHitState(this));
+        _upperStateMachine.CreateState((ushort)ENTITY.UpperStateType.EMPTY, new PlayerUpperEmptyState(this));
         _upperStateMachine.CreateState((ushort)GOLEM.UpperStateType.ATTACK_START,  new GolemUpperAttackStartState(this));
         _upperStateMachine.CreateState((ushort)GOLEM.UpperStateType.ATTACK_LAST,  new GolemUpperAttackLastState(this));
 

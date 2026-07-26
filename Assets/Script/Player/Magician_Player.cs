@@ -48,6 +48,7 @@ public class Magician_Player : Player
     {
         _upperStateMachine.CreateState((ushort)ENTITY.UpperStateType.IDLE, new PlayerUpperIdleState(this));
         _upperStateMachine.CreateState((ushort)ENTITY.UpperStateType.HIT,  new PlayerHitState(this));
+        _upperStateMachine.CreateState((ushort)ENTITY.UpperStateType.EMPTY, new PlayerUpperEmptyState(this));
         _upperStateMachine.CreateState((ushort)MAGICIAN.UpperStateType.ATTACK, new MagicainUpperAttackState(this, _rightHand));
         _upperStateMachine.CreateState((ushort)MAGICIAN.UpperStateType.QSKILL, new MagicianUpperQSkillState(this));
 
