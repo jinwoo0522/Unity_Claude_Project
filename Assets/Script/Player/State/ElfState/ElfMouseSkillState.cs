@@ -8,6 +8,7 @@ public class ElfMouseSkillState : EntityState
     IEntityMovement _move;
     IEffector _effector;
     Stat _stat;
+    private StateMachine _upperStateMachine;
 
     Vector3 vCentor = new Vector3(0f,0.25f,0.0f);
     Vector3 vHalfExtents = new Vector3(1f,0.25f,1f);
@@ -23,6 +24,7 @@ public class ElfMouseSkillState : EntityState
         _move = player._move;
         _effector = player._effector;
         _stat = player._stat;
+        _upperStateMachine = player._upperStateMachine;
     }
     public override void Create()
     {
@@ -36,13 +38,14 @@ public class ElfMouseSkillState : EntityState
     {
         _aniController._state.Value = (ushort)ELF.StateType.MOUSE_SKILL;
         _aniController._animator.applyRootMotion = true;
-        
+        _upperStateMachine.TransitionTo((ushort)ENTITY.UpperStateType.EMPTY);   // 상체 잠금
     }
 
     public override void Exit()
     {
         _aniController._animator.applyRootMotion = false;
         _effector.StopEffect((int)ELF.ElfEffect.MOUSE_SKILL);
+        _upperStateMachine.TransitionTo((ushort)ENTITY.UpperStateType.IDLE);    // 상체 복귀
     }
 
     protected override void UpdateState(float fTimedelta, ushort curState)

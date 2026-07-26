@@ -35,9 +35,11 @@ public class Magician_Player : Player
         _stateMachine.CreateState((ushort)ENTITY.StateType.LAND,     new PlayerLandState(this));
         _stateMachine.CreateState((ushort)ENTITY.StateType.AIRBORNE, new EntityAirborneState(this));
         _stateMachine.CreateState((ushort)MAGICIAN.StateType.MOUSE_SKILL, new MagicianMouseSkillState(this, _groundMask, _HeadPos));
+        _stateMachine.CreateState((ushort)ENTITY.StateType.FROZEN, new PlayerFrozenState(this));
 
-        _stateMachine.CreateAnyTransition(new AnyToJump_Player(_input, _aniController, _jump));
+        _stateMachine.CreateAnyTransition(new AnyToJump_Player(_input, _aniController, _jump, _crowdController));
         _stateMachine.CreateAnyTransition(new AnyToAirborne_Entity(_crowdController));
+        _stateMachine.CreateAnyTransition(new AnyToFrozen_Entity(_crowdController));
 
         _stateMachine.AddTransition((ushort)ENTITY.StateType.IDLE, new StateToMouseSkill_Magician(this, _groundMask, _HeadPos));
         _stateMachine.AddTransition((ushort)ENTITY.StateType.WALK, new StateToMouseSkill_Magician(this, _groundMask, _HeadPos));
@@ -48,6 +50,7 @@ public class Magician_Player : Player
     {
         _upperStateMachine.CreateState((ushort)ENTITY.UpperStateType.IDLE, new PlayerUpperIdleState(this));
         _upperStateMachine.CreateState((ushort)ENTITY.UpperStateType.HIT,  new PlayerHitState(this));
+        _upperStateMachine.CreateState((ushort)ENTITY.UpperStateType.EMPTY, new PlayerUpperEmptyState(this));
         _upperStateMachine.CreateState((ushort)MAGICIAN.UpperStateType.ATTACK, new MagicainUpperAttackState(this, _rightHand));
         _upperStateMachine.CreateState((ushort)MAGICIAN.UpperStateType.QSKILL, new MagicianUpperQSkillState(this));
 

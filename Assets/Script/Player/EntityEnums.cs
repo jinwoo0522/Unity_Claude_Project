@@ -15,14 +15,17 @@ namespace ENTITY
         RUN = 1 << 6,
         LAND = 1 << 7,
         AIRBORNE = 1 << 8,
-        FREZEE = 1 << 9,
+        FROZEN = 1 << 9,
     }
 
     public enum UpperStateType : ushort
     {
         NONE,
         IDLE = 1 << 0,
-        HIT = 1 << 1
+        HIT = 1 << 1,
+        // 하체 전신 스킬 중 상체 레이어를 꺼두는 빈 상태
+        // 1 << 2 ~ 1 << 4 는 캐릭터별 공격 상태가 쓰므로 비워둔다
+        EMPTY = 1 << 5
     }
 
     [Flags]

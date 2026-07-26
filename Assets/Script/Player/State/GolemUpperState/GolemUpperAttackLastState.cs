@@ -7,6 +7,7 @@ public class GolemUpperAttackLastState : EntityState
     IEntityMovement _move;
     IEffector _effector;
     Stat _stat;
+    MotionTrailer _motionTrailer;
     Vector3 vCentor = new Vector3(0f,1f,1.5f);
     Vector3 vHalfExtents = new Vector3(1.2f,0.5f,0.7f);
     const float fDashSpeed = 5f;
@@ -16,6 +17,7 @@ public class GolemUpperAttackLastState : EntityState
     const float fAirborneDecay = 3f;
     const float fKnockbackPower = 25f;
     const float fKnockbackDecay = 12f;
+    const float fTrailDuration = 0.1f; // 잔상 재생 시간(초)
     public GolemUpperAttackLastState(Golem_Player player)
     {
         _upperAniController = player._upperAniController;
@@ -23,6 +25,7 @@ public class GolemUpperAttackLastState : EntityState
         _move = player._move;
         _effector = player._effector;
         _stat = player._stat;
+        _motionTrailer = player._MotionTrailer;
     }
     public override void Create()
     {
@@ -52,6 +55,7 @@ public class GolemUpperAttackLastState : EntityState
     {
         _move.Dash(fDashSpeed , fDashDistance);
         _hitter.DoHitCheck(vCentor , vHalfExtents , fHitDuration, HitHandler);
+        _motionTrailer.Play_Trail(fTrailDuration);
     }
 
     void HitHandler(IHitter.HitInfo hitInfo)

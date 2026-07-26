@@ -10,15 +10,22 @@ public class AnyToJump_Player : ITransition
     IJumpMovement _jump;
 
     EntityAnimator _aniController;
+    CrowdController _crowdController;
 
-    public AnyToJump_Player(IEntityInputState input, EntityAnimator Animator , IJumpMovement jump)
+    public AnyToJump_Player(IEntityInputState input, EntityAnimator Animator , IJumpMovement jump,
+     CrowdController crowdController)
     {
         _inputState = input;
         _jump = jump;
         _aniController = Animator;
+        _crowdController = crowdController;
     }
     public bool CheckRule(float fTimeDelta)
     {
+        // 빙결 중에는 애니 상태값이 IDLE/WALK/RUN 그대로 남아 있으므로 별도로 막아야 한다
+        if(_crowdController.IsApply(CrowdController.CC_TAG.FREEZE) == true)
+            return false;
+
         if(
             ((_aniController._state.Value & (ushort)ENTITY.StateType.WALK) == 0) && 
             ((_aniController._state.Value & (ushort)ENTITY.StateType.RUN) == 0 ) &&

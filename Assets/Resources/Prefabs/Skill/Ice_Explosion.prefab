@@ -169,9 +169,10 @@ MonoBehaviour:
   _targetMask:
     serializedVersion: 2
     m_Bits: 448
-  _fHitTime: 0
+  _fHitDelayTime: 0
   _collisions:
   - rid: 6238406280567586904
+  - rid: 6238406280567586905
   references:
     version: 2
     RefIds:
@@ -179,6 +180,11 @@ MonoBehaviour:
       type: {class: ReturnToPoolOnCollision, ns: , asm: Assembly-CSharp}
       data:
         _timing: 0
+    - rid: 6238406280567586905
+      type: {class: FreezeOnCollision, ns: , asm: Assembly-CSharp}
+      data:
+        _timing: 0
+        _fFreezeTime: 2
 --- !u!54 &6541975973095891579
 Rigidbody:
   m_ObjectHideFlags: 0

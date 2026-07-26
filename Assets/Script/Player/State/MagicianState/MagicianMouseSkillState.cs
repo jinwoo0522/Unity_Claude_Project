@@ -39,10 +39,12 @@ public class MagicianMouseSkillState : EntityState
     {
         _aniController._state.Value = (ushort)MAGICIAN.StateType.MOUSE_SKILL;
         _effector.PlayTrail((int)MAGICIAN.MagicianTrail.Left_Hand);     // 왼손 트레일 시작
+        _player._upperStateMachine.TransitionTo((ushort)ENTITY.UpperStateType.EMPTY);   // 상체 잠금
     }
 
     public override void Exit()
     {
+        _player._upperStateMachine.TransitionTo((ushort)ENTITY.UpperStateType.IDLE);    // 상체 복귀
     }
 
     protected override void UpdateState(float fTimedelta, ushort curState)

@@ -40,7 +40,10 @@ public class EntityEffector : NetworkBehaviour , IEffector
 
     public void StopEffect(int iEffectNumber) => StopEffect_ClientRpc(iEffectNumber);
 
-    public void StopTrail(int iTrailtNumber) => StopTrail_ClientRpc(iTrailtNumber); 
+    public void StopTrail(int iTrailtNumber) => StopTrail_ClientRpc(iTrailtNumber);
+
+    // 풀 이펙트를 엔티티 위치에서 1회 재생 — 인스펙터 등록 없이 공용 풀을 쓰는 상태 이펙트용
+    public void PlayPoolEffect(PoolObjectType type) => PlayPoolEffect_ClientRpc((int)type);
 
     // 인스펙터 설정대로 이펙트별 풀을 구성
     void BuildPools()
@@ -98,6 +101,13 @@ public class EntityEffector : NetworkBehaviour , IEffector
         ps.Clear();
         ps.Play();
     }
+    [ClientRpc]
+    void PlayPoolEffect_ClientRpc(int iType)
+    {
+        EffectView effect = GameManager.Instance.objectPoolManager.Get<EffectView>((PoolObjectType)iType);
+        effect.Play(transform.position, Quaternion.identity);
+    }
+
     [ClientRpc]
     void PlayTrail_ClientRpc(int iTrailtNumber)
     {

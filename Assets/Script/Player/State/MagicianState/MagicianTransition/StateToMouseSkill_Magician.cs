@@ -10,6 +10,7 @@ public class StateToMouseSkill_Magician : ITransition
     private Transform _transform;
     private LayerMask _groundMask;
     private Transform _headPos;
+    private StateMachine _upperStateMachine;
 
     private const float fMaxRayDistance = 15f;   // 이 거리 안에서 그라운드에 맞아야 전환
 
@@ -19,10 +20,17 @@ public class StateToMouseSkill_Magician : ITransition
         _transform = player.transform;
         _groundMask = groundMask;
         _headPos = headPos;
+        _upperStateMachine = player._upperStateMachine;
     }
 
     public bool CheckRule(float fTimeDelta)
     {
+        // 상체가 공격·피격 중이면 전신 스킬로 넘어가지 않는다
+        if (_upperStateMachine.CurrentState != (ushort)ENTITY.UpperStateType.IDLE)
+        {
+            return false;
+        }
+
         if ((_input.inputState & (ushort)ENTITY.InputFlagType.MOUSE_RIGHT) == 0)
         {
             return false;

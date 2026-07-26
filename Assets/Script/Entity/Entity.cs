@@ -43,6 +43,19 @@ public abstract class Entity : NetworkBehaviour
         ClinetUpdate();
     }
 
+    // 상태머신은 서버에서만 돌기 때문에 애니메이션 재생 속도는 모든 피어에 따로 전파해야 한다
+    public void Set_AnimSpeed(float fSpeed)
+    {
+        _aniController._animator.speed = fSpeed;   // Dedicated 서버는 ClientRpc를 받지 않으므로 직접 적용
+        Set_AnimSpeed_ClientRpc(fSpeed);
+    }
+
+    [ClientRpc]
+    private void Set_AnimSpeed_ClientRpc(float fSpeed)
+    {
+        _aniController._animator.speed = fSpeed;
+    }
+
     void ServerUpdate()
     {
         if(IsServer == false) return;
