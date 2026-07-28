@@ -6,6 +6,7 @@ public class ElfMouseSkillState : EntityState
     EntityAnimator _aniController;
     IHitter _hitter;
     IEntityMovement _move;
+    IEntityRotate _rotate;
     IEffector _effector;
     Stat _stat;
     private StateMachine _upperStateMachine;
@@ -22,6 +23,7 @@ public class ElfMouseSkillState : EntityState
         _aniController = player._aniController;
         _hitter = player._hitter;
         _move = player._move;
+        _rotate = player._rotate;
         _effector = player._effector;
         _stat = player._stat;
         _upperStateMachine = player._upperStateMachine;
@@ -51,6 +53,7 @@ public class ElfMouseSkillState : EntityState
     protected override void UpdateState(float fTimedelta, ushort curState)
     {
         _move.Gravity();
+        _rotate.Rotate();
     }
     void EventFunc()
     {

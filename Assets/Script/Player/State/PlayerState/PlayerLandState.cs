@@ -7,10 +7,13 @@ public class PlayerLandState : EntityState
 
     IEntityMovement _playerMove;
 
+    IEntityRotate _rotate;
+
     public PlayerLandState(Player player)
     {
         _aniController = player._aniController;
         _playerMove = player._move;
+        _rotate = player._rotate;
     }
 
     public override void Create()
@@ -31,5 +34,6 @@ public class PlayerLandState : EntityState
     protected override void UpdateState(float fTimedelta, ushort curState)
     {
         _playerMove.Gravity();
+        _rotate.Rotate();
     }
 }

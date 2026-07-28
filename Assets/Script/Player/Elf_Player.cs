@@ -37,7 +37,7 @@ public class Elf_Player : Player
        _stateMachine.CreateState((ushort)ELF.StateType.MOUSE_SKILL, new ElfMouseSkillState(this));
        _stateMachine.CreateState((ushort)ELF.StateType.Q_SKILL, new ElfQSkillState(this));
        _stateMachine.CreateState((ushort)ENTITY.StateType.AIRBORNE, new EntityAirborneState(this));
-       _stateMachine.CreateState((ushort)ENTITY.StateType.FROZEN, new PlayerFrozenState(this));
+       _stateMachine.CreateState((ushort)ENTITY.StateType.FROZEN, new EntityFrozenState(this, _upperStateMachine));
 
        _stateMachine.CreateAnyTransition(new AnyToJump_Player(_input ,_aniController, _jump, _crowdController));
        _stateMachine.CreateAnyTransition(new AnyToAirborne_Entity(_crowdController));

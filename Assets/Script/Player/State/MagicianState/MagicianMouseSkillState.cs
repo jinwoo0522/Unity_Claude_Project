@@ -7,6 +7,7 @@ public class MagicianMouseSkillState : EntityState
     private Magician_Player _player;
     private EntityAnimator _aniController;
     private IEntityMovement _move;
+    private IEntityRotate _rotate;
     private Player_Input _input;
     private LayerMask _groundMask;
     private Transform _headPos;
@@ -21,6 +22,7 @@ public class MagicianMouseSkillState : EntityState
         _player = player;
         _aniController = player._aniController;
         _move = player._move;
+        _rotate = player._rotate;
         _input = player._input;
         _groundMask = groundMask;
         _headPos = headPos;
@@ -51,6 +53,7 @@ public class MagicianMouseSkillState : EntityState
     {
         // 이동 입력은 무시하고 중력만 적용 (스킬 중 제자리 고정)
         _move.Gravity();
+        _rotate.Rotate();
     }
 
     // 카메라 포워드 방향으로 그라운드 레이를 다시 쏘아 첫 히트 지점에 Storm 시전

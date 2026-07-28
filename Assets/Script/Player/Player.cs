@@ -15,18 +15,19 @@ public abstract class Player : Entity
     public Player_Input         _input {get; protected set;}
     public StateMachine         _upperStateMachine {get; protected set;}
     public EntityAnimator       _upperAniController {get; protected set;}
-    public PlayerCameraRotate   _camRotater {get; protected set;}
     public IJumpMovement        _jump {get; protected set;}
+
+    public override ENTITY.Faction Faction => ENTITY.Faction.PLAYER;
 
     public override void OnNetworkSpawn()
     {
         base.OnNetworkSpawn();
        //인풋 컴포넌트
        _input = GetComponent<Player_Input>();
-       // 카메라 로테이터
-       _camRotater = GetComponent<PlayerCameraRotate>();
        // 점프 컴포넌트
        _jump = GetComponent<IJumpMovement>();
+       // 회전 객체 생성 — 플레이어는 조준 입력을 회전 소스로 쓴다
+       _rotate = new PlayerCameraRotate(transform, _input);
 
        //상체 상태머신 생성
         _upperStateMachine = new StateMachine();

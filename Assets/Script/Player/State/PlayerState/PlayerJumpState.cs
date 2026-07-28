@@ -6,12 +6,14 @@ public class PlayerJumpState : EntityState
     IEntityMovement   _playerMove;
     IJumpMovement     _jump;
     IEntityMoveInput _moveInput;
+    IEntityRotate    _rotate;
     EntityAnimator   _aniController;
 
     float fJumpDelay = 1f;
     public PlayerJumpState(Player player , float fDelay = 1f)
     {
         _playerMove = player._move;
+        _rotate = player._rotate;
         _jump = player._jump;
         _moveInput = player._input;
         _aniController = player._aniController;
@@ -36,5 +38,6 @@ public class PlayerJumpState : EntityState
     {
         _playerMove.Move(_moveInput.MoveInput , _moveInput.isSprint);
         _playerMove.Gravity();
+        _rotate.Rotate();
     }
 }

@@ -5,6 +5,7 @@ public class GolemMouseSkillState : EntityState
 
     Golem_Player _player;
     EntityAnimator _aniController;
+    IEntityRotate _rotate;
     IEffector _effector;
 
     const float _fFireCastTime = 1.8f;   // Fire_Explosion 스폰 타이밍(초)
@@ -14,6 +15,7 @@ public class GolemMouseSkillState : EntityState
     {
         _player = player;
         _aniController = player._aniController;
+        _rotate = player._rotate;
         _effector = player._effector;
     }
     public override void Create()
@@ -40,6 +42,7 @@ public class GolemMouseSkillState : EntityState
 
     protected override void UpdateState(float fTimedelta, ushort curState)
     {
+        _rotate.Rotate();
     }
 
     // 서버 권위 — 플레이어 정면 방향 +3 위치에 Fire_Explosion 스폰

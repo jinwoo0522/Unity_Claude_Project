@@ -5,6 +5,7 @@ public class PlayerRunState : EntityState
 {
     IEntityMoveInput _moveInput;
     IEntityMovement _playerMove;
+    IEntityRotate _rotate;
     IEntityInputState _inputState;
     EntityAnimator _aniController;
     Vector2 vAnimLerp;
@@ -12,6 +13,7 @@ public class PlayerRunState : EntityState
     {
         _moveInput = player._input;
         _playerMove = player._move;
+        _rotate = player._rotate;
         _inputState= player._input;
         _aniController = player._aniController;
     }
@@ -36,6 +38,7 @@ public class PlayerRunState : EntityState
         // 이동 구현
         _playerMove.Move(_moveInput.MoveInput , _moveInput.isSprint);
         _playerMove.Gravity();
+        _rotate.Rotate();
 
         // 애니메이션
         Vector2 vTarget = _moveInput.MoveInput.magnitude > 0.1f ? _moveInput.MoveInput.normalized

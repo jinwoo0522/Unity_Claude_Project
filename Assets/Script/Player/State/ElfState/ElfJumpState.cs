@@ -6,6 +6,7 @@ public class ElfJumpState : EntityState
     IJumpMovement   _jump;
     IEntityMovement _move;
     IEntityMoveInput _moveInput;
+    IEntityRotate    _rotate;
     EntityAnimator   _aniController;
 
     float fJumpDelay;
@@ -17,6 +18,7 @@ public class ElfJumpState : EntityState
     {
         _jump = player._jump;
         _move = player._move;
+        _rotate = player._rotate;
         _moveInput = player._input;
         _aniController = player._aniController;
         fJumpDelay = fDelay;
@@ -53,7 +55,6 @@ public class ElfJumpState : EntityState
         }
 
         _move.Gravity();
-
-
+        _rotate.Rotate();
     }
 }
