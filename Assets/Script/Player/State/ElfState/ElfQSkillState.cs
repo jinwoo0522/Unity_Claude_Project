@@ -5,6 +5,7 @@ public class ElfQSkillState : EntityState
     
     EntityAnimator _aniController;
     IEntityMovement _move;
+    IEntityRotate _rotate;
     IEntityInputState _input;
     IEffector _effector;
     private StateMachine _upperStateMachine;
@@ -12,6 +13,7 @@ public class ElfQSkillState : EntityState
     {
         _aniController = player._aniController;
         _move = player._move;
+        _rotate = player._rotate;
         _input = player._input;
         _effector = player._effector;
         _upperStateMachine = player._upperStateMachine;
@@ -37,6 +39,7 @@ public class ElfQSkillState : EntityState
     protected override void UpdateState(float fTimedelta, ushort curState)
     {
         _move.Gravity();
+        _rotate.Rotate();
     }
 
 }

@@ -18,6 +18,9 @@ public class Stat : NetworkBehaviour , IDamagable
         RUN_SPEED,
         END,
     }
+    // 네트워크 동기화가 필요 없는 원본 설정값을 외부가 읽도록 노출 (쓰기는 막는다)
+    public Entity_Data _data => Stat_Data;
+
     [SerializeField] private Entity_Data Stat_Data;
     NetworkList<float> StatList = new();
     public bool _isHit {get; set;}

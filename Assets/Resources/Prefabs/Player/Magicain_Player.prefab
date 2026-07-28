@@ -475,7 +475,6 @@ GameObject:
   - component: {fileID: 1088455814805586593}
   - component: {fileID: 1226901140816173918}
   - component: {fileID: 602054283828838798}
-  - component: {fileID: 5485118948980521001}
   - component: {fileID: 3986771494508981848}
   - component: {fileID: 1000000000000001}
   - component: {fileID: 4269611873941324466}
@@ -542,7 +541,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
-  GlobalObjectIdHash: 2912079774
+  GlobalObjectIdHash: 3019987179
   InScenePlacedSourceGlobalObjectIdHash: 0
   DeferredDespawnTick: 0
   Ownership: 1
@@ -752,19 +751,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9857cbb74f6b0c44db85482147804de9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Player_Input
-  ShowTopMostFoldoutHeaderGroup: 1
---- !u!114 &5485118948980521001
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7576251448233022070}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 537adb45b4139504ab80574e0277d40b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerCameraRotate
   ShowTopMostFoldoutHeaderGroup: 1
 --- !u!114 &3986771494508981848
 MonoBehaviour:

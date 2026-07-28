@@ -39,7 +39,7 @@ public class Golem_Player : Player
         _stateMachine.CreateState((ushort)ENTITY.StateType.AIRBORNE, new EntityAirborneState(this));
         _stateMachine.CreateState((ushort)GOLEM.StateType.Q_SKILL, new GolemQSkillState(this, _bodyPosition));
         _stateMachine.CreateState((ushort)GOLEM.StateType.MOUSE_SKILL, new GolemMouseSkillState(this));
-        _stateMachine.CreateState((ushort)ENTITY.StateType.FROZEN, new PlayerFrozenState(this));
+        _stateMachine.CreateState((ushort)ENTITY.StateType.FROZEN, new EntityFrozenState(this, _upperStateMachine));
 
 
         _stateMachine.CreateAnyTransition(new AnyToJump_Player(_input, _aniController, _jump, _crowdController));

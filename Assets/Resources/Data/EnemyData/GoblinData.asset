@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d99337fd176eae49af155c54e5be677, type: 3}
+  m_Name: GoblinData
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyData
+  strName: "\uACE0\uBE14\uB9B0 \uC804\uC0AC"
+  strDesc: "\uACE0\uBE14\uB9B0 \uC804\uC0AC\uC785\uB2C8\uB2E4."
+  fAttackDamage: 3
+  fMaxHp: 100
+  fWalkSpeed: 2
+  fRunSpeed: 4
+  fRotateSpeed: 10
+  fGravity: -9.8
+  fDetectRange: 3
+  fReturnDistance: 6
+  fMaxMana: 100
+  fManaRegen: 2

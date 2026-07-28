@@ -28,6 +28,13 @@ namespace ENTITY
         EMPTY = 1 << 5
     }
 
+    // 등록소 조회 축 — 값이 곧 리스트 인덱스이므로 0부터 연속이어야 한다
+    public enum Faction : byte
+    {
+        PLAYER,
+        MONSTER,
+    }
+
     [Flags]
     public enum InputFlagType : ushort
     {

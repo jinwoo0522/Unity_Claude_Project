@@ -2082,7 +2082,6 @@ GameObject:
   - component: {fileID: 67922901575824775}
   - component: {fileID: 3609667280706908885}
   - component: {fileID: 1870520348488181551}
-  - component: {fileID: 1732251204160524492}
   - component: {fileID: 4768658993644480280}
   - component: {fileID: 4286714939965657102}
   - component: {fileID: 1102142476755284709}
@@ -2368,19 +2367,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMovement
   ShowTopMostFoldoutHeaderGroup: 1
   playerData: {fileID: 11400000, guid: 544554fc9e492e14ea81ccb605682e48, type: 2}
---- !u!114 &1732251204160524492
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3448056407326184070}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 537adb45b4139504ab80574e0277d40b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerCameraRotate
-  ShowTopMostFoldoutHeaderGroup: 1
 --- !u!114 &4768658993644480280
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2472,7 +2458,7 @@ MonoBehaviour:
   - {fileID: 7305141758908714847}
   _rimColor: {r: 0.6, g: 0.1960784, b: 0.8000001, a: 1}
   _fTrailTime: 0.5
-  _fDistInterval: 0.35
+  _fDistInterval: 0.7
 --- !u!114 &51585232012607564
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -6,12 +6,14 @@ public class GolemQSkillState : EntityState
     Golem_Player _player;
     EntityAnimator _aniController;
     IEntityMovement _move;
+    IEntityRotate _rotate;
     Transform _bodyTransform;
     public GolemQSkillState(Golem_Player player , Transform BodyTransform)
     {
         _player = player;
         _aniController = player._aniController;
         _move = player._move;
+        _rotate = player._rotate;
         _bodyTransform = BodyTransform;
     }
     public override void Create()
@@ -36,6 +38,7 @@ public class GolemQSkillState : EntityState
     protected override void UpdateState(float fTimedelta, ushort curState)
     {
         _move.Gravity();
+        _rotate.Rotate();
     }
 
 }

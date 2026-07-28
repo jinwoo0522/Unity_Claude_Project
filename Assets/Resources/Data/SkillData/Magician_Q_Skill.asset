@@ -19,7 +19,7 @@ MonoBehaviour:
   fDamage: 20
   fRadius: 5
   nPoolSize: 5
-  prefab: {fileID: 8318284260995122833, guid: 1a0953df719ae48419faf46f9ad66289, type: 3}
+  prefab: {fileID: 951630376874915276, guid: 1a0953df719ae48419faf46f9ad66289, type: 3}
   _fCooldown: 10
   _strSkillState: Standing 2H Magic Area Attack 02
   _fKnockback: 0

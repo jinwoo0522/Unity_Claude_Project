@@ -12,6 +12,10 @@ public abstract class Entity : NetworkBehaviour
     public StateMachine         _stateMachine {get; protected set;}
     public EntityAnimator       _aniController {get; protected set;}
     public IEntityMovement      _move {get; protected set;}
+    public IEntityRotate        _rotate {get; protected set;}   // 회전 소스가 엔티티마다 달라 생성은 파생 클래스가 담당
+
+    // 등록소 분류 축 — 파생이 반드시 선언하게 해 진영 설정 누락을 컴파일 타임에 막는다
+    public abstract ENTITY.Faction Faction {get;}
 
     [SerializeField]
     protected AnimData animData;
@@ -35,6 +39,18 @@ public abstract class Entity : NetworkBehaviour
        NetworkAnimator _netAnimator = GetComponent<NetworkAnimator>();
  
        _aniController = new EntityAnimator(_animator , _netAnimator , animData, _State);
+
+       if(IsServer == false) return;
+       // 타겟 탐색은 서버에서만 하므로 등록도 서버에서만 한다
+       GameManager.Instance.entityRegistry.Add(this);
+    }
+
+    // 파생이 오버라이드할 경우 반드시 base를 호출해야 등록소에 유령이 남지 않는다
+    public override void OnNetworkDespawn()
+    {
+        if(IsServer == false) return;
+
+        GameManager.Instance.entityRegistry.Remove(this);
     }
 
     protected virtual void Update()
@@ -59,6 +75,7 @@ public abstract class Entity : NetworkBehaviour
     void ServerUpdate()
     {
         if(IsServer == false) return;
+        
         _crowdController.CrowdController_Update(Time.deltaTime);
         _stateMachine.State_Update(Time.deltaTime);
 
