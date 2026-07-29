@@ -48,10 +48,14 @@ public class Goblin : Entity
        _stateMachine.CreateState((ushort)ENTITY.StateType.WALK, new GoblinMoveState(this));
 
        _stateMachine.CreateState((ushort)ENTITY.StateType.AIRBORNE, new EntityAirborneState(this));
+       _stateMachine.CreateState((ushort)ENTITY.StateType.LAND, new GoblinLandState(this));
        _stateMachine.CreateState((ushort)ENTITY.StateType.FROZEN, new EntityFrozenState(this));
+       _stateMachine.CreateState((ushort)MONSTER.StateType.HIT, new MonsterHitState(this));
 
+       // 등록 순서가 곧 우선순위 — CC가 피격 경직보다 앞선다
        _stateMachine.CreateAnyTransition(new AnyToAirborne_Entity(_crowdController));
        _stateMachine.CreateAnyTransition(new AnyToFrozen_Entity(_crowdController));
+       _stateMachine.CreateAnyTransition(new AnyToHit_Monster(_crowdController, _stat));
 
 
     }

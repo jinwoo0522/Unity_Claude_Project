@@ -30,6 +30,5 @@ public class EntityAirborneState : EntityState
     protected override void UpdateState(float fTimedelta, ushort curState)
     {
         _move.Gravity();
-        _rotate.Rotate();
     }
 }

@@ -11,7 +11,6 @@ public class EntityFrozenState : EntityState
     private IEntityMovement _move;
     private StateMachine _upperStateMachine;
     private CrowdController _crowdController;
-    private IDamagable _damagable;
 
     public EntityFrozenState(Entity entity, StateMachine upperStateMachine = null)
     {
@@ -19,7 +18,6 @@ public class EntityFrozenState : EntityState
         _move = entity._move;
         _upperStateMachine = upperStateMachine;
         _crowdController = entity._crowdController;
-        _damagable = entity._stat;
     }
 
     public override void Create()
@@ -37,9 +35,6 @@ public class EntityFrozenState : EntityState
 
     public override void Exit()
     {
-        // 빙결 중 밀린 피격 플래그를 정리 — 그대로 두면 Unlock 직후 HIT가 뒤늦게 재생된다
-        _damagable._isHit = false;
-
         _entity.Set_AnimSpeed(1f);
 
         if(_upperStateMachine == null) return;

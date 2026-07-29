@@ -26,8 +26,15 @@ public class Stat : NetworkBehaviour , IDamagable
     public bool _isHit {get; set;}
     public bool _isDead {get; set;}
 
+    private CrowdController _crowdController;
+
     // 스탯 변경 통지 — UI 등 외부가 구독 (Stat은 구독자를 모름, 단방향)
     public event Action<STAT_TAG> StatChanged;
+
+    void Awake()
+    {
+        _crowdController = GetComponent<CrowdController>();
+    }
 
     public override void OnNetworkSpawn()
     {
@@ -79,15 +86,16 @@ public class Stat : NetworkBehaviour , IDamagable
 
     public void Hit(float fDamage)
     {
-        // [디버그] _isHit이 실제로 켜지는 유일한 지점 — 언제/누구에게 데미지가 들어오는지 기록
-        Debug.Log($"[Stat:{name}] Hit 호출 dmg={fDamage} 이전_isHit={_isHit} frame={Time.frameCount}");
-
-        if(_isHit == true) return;
-
-        _isHit = true;
         Add_Stat(STAT_TAG.HP, -fDamage);
 
         if(StatList[(int)STAT_TAG.HP] < 0)
             _isDead = true;
+
+        // 에어본·빙결 중에는 데미지만 넣고 경직 반응은 만들지 않는다
+        // 여기서 막지 않으면 CC가 풀린 뒤 밀린 플래그가 살아나 뒤늦게 HIT이 재생된다
+        if(_crowdController.IsApply(CrowdController.CC_TAG.AIRBORNE) == true) return;
+        if(_crowdController.IsApply(CrowdController.CC_TAG.FREEZE) == true) return;
+
+        _isHit = true;
     }
 }

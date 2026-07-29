@@ -20,6 +20,10 @@ MonoBehaviour:
     clipName: GoblinIdle
   - key: 2
     clipName: Move
+  - key: 16
+    clipName: Hit
+  - key: 128
+    clipName: Land
   - key: 256
     clipName: Airborne
   - key: 512

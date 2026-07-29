@@ -12,8 +12,12 @@ public class CrowdController : MonoBehaviour
 
     Dictionary<CC_TAG , ICrowdControl> CrowdControls = new();
 
+    IDamagable _damagable;
+
     void Awake()
     {
+        _damagable = GetComponent<IDamagable>();
+
         CharacterController cct = GetComponent<CharacterController>();
         MaterialChanger matChanger = GetComponent<MaterialChanger>();
         EntityEffector effector = GetComponent<EntityEffector>();
@@ -38,6 +42,9 @@ public class CrowdController : MonoBehaviour
 
     public void Apply(CC_TAG tag , ICrowdControl.CCData data)
     {
+        if(tag == CC_TAG.AIRBORNE || tag == CC_TAG.FREEZE)
+            _damagable._isHit = false;
+
         CrowdControls[tag].Apply(data);
     }
 

@@ -163,8 +163,8 @@ MonoBehaviour:
   ShowTopMostFoldoutHeaderGroup: 1
   _targetMask:
     serializedVersion: 2
-    m_Bits: 448
-  _fHitTime: 0
+    m_Bits: 960
+  _fHitDelayTime: 0
   _collisions:
   - rid: 6238406212872306776
   references:
