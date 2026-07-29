@@ -135,7 +135,7 @@ MonoBehaviour:
         _fRadius: 5
         _targetMask:
           serializedVersion: 2
-          m_Bits: 128
+          m_Bits: 640
         _onHit:
         - rid: 6238406325766979878
         - rid: 6238406325766979879
@@ -188,7 +188,7 @@ MonoBehaviour:
   ShowTopMostFoldoutHeaderGroup: 1
   _targetMask:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 640
   _fHitDelayTime: 0
   _collisions: []
   references:

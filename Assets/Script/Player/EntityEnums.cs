@@ -48,6 +48,15 @@ namespace ENTITY
     }
 }
 
+// 몬스터 전용 상태 — 상·하체 분리가 없어 ENTITY.StateType의 빈 비트를 이어서 쓴다
+namespace MONSTER
+{
+    public enum StateType : ushort
+    {
+        HIT = 1 << 4,
+    }
+}
+
 namespace ELF
 {
     public enum StateType : ushort

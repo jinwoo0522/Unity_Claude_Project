@@ -15,7 +15,7 @@ MonoBehaviour:
   strName: "\uACE0\uBE14\uB9B0 \uC804\uC0AC"
   strDesc: "\uACE0\uBE14\uB9B0 \uC804\uC0AC\uC785\uB2C8\uB2E4."
   fAttackDamage: 3
-  fMaxHp: 100
+  fMaxHp: 200
   fWalkSpeed: 2
   fRunSpeed: 4
   fRotateSpeed: 10
