@@ -1,0 +1,156 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!200 &20000000
+ShaderVariantCollection:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: NewShaderVariants
+  m_Shaders:
+  - first: {fileID: 0}
+    second:
+      variants:
+      - keywords: 
+        passType: 0
+  - first: {fileID: 0}
+    second:
+      variants:
+      - keywords: 
+        passType: 0
+  - first: {fileID: 0}
+    second:
+      variants:
+      - keywords: 
+        passType: 13
+      - keywords: FOG_LINEAR PROBE_VOLUMES_L1 _ADDITIONAL_LIGHT_SHADOWS _CLUSTER_LIGHT_LOOP
+          _LIGHT_LAYERS _REFLECTION_PROBE_ATLAS _REFLECTION_PROBE_BLENDING _REFLECTION_PROBE_BOX_PROJECTION
+          _SCREEN_SPACE_OCCLUSION
+        passType: 13
+      - keywords: FOG_LINEAR PROBE_VOLUMES_L1 _CLUSTER_LIGHT_LOOP
+        passType: 13
+      - keywords: PROBE_VOLUMES_L1 _ADDITIONAL_LIGHT_SHADOWS _CLUSTER_LIGHT_LOOP
+          _LIGHT_LAYERS _REFLECTION_PROBE_ATLAS _REFLECTION_PROBE_BLENDING _REFLECTION_PROBE_BOX_PROJECTION
+        passType: 13
+      - keywords: PROBE_VOLUMES_L1 _ADDITIONAL_LIGHT_SHADOWS _CLUSTER_LIGHT_LOOP
+          _LIGHT_LAYERS _REFLECTION_PROBE_ATLAS _REFLECTION_PROBE_BLENDING _REFLECTION_PROBE_BOX_PROJECTION
+          _SCREEN_SPACE_OCCLUSION
+        passType: 13
+      - keywords: PROBE_VOLUMES_L1 _CLUSTER_LIGHT_LOOP
+        passType: 13
+      - keywords: PROBE_VOLUMES_L1 _CLUSTER_LIGHT_LOOP _REFLECTION_PROBE_BLENDING
+          _REFLECTION_PROBE_BOX_PROJECTION
+        passType: 13
+  - first: {fileID: 0}
+    second:
+      variants:
+      - keywords: 
+        passType: 0
+  - first: {fileID: 0}
+    second:
+      variants:
+      - keywords: 
+        passType: 13
+      - keywords: PROBE_VOLUMES_L1 _ADDITIONAL_LIGHT_SHADOWS _CLUSTER_LIGHT_LOOP
+          _LIGHT_LAYERS _REFLECTION_PROBE_ATLAS _REFLECTION_PROBE_BLENDING _REFLECTION_PROBE_BOX_PROJECTION
+        passType: 13
+      - keywords: PROBE_VOLUMES_L1 _CLUSTER_LIGHT_LOOP
+        passType: 13
+      - keywords: PROBE_VOLUMES_L1 _CLUSTER_LIGHT_LOOP _REFLECTION_PROBE_BLENDING
+          _REFLECTION_PROBE_BOX_PROJECTION
+        passType: 13
+  - first: {fileID: 0}
+    second:
+      variants:
+      - keywords: 
+        passType: 0
+  - first: {fileID: 0}
+    second:
+      variants:
+      - keywords: 
+        passType: 0
+  - first: {fileID: 0}
+    second:
+      variants:
+      - keywords: 
+        passType: 13
+      - keywords: FOG_LINEAR PROBE_VOLUMES_L1 _ADDITIONAL_LIGHT_SHADOWS _CLUSTER_LIGHT_LOOP
+          _LIGHT_LAYERS _REFLECTION_PROBE_ATLAS _REFLECTION_PROBE_BLENDING _REFLECTION_PROBE_BOX_PROJECTION
+          _SCREEN_SPACE_OCCLUSION
+        passType: 13
+      - keywords: FOG_LINEAR PROBE_VOLUMES_L1 _CLUSTER_LIGHT_LOOP
+        passType: 13
+      - keywords: PROBE_VOLUMES_L1 _ADDITIONAL_LIGHT_SHADOWS _CLUSTER_LIGHT_LOOP
+          _LIGHT_LAYERS _REFLECTION_PROBE_ATLAS _REFLECTION_PROBE_BLENDING _REFLECTION_PROBE_BOX_PROJECTION
+        passType: 13
+      - keywords: PROBE_VOLUMES_L1 _ADDITIONAL_LIGHT_SHADOWS _CLUSTER_LIGHT_LOOP
+          _LIGHT_LAYERS _REFLECTION_PROBE_ATLAS _REFLECTION_PROBE_BLENDING _REFLECTION_PROBE_BOX_PROJECTION
+          _SCREEN_SPACE_OCCLUSION
+        passType: 13
+      - keywords: PROBE_VOLUMES_L1 _CLUSTER_LIGHT_LOOP
+        passType: 13
+      - keywords: PROBE_VOLUMES_L1 _CLUSTER_LIGHT_LOOP _REFLECTION_PROBE_BLENDING
+          _REFLECTION_PROBE_BOX_PROJECTION
+        passType: 13
+  - first: {fileID: 0}
+    second:
+      variants:
+      - keywords: 
+        passType: 0
+  - first: {fileID: 0}
+    second:
+      variants:
+      - keywords: 
+        passType: 13
+      - keywords: PROBE_VOLUMES_L1 _ADDITIONAL_LIGHT_SHADOWS _CLUSTER_LIGHT_LOOP
+          _LIGHT_LAYERS _REFLECTION_PROBE_ATLAS _REFLECTION_PROBE_BLENDING _REFLECTION_PROBE_BOX_PROJECTION
+        passType: 13
+      - keywords: PROBE_VOLUMES_L1 _CLUSTER_LIGHT_LOOP
+        passType: 13
+      - keywords: PROBE_VOLUMES_L1 _CLUSTER_LIGHT_LOOP _REFLECTION_PROBE_BLENDING
+          _REFLECTION_PROBE_BOX_PROJECTION
+        passType: 13
+  - first: {fileID: 0}
+    second:
+      variants:
+      - keywords: 
+        passType: 0
+  - first: {fileID: 0}
+    second:
+      variants:
+      - keywords: 
+        passType: 0
+  - first: {fileID: 0}
+    second:
+      variants:
+      - keywords: 
+        passType: 13
+      - keywords: FOG_LINEAR PROBE_VOLUMES_L1 _ADDITIONAL_LIGHT_SHADOWS _CLUSTER_LIGHT_LOOP
+          _LIGHT_LAYERS _REFLECTION_PROBE_ATLAS _REFLECTION_PROBE_BLENDING _REFLECTION_PROBE_BOX_PROJECTION
+          _SCREEN_SPACE_OCCLUSION
+        passType: 13
+      - keywords: FOG_LINEAR PROBE_VOLUMES_L1 _CLUSTER_LIGHT_LOOP
+        passType: 13
+      - keywords: PROBE_VOLUMES_L1 _ADDITIONAL_LIGHT_SHADOWS _CLUSTER_LIGHT_LOOP
+          _LIGHT_LAYERS _REFLECTION_PROBE_ATLAS _REFLECTION_PROBE_BLENDING _REFLECTION_PROBE_BOX_PROJECTION
+        passType: 13
+      - keywords: PROBE_VOLUMES_L1 _ADDITIONAL_LIGHT_SHADOWS _CLUSTER_LIGHT_LOOP
+          _LIGHT_LAYERS _REFLECTION_PROBE_ATLAS _REFLECTION_PROBE_BLENDING _REFLECTION_PROBE_BOX_PROJECTION
+          _SCREEN_SPACE_OCCLUSION
+        passType: 13
+      - keywords: PROBE_VOLUMES_L1 _CLUSTER_LIGHT_LOOP
+        passType: 13
+      - keywords: PROBE_VOLUMES_L1 _CLUSTER_LIGHT_LOOP _REFLECTION_PROBE_BLENDING
+          _REFLECTION_PROBE_BOX_PROJECTION
+        passType: 13
+  - first: {fileID: 4800000, guid: 933532a4fcc9baf4fa0491de14d08ed7, type: 3}
+    second:
+      variants:
+      - keywords: FOG_LINEAR LIGHTMAP_SHADOW_MIXING PROBE_VOLUMES_L1 SHADOWS_SHADOWMASK
+          _ADDITIONAL_LIGHT_SHADOWS _CLUSTER_LIGHT_LOOP _EMISSION _LIGHT_LAYERS _METALLICSPECGLOSSMAP
+          _NORMALMAP _REFLECTION_PROBE_ATLAS _REFLECTION_PROBE_BLENDING _REFLECTION_PROBE_BOX_PROJECTION
+          _SCREEN_SPACE_OCCLUSION _SPECULAR_SETUP
+        passType: 13
+      - keywords: FOG_LINEAR LIGHTMAP_SHADOW_MIXING PROBE_VOLUMES_L1 SHADOWS_SHADOWMASK
+          _CLUSTER_LIGHT_LOOP _LIGHT_LAYERS _NORMALMAP
+        passType: 13

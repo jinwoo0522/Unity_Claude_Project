@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour
     public ObjectPoolManager objectPoolManager {get; private set;}
     public SkillFactory skillFactory {get; private set;}
     public ScoreManager scoreManager {get; private set;}
+    public DebugManager debugManager {get; private set;}
 
     // 씬에 배치된 엔티티의 OnNetworkSpawn이 Start보다 먼저 돌 수 있어 필드에서 바로 생성한다
     public EntityRegistry entityRegistry {get; private set;} = new EntityRegistry();
@@ -58,6 +59,11 @@ public class GameManager : MonoBehaviour
 
         if(scoreManager == null)
             scoreManager = new ScoreManager();
+
+        if(debugManager == null)
+            debugManager = new DebugManager();
+
+        debugManager.Check();
     }
 
     public void DebugMessage<T>(string message)

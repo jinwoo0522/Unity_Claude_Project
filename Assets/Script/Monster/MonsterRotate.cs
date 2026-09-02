@@ -6,7 +6,6 @@ public class MonsterRotate : IEntityRotate
 {
     private Transform _transform;
     private MonsterTargeter _targeter;
-
     private float _fRotateSpeed;   // 회전 보간 속도 (클수록 빠르게 따라붙는다)
 
     public MonsterRotate(Transform transform, MonsterTargeter targeter, float fRotateSpeed)

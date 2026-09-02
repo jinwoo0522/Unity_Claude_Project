@@ -1,35 +1,43 @@
 using UnityEngine;
+using UnityEngine.AI;
 
-// 타게터가 잡아둔 대상 방향으로 수평 이동 — 중력 규칙은 플레이어와 동일하다
-// 호출 시점은 상태가 정하며, 상태머신이 서버에서만 돌므로 서버 권위는 호출 시점이 보장한다
+
 public class MonsterMove : MonoBehaviour, IEntityMovement
 {
-    private CharacterController _cct;
-    private Stat _stat;
-    private Goblin _goblin;   // 타게터 소유자 — 타겟은 매 프레임 바뀌므로 참조만 캐싱한다
-
+    [SerializeField] private CharacterController _cct;
+    [SerializeField] private Stat _stat;
+    [SerializeField] private Monster _goblin;   // 타게터 소유자 — 타겟은 매 프레임 바뀌므로 참조만 캐싱한다
+    [SerializeField] private NavMeshAgent _agent;
     private float _fVerticalVelocity = 0f;
 
-    private void Awake()
+    void Awake()
     {
-        _cct = GetComponent<CharacterController>();
-        _stat = GetComponent<Stat>();
-        _goblin = GetComponent<Goblin>();
+        _agent.updatePosition = false;
     }
+
 
     // 이동 방향은 타게터가 정하므로 인자로 받은 방향은 사용하지 않는다 (인터페이스 호환용)
     public void Move(Vector2 vMoveDir, bool isSprint)
     {
         Transform target = _goblin._targeter.Target;
 
-        if(target == null) return;
+        if(target == null)
+        {
+            _agent.nextPosition = _cct.transform.position;
+            return;
+        }
 
-        Vector3 vFlat = target.position - transform.position;
+        _agent.SetDestination(target.position);
+
+        Vector3 vFlat = _agent.desiredVelocity;
         vFlat.y = 0f;
 
         float fSpeed = isSprint ? _stat._data.fRunSpeed : _stat._data.fWalkSpeed;
 
         _cct.Move(vFlat.normalized * fSpeed * Time.deltaTime);
+
+        _agent.nextPosition = _cct.transform.position;   // CCT 이동 후 NavMeshAgent 위치를 동기화
+
     }
 
     public void Gravity()
