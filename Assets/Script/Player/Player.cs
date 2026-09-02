@@ -16,7 +16,7 @@ public abstract class Player : Entity
     public StateMachine         _upperStateMachine {get; protected set;}
     public EntityAnimator       _upperAniController {get; protected set;}
     public IJumpMovement        _jump {get; protected set;}
-
+    public IEntityRotate        _rotate {get; protected set;}   // 회전 소스가 엔티티마다 달라 생성은 파생 클래스가 담당
     public override ENTITY.Faction Faction => ENTITY.Faction.PLAYER;
 
     public override void OnNetworkSpawn()

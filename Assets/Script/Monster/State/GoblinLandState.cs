@@ -4,13 +4,11 @@ using UnityEngine;
 public class GoblinLandState : EntityState
 {
     private IEntityMovement _move;
-    private IEntityRotate _rotate;
     private EntityAnimator _aniController;
 
     public GoblinLandState(Goblin goblin)
     {
         _move = goblin._move;
-        _rotate = goblin._rotate;
         _aniController = goblin._aniController;
     }
 
@@ -32,6 +30,5 @@ public class GoblinLandState : EntityState
     {
         // 착지 중에는 이동만 막고 회전은 유지한다
         _move.Gravity();
-        _rotate.Rotate();
     }
 }

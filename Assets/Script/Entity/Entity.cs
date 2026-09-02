@@ -12,7 +12,6 @@ public abstract class Entity : NetworkBehaviour
     public StateMachine         _stateMachine {get; protected set;}
     public EntityAnimator       _aniController {get; protected set;}
     public IEntityMovement      _move {get; protected set;}
-    public IEntityRotate        _rotate {get; protected set;}   // 회전 소스가 엔티티마다 달라 생성은 파생 클래스가 담당
 
     // 등록소 분류 축 — 파생이 반드시 선언하게 해 진영 설정 누락을 컴파일 타임에 막는다
     public abstract ENTITY.Faction Faction {get;}

@@ -14,7 +14,7 @@ public class GoblinIdleState : EntityState
         _targeter = goblin._targeter;
         _move = goblin._move;
         _aniController = goblin._aniController;
-        _fDetectRange = goblin._stat._data.fDetectRange;
+        _fDetectRange = goblin._enemyData.fDetectRange;
     }
 
     public override void Create()

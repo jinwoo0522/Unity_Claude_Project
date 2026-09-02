@@ -7,23 +7,26 @@ public class GoblinMoveState : EntityState
 {
     private MonsterTargeter _targeter;
     private IEntityMovement _move;
-    private IEntityRotate _rotate;
     private EntityAnimator _aniController;
 
-    private float _fReturnDistance;
+    private float _fLeaveRange;
+    private float _fStopDistance;
 
     public GoblinMoveState(Goblin goblin)
     {
         _targeter = goblin._targeter;
         _move = goblin._move;
-        _rotate = goblin._rotate;
         _aniController = goblin._aniController;
-        _fReturnDistance = goblin._stat._data.fReturnDistance;
+        _fLeaveRange = goblin._enemyData.fReturnDistance;
+        // 공격 진입 거리는 NavMesh가 멈추는 지점과 같아야 하므로 에이전트 값을 그대로 쓴다
+        _fStopDistance = goblin._agent.stoppingDistance;
     }
 
     public override void Create()
     {
+        // 등록 순서가 곧 우선순위 — 타겟을 놓친 경우를 먼저 걸러야 공격 판정이 빈 타겟을 보지 않는다
         TransitionList.Add(new MoveToIdle_Goblin(_targeter));
+        TransitionList.Add(new MoveToAttack_Goblin(_targeter, _fStopDistance));
     }
 
     public override void Enter()
@@ -37,11 +40,10 @@ public class GoblinMoveState : EntityState
 
     protected override void UpdateState(float fTimedelta, ushort curState)
     {
-        _targeter.ReturnPoint(_fReturnDistance);
-
+        // 추격 중에는 재탐색 없이 잡아둔 타겟만 붙든다 — 놓치면 전환이 대기로 넘긴다
+        _targeter.KeepTarget(_fLeaveRange);
         // 이동 방향은 타게터가 정하므로 입력 인자는 비워 보낸다
         _move.Move(Vector2.zero, false);
         _move.Gravity();
-        _rotate.Rotate();
     }
 }
