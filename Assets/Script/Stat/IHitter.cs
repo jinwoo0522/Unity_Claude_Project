@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using UnityEngine;
 
 public interface IHitter 
@@ -9,5 +9,5 @@ public interface IHitter
         public Vector3    Point;    // 피격 VFX 띄울 위치
         public Collider   Collider;
     }
-    public void DoHitCheck(Vector3 center, Vector3 halfExtents, float duration, Action<HitInfo> HitInfo);
+    public void DoHitCheck(Vector3 center, Vector3 halfExtents, float duration, Action<HitInfo> HitInfo, bool isFollowRotation = true);
 }
