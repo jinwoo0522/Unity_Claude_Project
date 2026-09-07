@@ -50,12 +50,13 @@ public class GoblinAttackState : EntityState
     }
     void EventFunc()
     {
-        _hitter.DoHitCheck(vCentor , vHalfExtents , fHitDuration, HitHandler, false);
+        _hitter.DoHitCheck(vCentor , vHalfExtents , fHitDuration, HitHandler);
     }
 
     void HitHandler(IHitter.HitInfo hitInfo)
     {
-        hitInfo.Target.Hit(_stat.Get_Stat(Stat.STAT_TAG.DAMAGE));
+        hitInfo.Target.Hit(new IDamagable.DamageInfo{
+            Damage = _stat.Get_Stat(Stat.STAT_TAG.DAMAGE), Attacker = _stat.transform, Point = hitInfo.Point});
 
         Vector3 vKnocbackDir = Vector3.Normalize(hitInfo.Point - _stat.gameObject.transform.position);
         

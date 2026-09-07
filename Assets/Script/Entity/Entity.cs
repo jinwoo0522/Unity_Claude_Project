@@ -8,6 +8,7 @@ public abstract class Entity : NetworkBehaviour
 
     public EntityEffector       _effector {get; protected set;}
     public Stat                 _stat {get; protected set;}
+    public IDamagable           _damagable {get; protected set;}
     public CrowdController      _crowdController {get; protected set;}
     public StateMachine         _stateMachine {get; protected set;}
     public EntityAnimator       _aniController {get; protected set;}
@@ -24,6 +25,8 @@ public abstract class Entity : NetworkBehaviour
     public override void OnNetworkSpawn()
     {
        _stat = GetComponent<Stat>();
+       //피격 처리 컴포넌트
+       _damagable = GetComponent<IDamagable>();
        //이펙터 컴포넌트
        _effector = GetComponent<EntityEffector>();
        //군중제어 컨트롤러 컴포넌트

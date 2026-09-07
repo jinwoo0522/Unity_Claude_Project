@@ -11,7 +11,7 @@ public class MonsterHitState : EntityState
 
     public MonsterHitState(Entity entity)
     {
-        _damagable = entity._stat;
+        _damagable = entity._damagable;
         _move = entity._move;
         _aniController = entity._aniController;
     }

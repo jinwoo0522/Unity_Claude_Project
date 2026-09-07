@@ -63,7 +63,7 @@ public class Golem_Player : Player
         _upperStateMachine.CreateState((ushort)GOLEM.UpperStateType.ATTACK_START,  new GolemUpperAttackStartState(this));
         _upperStateMachine.CreateState((ushort)GOLEM.UpperStateType.ATTACK_LAST,  new GolemUpperAttackLastState(this));
 
-        _upperStateMachine.CreateAnyTransition(new AnyToHit_Player(_upperAniController, _stat));
+        _upperStateMachine.CreateAnyTransition(new AnyToHit_Player(_upperAniController, _damagable));
 
         _upperStateMachine.AddTransition((ushort)GOLEM.UpperStateType.IDLE, new IdleToAttackStart_Golem(_input));
     }

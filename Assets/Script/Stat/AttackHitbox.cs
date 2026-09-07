@@ -25,16 +25,14 @@ public class AttackHitbox : MonoBehaviour , IHitter
     private float      _hitTimer;
     private Vector3    _curCenter;
     private Vector3    _curHalfExtents;
-    private bool       _isFollowRotation = true;   // false면 호출 시점 회전으로 고정
     private Quaternion _fixedRotation;
 
-    public void DoHitCheck(Vector3 center, Vector3 halfExtents, float duration, Action<IHitter.HitInfo> HitInfo, bool isFollowRotation = true)
+    public void DoHitCheck(Vector3 center, Vector3 halfExtents, float duration, Action<IHitter.HitInfo> HitInfo)
     {
         _curCenter        = center;
         _curHalfExtents   = halfExtents;
         _hitTimer         = duration;
         _HitInfo          = HitInfo;
-        _isFollowRotation = isFollowRotation;
         _fixedRotation    = transform.rotation;   // 호출 시점 회전 스냅샷
     }
 
@@ -71,7 +69,7 @@ public class AttackHitbox : MonoBehaviour , IHitter
     // 추적 모드면 Transform 회전을 따라가고, 고정 모드면 판정 중 스냅샷 회전을 유지한다 (Gizmo 프리뷰는 항상 현재 회전)
     void GetBoxWorld(Vector3 localCenter, out Vector3 center, out Quaternion rotation)
     {
-        rotation = (_isFollowRotation || _hitTimer <= 0f) ? transform.rotation : _fixedRotation;
+        rotation = (_hitTimer <= 0f) ? transform.rotation : _fixedRotation;
         center   = transform.position + rotation * localCenter;
     }
 
