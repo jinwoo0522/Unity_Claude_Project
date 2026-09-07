@@ -24,7 +24,7 @@ public class MonsterTargeter
         }
 
         Target = entity.transform;
-        _targetDamagable = entity._stat;
+        _targetDamagable = entity._damagable;
     }
 
     // 추격 중 매 프레임 호출 — 잡아둔 타겟이 죽거나 이탈 거리를 벗어나면 비운다

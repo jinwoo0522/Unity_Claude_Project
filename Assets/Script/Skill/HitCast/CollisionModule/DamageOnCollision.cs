@@ -1,8 +1,5 @@
 using UnityEngine;
 
-// 충돌한 대상에게 데미지를 입히는 충돌 이벤트 모듈 — 최종 데미지 = Owner 공격력 + 기본 데미지.
-// 물리 트리거(SkillHitCast) 또는 구체 캐스트(SkillSphereCast) 어느 쪽이 구동해도 동작한다.
-// 서버 권위 — 데미지 판정은 서버에서만 수행한다.
 [System.Serializable]
 public class DamageOnCollision : ICollsionEventModule
 {
@@ -22,7 +19,8 @@ public class DamageOnCollision : ICollsionEventModule
         if (_skill.IsServer == false) return;                             // 데미지는 서버 권위
         if (col.TryGetComponent(out IDamagable target) == false) return;
 
-        target.Hit(FinalDamage());
+        target.Hit(new IDamagable.DamageInfo{
+            Damage = FinalDamage(), Attacker = _skill.Owner.transform, Point = col.ClosestPoint(_skill.transform.position)});
     }
 
     // 최종 데미지 = Owner 현재 공격력 + 기본 데미지

@@ -64,7 +64,8 @@ public class ElfUpperAttackMiddleState : EntityState
 
     void HitHandler(IHitter.HitInfo hitInfo)
     {
-        hitInfo.Target.Hit(_stat.Get_Stat(Stat.STAT_TAG.DAMAGE));
+        hitInfo.Target.Hit(new IDamagable.DamageInfo{
+            Damage = _stat.Get_Stat(Stat.STAT_TAG.DAMAGE), Attacker = _stat.transform, Point = hitInfo.Point});
         _effector.PlayEffect((int)ELF.ElfEffect.HIT_EFFECT , hitInfo.Point);
         
         Vector3 vKnocbackDir = Vector3.Normalize(hitInfo.Point - _stat.gameObject.transform.position);

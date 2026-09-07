@@ -60,7 +60,8 @@ public class GolemUpperAttackLastState : EntityState
 
     void HitHandler(IHitter.HitInfo hitInfo)
     {
-        hitInfo.Target.Hit(_stat.Get_Stat(Stat.STAT_TAG.DAMAGE));
+        hitInfo.Target.Hit(new IDamagable.DamageInfo{
+            Damage = _stat.Get_Stat(Stat.STAT_TAG.DAMAGE), Attacker = _stat.transform, Point = hitInfo.Point});
         _effector.PlayEffect((int)GOLEM.GolemEffect.HIT_EFFECT , hitInfo.Point);
 
         if(hitInfo.Collider.TryGetComponent(out CrowdController crowdController)== true)

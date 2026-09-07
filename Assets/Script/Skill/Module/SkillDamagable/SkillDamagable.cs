@@ -40,7 +40,8 @@ public class SkillDamagable : ISkillModule
         // [디버그] 실제 Hit 순간 — 어느 스킬이 / 누구 소유로 / 누구를 때리는지 못박음
         Debug.Log($"[SkillDamagable:{_skill.name}] Hit! target={collider.name} targetRoot={collider.transform.root.name} skillOwner={(_skill.Owner == null ? "null" : _skill.Owner.name)}");
 
-        target.Hit(FinalDamage());
+        target.Hit(new IDamagable.DamageInfo{
+            Damage = FinalDamage(), Attacker = _skill.Owner.transform, Point = collider.ClosestPoint(_skill.transform.position)});
     }
 
     // 지속성 — CollisionStay는 서버 전용(CheckLayer 보장). 주기 도달 프레임의 겹친 대상 전원에 데미지
@@ -62,7 +63,8 @@ public class SkillDamagable : ISkillModule
         // [디버그] 실제 Hit 순간 — 어느 스킬이 / 누구 소유로 / 누구를 때리는지 못박음
         Debug.Log($"[SkillDamagable:{_skill.name}] (Stay) Hit! target={collider.name} targetRoot={collider.transform.root.name} skillOwner={(_skill.Owner == null ? "null" : _skill.Owner.name)}");
 
-        target.Hit(FinalDamage());
+        target.Hit(new IDamagable.DamageInfo{
+            Damage = FinalDamage(), Attacker = _skill.Owner.transform, Point = collider.ClosestPoint(_skill.transform.position)});
     }
 
     // 최종 데미지 = Owner 현재 공격력 + 기본 데미지

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d99337fd176eae49af155c54e5be677, type: 3}
   m_Name: GoblinData
   m_EditorClassIdentifier: Assembly-CSharp::EnemyData
-  strName: "\uACE0\uBE14\uB9B0 \uC804\uC0AC"
+  strName: Goblin Warrior
   strDesc: "\uACE0\uBE14\uB9B0 \uC804\uC0AC\uC785\uB2C8\uB2E4."
   fAttackDamage: 3
   fMaxHp: 200

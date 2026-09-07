@@ -8,7 +8,7 @@ public class PlayerHitState : EntityState
     public PlayerHitState(Player player)
     {
         _upperAniController = player._upperAniController;
-        _damagable = player._stat;
+        _damagable = player._damagable;
     }
     public override void Create()
     {

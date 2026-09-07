@@ -62,7 +62,8 @@ public class ElfMouseSkillState : EntityState
 
     void HitHandler(IHitter.HitInfo hitInfo)
     {
-        hitInfo.Target.Hit(_stat.Get_Stat(Stat.STAT_TAG.DAMAGE));
+        hitInfo.Target.Hit(new IDamagable.DamageInfo{
+            Damage = _stat.Get_Stat(Stat.STAT_TAG.DAMAGE), Attacker = _stat.transform, Point = hitInfo.Point});
     }
 
 }

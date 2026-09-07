@@ -61,7 +61,7 @@ public class Elf_Player : Player
        _upperStateMachine.CreateState((ushort)ELF.UpperStateType.ATTACK_MIDDLE, new ElfUpperAttackMiddleState(this));
        _upperStateMachine.CreateState((ushort)ELF.UpperStateType.ATTACK_LAST, new ElfUpperAttackLastState(this));
 
-       _upperStateMachine.CreateAnyTransition(new AnyToHit_Player(_upperAniController , _stat));
+       _upperStateMachine.CreateAnyTransition(new AnyToHit_Player(_upperAniController , _damagable));
 
        // 공통 상체 Idle 상태에서 분리된 Elf 전용 공격 전환을 외부 주입
        _upperStateMachine.AddTransition((ushort)ELF.UpperStateType.IDLE, new IdleToAttackStart_Elf(_input));

@@ -364,6 +364,7 @@ GameObject:
   - component: {fileID: 7919488148856497620}
   - component: {fileID: 4856361388078937898}
   - component: {fileID: 6726639379103552195}
+  - component: {fileID: 2134949363504026889}
   m_Layer: 7
   m_Name: Golem_Player
   m_TagString: Player
@@ -748,6 +749,19 @@ MonoBehaviour:
   ShowTopMostFoldoutHeaderGroup: 1
   _changeMats:
   - {fileID: 2100000, guid: f72c08af95547be489836fdf0b04e8a3, type: 2}
+--- !u!114 &2134949363504026889
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4754220212716445872}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f822786ba6ff2e745a17a4a71717a9b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerDamage
+  ShowTopMostFoldoutHeaderGroup: 1
 --- !u!1 &4993173485944839245
 GameObject:
   m_ObjectHideFlags: 0

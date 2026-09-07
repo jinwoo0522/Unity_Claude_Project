@@ -32,7 +32,7 @@ public class EntityRegistry
 
         foreach(Entity entity in targetList)
         {
-            if(entity._stat._isDead == true) continue;   // 시체를 쫓지 않는다
+            if(entity._damagable._isDead == true) continue;   // 시체를 쫓지 않는다
 
             float fSqr = (entity.transform.position - vPos).sqrMagnitude;
             if(fSqr > fNearestSqr) continue;
