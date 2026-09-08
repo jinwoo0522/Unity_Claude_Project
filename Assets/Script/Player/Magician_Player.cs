@@ -36,7 +36,10 @@ public class Magician_Player : Player
         _stateMachine.CreateState((ushort)ENTITY.StateType.AIRBORNE, new EntityAirborneState(this));
         _stateMachine.CreateState((ushort)MAGICIAN.StateType.MOUSE_SKILL, new MagicianMouseSkillState(this, _groundMask, _HeadPos));
         _stateMachine.CreateState((ushort)ENTITY.StateType.FROZEN, new EntityFrozenState(this, _upperStateMachine));
+        _stateMachine.CreateState((ushort)ENTITY.StateType.DIE, new PlayerDieState(this));
 
+        // 등록 순서가 곧 우선순위 — 사망이 최우선이다
+        _stateMachine.CreateAnyTransition(new AnyToDie_Player(_stat, _damagable));
         _stateMachine.CreateAnyTransition(new AnyToJump_Player(_input, _aniController, _jump, _crowdController));
         _stateMachine.CreateAnyTransition(new AnyToAirborne_Entity(_crowdController));
         _stateMachine.CreateAnyTransition(new AnyToFrozen_Entity(_crowdController));

@@ -19,26 +19,29 @@ public class CC_Knockback : ICrowdControl
         isFlag = true;
         vKnockback = data._vDir * data._fValue;
         fKnockbackDecay = data._fDecay;
-        Debug.Log("넉백 적용");
     }
 
     public void Tick(float fTimeDelta)
     {
-        if (vKnockback.sqrMagnitude < 0.01f) // 종료구문
-        {
-            vKnockback = Vector3.zero;
-            isFlag = false;
-            return;
-        } 
-
         Vector3 vKnockbackDir = Vector3.zero;
 
         vKnockbackDir.x += vKnockback.x; 
         vKnockbackDir.z += vKnockback.z;
 
-        _cct.Move(vKnockbackDir * Time.deltaTime);
+        _cct.Move(vKnockbackDir * fTimeDelta);
         
         // 지수 감쇠: 초기에 큰 힘을 주고 급격히 줄어드는 방식 — 미끄러지듯 멈추는 현상 방지
-        vKnockback *= Mathf.Exp(-fKnockbackDecay * Time.deltaTime);
+        vKnockback *= Mathf.Exp(-fKnockbackDecay * fTimeDelta);
+    }
+
+    public bool IsExpired()
+    {
+        return vKnockback.sqrMagnitude < 0.01f;
+    }
+
+    public void Restore()
+    {
+        vKnockback = Vector3.zero;
+        isFlag = false;
     }
 }

@@ -2128,7 +2128,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
-  GlobalObjectIdHash: 1491011233
+  GlobalObjectIdHash: 3901262420
   InScenePlacedSourceGlobalObjectIdHash: 0
   DeferredDespawnTick: 0
   Ownership: 1
@@ -2487,7 +2487,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f822786ba6ff2e745a17a4a71717a9b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerDamage
-  ShowTopMostFoldoutHeaderGroup: 1
 --- !u!1 &3648312818719334364
 GameObject:
   m_ObjectHideFlags: 0

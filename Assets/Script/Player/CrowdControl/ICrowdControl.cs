@@ -14,7 +14,9 @@ public interface ICrowdControl
         public float   _fDecay;
         public Vector3 _vDir;
     }
-    public void Apply(CCData data);
     public bool isFlag {get;}
+    public void Apply(CCData data);
+    public bool IsExpired();   // 종료조건 판정만 수행 — 상태 변경 금지
+    public void Restore();
     public void Tick(float fTimeDelta);
 }

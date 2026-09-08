@@ -761,7 +761,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f822786ba6ff2e745a17a4a71717a9b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerDamage
-  ShowTopMostFoldoutHeaderGroup: 1
 --- !u!1 &4993173485944839245
 GameObject:
   m_ObjectHideFlags: 0

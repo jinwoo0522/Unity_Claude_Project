@@ -25,9 +25,20 @@ public class MaterialChanger : NetworkBehaviour
             _originMats[i] = _renderers[i].sharedMaterials;
     }
 
-    public void Change(MAT_TAG tag) => Change_ClientRpc((int)tag);
+    // 디스폰·셧다운 이후에는 RPC를 보낼 수 없으므로 발신 지점에서 막는다
+    public void Change(MAT_TAG tag)
+    {
+        if(IsSpawned == false) return;
 
-    public void Restore() => Restore_ClientRpc();
+        Change_ClientRpc((int)tag);
+    }
+
+    public void Restore()
+    {
+        if(IsSpawned == false) return;
+
+        Restore_ClientRpc();
+    }
 
     // 서버는 화면을 그리지 않으므로 직접 적용 없이 전파만 한다
     [ClientRpc]

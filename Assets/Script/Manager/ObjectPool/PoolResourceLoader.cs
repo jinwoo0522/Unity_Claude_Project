@@ -116,11 +116,19 @@ public class PoolResourceLoader
         prefabs.Add(Motion_Trail_Object);
 
         GameObject FrozenSmoke = Resources.Load<GameObject>("Prefabs/Effect/FrozenSmoke");
-        if (Motion_Trail_Object == null)
+        if (FrozenSmoke == null)
         {
             GameManager.Instance.DebugMessage<PoolResourceLoader>("FrozenSmoke 이펙트 NULL");
             return;
         }
         prefabs.Add(FrozenSmoke);
+
+        GameObject Hit_stone = Resources.Load<GameObject>("Prefabs/Effect/Goblin/Hit_stone");
+        if (Hit_stone == null)
+        {
+            GameManager.Instance.DebugMessage<PoolResourceLoader>("Hit_stone 이펙트 NULL");
+            return;
+        }
+        prefabs.Add(Hit_stone);
     }
 }

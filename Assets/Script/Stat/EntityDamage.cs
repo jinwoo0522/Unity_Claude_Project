@@ -48,6 +48,12 @@ public abstract class EntityDamage : MonoBehaviour , IDamagable
     {
         if(tag != Stat.STAT_TAG.HP) return;
 
-        _isDead = _stat.Get_Stat(Stat.STAT_TAG.HP) < 0f;
+        bool isDead = _stat.Get_Stat(Stat.STAT_TAG.HP) < 0f;
+
+        // 사망으로 넘어가는 순간에만 CC를 전부 해제한다 — 시체에 빙결 머티리얼·에어본 이동이 남지 않게
+        if(_isDead == false && isDead == true)
+            _crowdController.RestoreAll();
+
+        _isDead = isDead;
     }
 }
