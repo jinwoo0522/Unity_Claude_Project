@@ -10,6 +10,7 @@ public class StateMachine
     private ushort CurState = 0;
 
     private bool _isLock;   // 빙결 등으로 잠기면 상태 갱신·전환을 모두 멈춘다
+    private bool _isTransitionLock;   // 사망 등 종료 상태 — 갱신은 계속하되 전환만 막는다
 
     // 다른 상태머신(상·하체)이 현재 상태를 조회할 때 사용
     public ushort CurrentState => CurState;
@@ -18,12 +19,19 @@ public class StateMachine
     public void Lock() => _isLock = true;
     public void Unlock() => _isLock = false;
 
+    // 현재 상태의 갱신은 유지한 채 전환만 정지 (사망 후에도 중력 같은 처리는 계속돼야 한다)
+    public void LockTransition() => _isTransitionLock = true;
+    public void UnlockTransition() => _isTransitionLock = false;
+
     public void State_Update(float fTimeDelta)
     {
         if(_isLock == true) return;
 
-        if(ChangeAnyState(fTimeDelta) == true) return;
-        if(ChangeState(fTimeDelta) == true) return;
+        if(_isTransitionLock == false)
+        {
+            if(ChangeAnyState(fTimeDelta) == true) return;
+            if(ChangeState(fTimeDelta) == true) return;
+        }
 
         States[CurState].Update(fTimeDelta, CurState);
     }

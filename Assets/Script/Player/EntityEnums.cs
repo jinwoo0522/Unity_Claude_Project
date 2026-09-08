@@ -55,6 +55,16 @@ namespace MONSTER
     {
         HIT = 1 << 4,
     }
+
+    public enum GoblinEffect
+    {
+        HIT_EFFECT,
+    }
+
+    public enum GoblinTrail
+    {
+        WEAPON_TRAIL,
+    }
 }
 
 namespace ELF

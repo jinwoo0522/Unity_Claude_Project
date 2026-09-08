@@ -22,6 +22,8 @@ MonoBehaviour:
     clipName: Walk
   - key: 4
     clipName: Jump
+  - key: 32
+    clipName: Death
   - key: 64
     clipName: Run
   - key: 128

@@ -10,6 +10,7 @@ public class GoblinAttackState : EntityState
     private Transform _transform;
     private IHitter _hitter;
     private Stat _stat;
+    private IEffector _effector;
     Vector3 vCentor = new Vector3(0f,1f,1.5f);
     Vector3 vHalfExtents = new Vector3(1.2f,0.5f,0.7f);
     const float fHitDuration = 0.3f;   // 판정 지속시간
@@ -23,12 +24,14 @@ public class GoblinAttackState : EntityState
         _transform = goblin.transform;
         _hitter = goblin._hitter;
         _stat = goblin._stat;   
+        _effector = goblin._effector;
     }
 
     public override void Create()
     {
         TransitionList.Add(new AttackToIdle_Goblin(_aniController));
         StateEvents.Add((0.6f , EventFunc));
+        StateEvents.Add((0.6f , () => _effector.StopTrail((int)MONSTER.GoblinTrail.WEAPON_TRAIL)));
     }
 
     public override void Enter()
@@ -36,10 +39,12 @@ public class GoblinAttackState : EntityState
         _aniController._state.Value = (ushort)ENTITY.StateType.ATTACK;
         // 앞으로 내딛는 이동량은 클립이 직접 만든다
         _aniController._animator.applyRootMotion = true;
+        _effector.PlayTrail((int)MONSTER.GoblinTrail.WEAPON_TRAIL);
     }
 
     public override void Exit()
     {
+        _effector.StopTrail((int)MONSTER.GoblinTrail.WEAPON_TRAIL);
         _aniController._animator.applyRootMotion = false;
         _agent.nextPosition = _transform.transform.position;
     }
@@ -57,6 +62,7 @@ public class GoblinAttackState : EntityState
     {
         hitInfo.Target.Hit(new IDamagable.DamageInfo{
             Damage = _stat.Get_Stat(Stat.STAT_TAG.DAMAGE), Attacker = _stat.transform, Point = hitInfo.Point});
+        _effector.PlayEffect((int)MONSTER.GoblinEffect.HIT_EFFECT, hitInfo.Point);
 
         Vector3 vKnocbackDir = Vector3.Normalize(hitInfo.Point - _stat.gameObject.transform.position);
         
