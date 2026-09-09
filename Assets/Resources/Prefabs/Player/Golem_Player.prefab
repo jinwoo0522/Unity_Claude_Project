@@ -404,7 +404,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
-  GlobalObjectIdHash: 3296484378
+  GlobalObjectIdHash: 427886385
   InScenePlacedSourceGlobalObjectIdHash: 0
   DeferredDespawnTick: 0
   Ownership: 1
@@ -748,7 +748,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::MaterialChanger
   ShowTopMostFoldoutHeaderGroup: 1
   _changeMats:
-  - {fileID: 2100000, guid: f72c08af95547be489836fdf0b04e8a3, type: 2}
+  - rid: 8331585859072032862
+  - rid: 8331585859072032863
+  references:
+    version: 2
+    RefIds:
+    - rid: 8331585859072032862
+      type: {class: DissolveMaterial, ns: , asm: Assembly-CSharp}
+      data:
+        _sourceMat: {fileID: 2100000, guid: 2dc57758730c1494ea60697949288968, type: 2}
+        _fDuration: 3.5
+    - rid: 8331585859072032863
+      type: {class: FreezeMaterial, ns: , asm: Assembly-CSharp}
+      data:
+        _sourceMat: {fileID: 2100000, guid: f72c08af95547be489836fdf0b04e8a3, type: 2}
 --- !u!114 &2134949363504026889
 MonoBehaviour:
   m_ObjectHideFlags: 0

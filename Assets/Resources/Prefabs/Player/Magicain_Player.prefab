@@ -827,7 +827,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::MaterialChanger
   ShowTopMostFoldoutHeaderGroup: 1
   _changeMats:
-  - {fileID: 2100000, guid: f72c08af95547be489836fdf0b04e8a3, type: 2}
+  - rid: 8331585859072032864
+  - rid: 8331585859072032865
+  references:
+    version: 2
+    RefIds:
+    - rid: 8331585859072032864
+      type: {class: DissolveMaterial, ns: , asm: Assembly-CSharp}
+      data:
+        _sourceMat: {fileID: 2100000, guid: 2dc57758730c1494ea60697949288968, type: 2}
+        _fDuration: 3.5
+    - rid: 8331585859072032865
+      type: {class: FreezeMaterial, ns: , asm: Assembly-CSharp}
+      data:
+        _sourceMat: {fileID: 2100000, guid: f72c08af95547be489836fdf0b04e8a3, type: 2}
 --- !u!114 &3069796688563442396
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -840,7 +853,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f822786ba6ff2e745a17a4a71717a9b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerDamage
-  ShowTopMostFoldoutHeaderGroup: 1
 --- !u!1 &8304582804339889416
 GameObject:
   m_ObjectHideFlags: 0
