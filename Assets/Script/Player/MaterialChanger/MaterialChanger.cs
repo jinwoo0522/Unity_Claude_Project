@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
 
@@ -8,9 +9,14 @@ public class MaterialChanger : NetworkBehaviour
     public enum MAT_TAG
     {
         FROZEN,
+        DISSOLVE,
     }
 
-    [SerializeField] private Material[] _changeMats;   // MAT_TAG 순서대로 인스펙터에 등록
+    [SerializeReference, SubclassSelector] private IStateMaterial[] _changeMats;   // 등록 순서 무관, 각자 Tag로 식별한다
+
+    private readonly Dictionary<MAT_TAG, IStateMaterial> _matTable = new();
+    private IStateMaterial _currentMat;
+    private bool _isChanged;
 
     private SkinnedMeshRenderer[] _renderers;
     private Material[][] _originMats;   // 렌더러별 원본 머티리얼 배열
@@ -23,9 +29,25 @@ public class MaterialChanger : NetworkBehaviour
 
         for (int i = 0; i < _renderers.Length; ++i)
             _originMats[i] = _renderers[i].sharedMaterials;
+
+        // 머티리얼 인스턴스는 캐릭터마다 하나씩 만든다 — 공유 에셋을 건드리지 않아야 개별 연출이 가능하다
+        for (int i = 0; i < _changeMats.Length; ++i)
+        {
+            _changeMats[i].Init();
+            _matTable.Add(_changeMats[i].Tag, _changeMats[i]);
+        }
     }
 
-    // 디스폰·셧다운 이후에는 RPC를 보낼 수 없으므로 발신 지점에서 막는다
+    public override void OnNetworkDespawn()
+    {
+        _isChanged = false;
+
+        for (int i = 0; i < _changeMats.Length; ++i)
+            _changeMats[i].Release();
+
+        _matTable.Clear();
+    }
+
     public void Change(MAT_TAG tag)
     {
         if(IsSpawned == false) return;
@@ -40,18 +62,29 @@ public class MaterialChanger : NetworkBehaviour
         Restore_ClientRpc();
     }
 
+    // 연출 진행은 각 피어가 로컬로 굴린다 — CC의 Update는 서버에서만 돌기 때문에 여기서 대신 돌린다
+    private void Update()
+    {
+        if(_isChanged == false) return;
+
+        _currentMat.Tick(Time.deltaTime);
+    }
+
     // 서버는 화면을 그리지 않으므로 직접 적용 없이 전파만 한다
     [ClientRpc]
     private void Change_ClientRpc(int iMatNumber)
     {
-        Material changeMat = _changeMats[iMatNumber];
+        _currentMat = _matTable[(MAT_TAG)iMatNumber];
+        _currentMat.Enter();
+        _isChanged = true;
 
         for (int i = 0; i < _renderers.Length; ++i)
         {
             // 슬롯 수만큼 채우지 않으면 해당 파츠가 원래 재질로 남는다 (엘프 body는 2슬롯)
+            // sharedMaterials로 넣어야 Unity가 렌더러마다 또 복제하지 않고 인스턴스 하나를 공유한다
             Material[] mats = new Material[_originMats[i].Length];
             for (int j = 0; j < mats.Length; ++j)
-                mats[j] = changeMat;
+                mats[j] = _currentMat.Material;
 
             _renderers[i].sharedMaterials = mats;
         }
@@ -60,6 +93,8 @@ public class MaterialChanger : NetworkBehaviour
     [ClientRpc]
     private void Restore_ClientRpc()
     {
+        _isChanged = false;
+
         for (int i = 0; i < _renderers.Length; ++i)
             _renderers[i].sharedMaterials = _originMats[i];
     }

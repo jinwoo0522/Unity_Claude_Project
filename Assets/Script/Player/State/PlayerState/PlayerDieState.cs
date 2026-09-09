@@ -9,6 +9,7 @@ public class PlayerDieState : EntityState
     private StateMachine _stateMachine;
     private StateMachine _upperStateMachine;
     private CrowdController _crowdController;
+    private MaterialChanger _matChanger;
 
     public PlayerDieState(Player player)
     {
@@ -17,6 +18,7 @@ public class PlayerDieState : EntityState
         _stateMachine = player._stateMachine;
         _upperStateMachine = player._upperStateMachine;
         _crowdController = player._crowdController;
+        _matChanger = player.GetComponent<MaterialChanger>();
     }
 
     public override void Create()
@@ -42,5 +44,16 @@ public class PlayerDieState : EntityState
     protected override void UpdateState(float fTimedelta, ushort curState)
     {
         _move.Gravity();   // 공중에서 사망한 경우 그대로 떨어지도록
+
+        CheckDissolve();
+    }
+
+    // 사망 모션이 끝까지 재생된 뒤부터 몸이 사라지기 시작한다
+    private void CheckDissolve()
+    {
+        if(_aniController.IsCurrentStateFinished() == false) return;
+
+        _matChanger.Change(MaterialChanger.MAT_TAG.DISSOLVE);
+
     }
 }

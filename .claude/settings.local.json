@@ -43,7 +43,16 @@
       "Bash(claude --version)",
       "Bash(git -C \"C:/Users/kim05/.claude\" add settings.json)",
       "Bash(git -C \"C:/Users/kim05/.claude\" -c user.name=\"GiJungSUk\" -c user.email=\"kim05220808@gmail.com\" commit -m \"Day7 작업 중 변경사항\")",
-      "Bash(git pull *)"
+      "Bash(git pull *)",
+      "Bash(\"C:/Users/kim05/AppData/Local/unity-scanner/unity-scanner.exe\" search *)",
+      "Bash(\"C:/Users/kim05/AppData/Local/unity-scanner/unity-scanner.exe\" --help)",
+      "Bash(\"C:/Users/kim05/AppData/Local/unity-cli/unity-cli\" --help)",
+      "Bash(\"C:/Users/kim05/AppData/Local/unity-cli/unity-cli\" editor *)",
+      "Bash(\"C:/Users/kim05/AppData/Local/unity-cli/unity-cli\" console *)",
+      "Bash(\"C:/Users/kim05/AppData/Local/unity-scanner/unity-scanner.exe\" read *)",
+      "Bash(\"C:/Users/kim05/AppData/Local/unity-scanner/unity-scanner.exe\" refs *)",
+      "Bash(cd \"c:/Unity/Golem_VS_Magician\" && echo \"=== 프로젝트 .claude ===\" && ls -a .claude 2>/dev/null; echo \"=== 전역 ~/.claude ===\" && ls \"$HOME/.claude\" 2>/dev/null | grep -i settings)",
+      "Read(//c/Users/kim05/.claude/**)"
     ]
   }
 }
